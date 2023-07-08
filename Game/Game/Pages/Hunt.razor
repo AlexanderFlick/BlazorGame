@@ -1,11 +1,16 @@
 ﻿@page "/hunt"
-@inject IMonsterService MonsterService
 @using Game.Data;
 @using Game.Services;
+@inject IPlayerMonsterService MonsterService
+@inject IGoldService GoldService
 
-<h3>Hunt</h3>
-<p>Current Monster Count: @player.Monsters.Count()/@player.MaxPartySize</p>
-<button @onclick="GetNewMonster">Get New Monster</button>
+<div style="text-align:center">
+    <h3>Hunt</h3>
+    <p>Current Gold: @player.Gold</p>
+    <p>Gold Needed to Hunt for New Monsters: @player.GoldPerMonster</p>
+    <p>Current Monster Count: @player.Monsters.Count()/@player.MaxPartySize</p>    
+    <button class="btn btn-primary" @onclick="GetNewMonster">Get New Monster</button>
+</div>
 
 @code {
     [CascadingParameter]
@@ -13,6 +18,11 @@
 
     private void GetNewMonster()
     {
-        player = MonsterService.HuntForMonster(player);
+        var enoughGold = GoldService.HasEnough(player, player.GoldPerMonster);
+        if (enoughGold)
+        {
+            player.Gold = GoldService.Pay(player.GoldPerMonster, player.Gold);
+            player = MonsterService.HuntForMonster(player);
+        }
     }
 }

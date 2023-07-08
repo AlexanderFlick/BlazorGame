@@ -1,9 +1,11 @@
 ﻿@using Game.Data;
 @using Game.Services;
-@inject IMonsterService MonsterService
+@inject IPlayerMonsterService MonsterService
 
 <div class="container align-content-center">
-    <p>Health: @monster.Health</p>
+    <p>Level: @monster.Level</p>
+    <p>Health: @monster.TotalHealth</p>
+    <p>Health: @monster.TotalHealth</p>
     <p>Attack: @monster.Attack</p>
     <p>Defense: @monster.Defense</p>
 </div>

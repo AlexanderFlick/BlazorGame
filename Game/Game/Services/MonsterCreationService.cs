@@ -2,33 +2,26 @@
 
 namespace Game.Services;
 
-public interface IMonsterService
+public interface IMonsterCreationService
 {
-    Player HuntForMonster(Player player);
+    Monster GetNewMonster();
     Monster LockOrUnlockMonster(Monster monster);
-    Player RemoveMonster(Player player, Monster monster);
 }
-public class MonsterService : IMonsterService
+public class MonsterCreationService : IMonsterCreationService
 {
     readonly Random rand = new();
 
-    public Player HuntForMonster(Player player)
+    public Monster GetNewMonster()
     {
-        if (player.Monsters.Count >= player.MaxPartySize)
-            return player;
+        var health = GetMonsterHealth();
 
-        player.Monsters.Add(GetNewMonster());
-        return player;
-    }
-
-    private Monster GetNewMonster()
-    {
-        return new Monster 
-        { 
+        return new Monster
+        {
             Name = GetMonsterName(),
-            Health = GetMonsterHealth(),
-            Attack= GetMonsterAttack(),
-            Defense = GetMonsterDefense()
+            Attack = GetMonsterAttack(),
+            Defense= GetMonsterDefense(),
+            CurrentHealth = health,
+            TotalHealth = health
         };
     }
 
@@ -76,8 +69,8 @@ public class MonsterService : IMonsterService
     }
 
     public int GetMonsterHealth()
-    {
-        return 0;
+    {        
+        return rand.Next(80, 100);
     }
 
     public int GetMonsterAttack()
@@ -93,15 +86,5 @@ public class MonsterService : IMonsterService
     {
         monster.Locked = monster.Locked != true;
         return monster;
-    }
-
-    public Player RemoveMonster(Player player, Monster monster)
-    {
-        if (monster.Locked)
-            return player;
-
-        player.Monsters.Remove(monster);
-
-        return player;
     }
 }

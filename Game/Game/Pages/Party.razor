@@ -1,28 +1,32 @@
 ﻿@page "/party"
 @using Game.Data;
 @using Game.Services;
-@inject IMonsterService MonsterService
+@inject IPlayerMonsterService PlayerMonsters
+@inject IMonsterCreationService MonsterCreation
 
-<h3><b>Party</b></h3>
-<p>Party size: @player.Monsters.Count()/@player.MaxPartySize</p>
+<div style="text-align:center; padding: 10px">
+    <h1><b>Party</b></h1>
+    <p>Party size: @player.Monsters.Count()/@player.MaxPartySize</p>
 
-@foreach (var teamMember in player.Monsters)
-{
-    <div style="card">
-        @if (!teamMember.Locked)
-        {
-            <h3><b>@teamMember.Name</b> </h3>
-        }
-        else
-        {
-            <h3><b>@teamMember.Name</b> - Locked </h3>
-        }
-        <MonsterSummary monster="@teamMember"></MonsterSummary>
-        <button @onclick="() => LockMonster(teamMember)" value="@teamMember">Lock</button>
-        <button @onclick="() => RemoveMonster(teamMember)">Remove</button>
-    </div>
+    @foreach (var teamMember in player.Monsters)
+    {
+        <div class="card" style="float:left">
+            @if (!teamMember.Locked)
+            {
+                <h3><b>@teamMember.Name</b> </h3>
+            }
+            else
+            {
+                <h3><b>@teamMember.Name</b></h3>
+                <span class="oi oi-lock-locked">  Locked</span>
+            }
+            <MonsterSummary monster="@teamMember"></MonsterSummary>
+            <button class="btn btn-primary" @onclick="() => LockMonster(teamMember)" value="@teamMember">Lock</button>
+            <button class="btn btn-danger" @onclick="() => RemoveMonster(teamMember)">Remove</button>
+        </div>
+    }
 
-}
+</div>
 
 @code {
     [CascadingParameter]
@@ -30,18 +34,18 @@
 
     public void LockMonster(Monster monster)
     {
-        monster = MonsterService.LockOrUnlockMonster(monster);
+        monster = MonsterCreation.LockOrUnlockMonster(monster);
     }
 
     public void RemoveMonster(Monster monster)
     {
-        player = MonsterService.RemoveMonster(player, monster);
+        player = PlayerMonsters.RemoveMonster(player, monster);
     }
 }
 
 <style>
     .card {
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 4px 16px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 40%;
         border-radius: 5px;

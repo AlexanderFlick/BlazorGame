@@ -5,7 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<IMonsterService, MonsterService>();
+builder.Services.AddSingleton<IPlayerMonsterService, PlayerMonsterService>();
+builder.Services.AddSingleton<IMonsterCreationService, MonsterCreationService>();
 builder.Services.AddSingleton<IGoldService, GoldService>();
 
 var app = builder.Build();
