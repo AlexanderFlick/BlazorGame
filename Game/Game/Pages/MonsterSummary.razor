@@ -1,0 +1,15 @@
+﻿@using Game.Data;
+@using Game.Services;
+@inject IMonsterService MonsterService
+
+<div class="container align-content-center">
+    <p>Health: @monster.Health</p>
+    <p>Attack: @monster.Attack</p>
+    <p>Defense: @monster.Defense</p>
+</div>
+
+@code {
+    [Parameter]
+    public Monster monster { get; set; }
+}
+

@@ -1,0 +1,17 @@
+﻿@page "/gold"
+@inject IGoldService GoldService
+@using Game.Data;
+@using Game.Services;
+
+<h3>Gather Gold</h3>
+<button @onclick="GetGold">Get Gold</button>
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    private void GetGold()
+    {
+        GoldService.GetGold(player);
+    }
+}
