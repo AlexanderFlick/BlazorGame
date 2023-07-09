@@ -3,26 +3,48 @@
 @using Game.Services;
 @inject IPlayerMonsterService MonsterService
 @inject IGoldService GoldService
+@inject NavigationManager NavigationManager
 
 <div style="text-align:center">
-    <h3>Hunt</h3>
+    <h3>Hunt For Monsters</h3>
+    @if (!HasEnough)
+    {
+        <div class="alert alert-danger" role="alert">
+            Go earn more gold to buy new Monsters!
+            <button class="btn btn-danger" @onclick="RedirectToGold">Go Get More Gold</button>
+        </div>
+    }
     <p>Current Gold: @player.Gold</p>
     <p>Gold Needed to Hunt for New Monsters: @player.GoldPerMonster</p>
     <p>Current Monster Count: @player.Monsters.Count()/@player.MaxPartySize</p>    
     <button class="btn btn-primary" @onclick="GetNewMonster">Get New Monster</button>
+    
 </div>
 
 @code {
     [CascadingParameter]
     public Player player { get; set; }
 
+    public bool HasEnough { get; set; } = true;
+
     private void GetNewMonster()
     {
         var enoughGold = GoldService.HasEnough(player, player.GoldPerMonster);
         if (enoughGold)
         {
+            HasEnough = true;
             player.Gold = GoldService.Pay(player.GoldPerMonster, player.Gold);
             player = MonsterService.HuntForMonster(player);
         }
+        else
+        {
+            HasEnough = false;
+
+        }
+    }
+
+    private void RedirectToGold()
+    {
+        NavigationManager.NavigateTo("/gold");
     }
 }
