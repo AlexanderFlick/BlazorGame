@@ -12,12 +12,12 @@
     {
         <div class="alert alert-danger" role="alert">
             <p>Gather more amber to find new fossils!</p>
-            <button class="btn btn-danger" @onclick="RedirectToGold">Go Get More Amber</button>
+            <button class="btn btn-danger" @onclick="RedirectToGold">Gather More Amber</button>
         </div>
     }
-    <p>Current Amber: @player.Amber</p>
+    <p>Total Amber: @player.Amber</p>
     <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
-    <p>Current Fossil Count: @player.Fossils.Count()/@player.MaxPartySize</p>    
+    <p>Current Fossil Count: @player.Fossils.Count()</p>
     <button class="btn btn-primary" @onclick="GetNewFossil">Get New Dinosaur</button>
 </div>
 

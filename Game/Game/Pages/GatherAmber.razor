@@ -1,22 +1,22 @@
 ﻿@page "/amber"
-@inject IAmberService GoldService
+@inject IAmberService AmberService
 @using Game.Data;
 @using Game.Services;
 
 <div style="text-align:center">
     <h1><b>Gather @player.AmberType Amber</b></h1>
-    <img src="images/Amber.jpg" alt="Amber"/>
+    <img src="images/YellowAmber.png" alt="Amber"/>
     <p>Total Amber: @player.Amber</p>
     <p>Amber Per Click: @player.AmberPerClick</p>
-    <button class="btn btn-primary" @onclick="GetAmber">Get Amber!</button>
+    <button class="btn btn-primary" @onclick="GetYellowAmber">Get Yellow Amber!</button>
 </div>
 
 @code {
     [CascadingParameter]
     public Player player { get; set; }
 
-    private void GetAmber()
+    private void GetYellowAmber()
     {
-        GoldService.GetAmber(player);
+        AmberService.GetAmber(player);
     }
 }
