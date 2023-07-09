@@ -4,26 +4,29 @@
 @inject IPlayerMonsterService PlayerMonsters
 @inject IMonsterCreationService MonsterCreation
 
-<div style="text-align:center; padding: 10px">
+<div style="text-align:center;" class="overflow-auto">
     <h1><b>Party</b></h1>
     <p>Party size: @player.Monsters.Count()/@player.MaxPartySize</p>
 
     @foreach (var teamMember in player.Monsters)
     {
-        <div class="card" style="float:left">
-            @if (!teamMember.Locked)
-            {
-                <h3><b>@teamMember.Name</b> </h3>
-                <span></span>
-            }
-            else
-            {
-                <h3><b>@teamMember.Name</b></h3>
-                <span class="oi oi-lock-locked">  Locked</span>
-            }
-            <MonsterSummary monster="@teamMember"></MonsterSummary>
-            <button class="btn btn-primary" @onclick="() => LockMonster(teamMember)" value="@teamMember">Lock</button>
-            <button class="btn btn-danger" @onclick="() => RemoveMonster(teamMember)">Remove</button>
+        <div class="card" style="width: 18rem; flex-wrap:initial">
+            <div class="card-body">
+                <h5 class="card-title"><b>@teamMember.Name</b></h5>
+                <p class="card-subtitle mb-2 text-muted">Level: @teamMember.Level Experience: @teamMember.CurrentExperience/@teamMember.ExperienceToLevelUp</p>
+                <p class="card-text">Health: @teamMember.TotalHealth</p>
+                <p class="card-text">Attack: @teamMember.Attack</p>
+                <p class="card-text">Defense: @teamMember.Defense</p>
+                <p>
+                    @if (teamMember.Locked)
+                    {
+                        <span class="oi oi-lock-locked">  Locked!</span>
+                    }
+                </p>
+
+                <button class="btn btn-primary" @onclick="() => LockMonster(teamMember)" value="@teamMember">Lock</button>
+                <button class="btn btn-danger" @onclick="() => RemoveMonster(teamMember)">Remove</button>
+            </div>
         </div>
     }
 
@@ -46,21 +49,17 @@
 
 <style>
     .card {
-        box-shadow: 0 4px 16px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 40%;
-        border-radius: 5px;
+        display: grid;
     }
 
         .card:hover {
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         }
 
-    img {
-        border-radius: 5px 5px 0 0;
-    }
-
     .container {
-        padding: 2px 16px;
+        padding: 16px 16px;
     }
 </style>

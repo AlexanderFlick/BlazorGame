@@ -1,0 +1,21 @@
+﻿@page "/amber"
+@inject IGoldService GoldService
+@using Game.Data;
+@using Game.Services;
+
+<div style="text-align:center">
+    <h1><b>Gather Amber</b></h1>
+    <p>Total Amber: @player.Amber</p>
+    <p>Amber Per Click: @player.AmberPerClick</p>
+    <button class="btn btn-primary" @onclick="GetAmber">Get Amber!</button>
+</div>
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    private void GetAmber()
+    {
+        GoldService.GetAmber(player);
+    }
+}

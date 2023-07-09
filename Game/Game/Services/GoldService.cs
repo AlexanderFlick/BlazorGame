@@ -5,20 +5,20 @@ namespace Game.Services;
 
 public interface IGoldService
 {
-    void GetGold(Player player);
+    void GetAmber(Player player);
     bool HasEnough(Player player, int cost);
     int Pay(int cost, int total);
 }
 public class GoldService : IGoldService
 {
-    public void GetGold(Player player)
+    public void GetAmber(Player player)
     {
-        player.Gold += player.GoldPerClick;
+        player.Amber += player.AmberPerClick;
     }
 
     public bool HasEnough(Player player, int cost)
     {
-        return (player.Gold >= cost);
+        return (player.Amber >= cost);
     }
 
     public int Pay(int cost, int total)

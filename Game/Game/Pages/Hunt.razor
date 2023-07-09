@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 
 <div style="text-align:center">
-    <h3>Hunt For Monsters</h3>
+    <h3><b>Hunt For Monsters</b></h3>
     @if (!HasEnough)
     {
         <div class="alert alert-danger" role="alert">
@@ -14,8 +14,8 @@
             <button class="btn btn-danger" @onclick="RedirectToGold">Go Get More Gold</button>
         </div>
     }
-    <p>Current Gold: @player.Gold</p>
-    <p>Gold Needed to Hunt for New Monsters: @player.GoldPerMonster</p>
+    <p>Current Gold: @player.Amber</p>
+    <p>Gold Needed to Hunt for New Monsters: @player.AmberPerMonster</p>
     <p>Current Monster Count: @player.Monsters.Count()/@player.MaxPartySize</p>    
     <button class="btn btn-primary" @onclick="GetNewMonster">Get New Monster</button>
     
@@ -29,11 +29,11 @@
 
     private void GetNewMonster()
     {
-        var enoughGold = GoldService.HasEnough(player, player.GoldPerMonster);
+        var enoughGold = GoldService.HasEnough(player, player.AmberPerMonster);
         if (enoughGold)
         {
             HasEnough = true;
-            player.Gold = GoldService.Pay(player.GoldPerMonster, player.Gold);
+            player.Amber = GoldService.Pay(player.AmberPerMonster, player.Amber);
             player = MonsterService.HuntForMonster(player);
         }
         else
