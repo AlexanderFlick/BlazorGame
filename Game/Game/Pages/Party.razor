@@ -1,31 +1,45 @@
 ﻿@page "/party"
 @using Game.Data;
+@using Game.Data.Dinosaurs;
 @using Game.Services;
-@inject IPlayerMonsterService PlayerMonsters
-@inject IMonsterCreationService MonsterCreation
+@inject IPlayerDinosaurService PlayerMonsters
+@inject IDinosaurCreationService MonsterCreation
 
 <div style="text-align:center;" class="overflow-auto">
-    <h1><b>Party</b></h1>
-    <p>Party size: @player.Fossils.Count()/@player.MaxPartySize</p>
-
-    @foreach (var teamMember in player.Fossils)
+    <h1><b>Fossils</b></h1>
+    <p>Fossil Total: @player.Fossils.Count()</p>
+    @foreach (var fossil in player.Fossils)
     {
         <div class="card" style="width: 18rem; flex-wrap:initial">
             <div class="card-body">
-                <h5 class="card-title"><b>@teamMember.Name</b></h5>
-                <p class="card-subtitle mb-2 text-muted">Level: @teamMember.Level Experience: @teamMember.CurrentExperience/@teamMember.ExperienceToLevelUp</p>
-                <p class="card-text">Health: @teamMember.TotalHealth</p>
-                <p class="card-text">Attack: @teamMember.Attack</p>
-                <p class="card-text">Defense: @teamMember.Defense</p>
+                <h5 class="card-title"><b>@fossil.DinosaurType @fossil.FossilType</b></h5>
+            </div>
+        </div>
+    }
+</div>
+
+<div style="text-align:center;" class="overflow-auto">
+    <h1><b>Dinosaur Army</b></h1>
+    <p>Party size: @player.Dinosaurs.Count()/@player.MaxPartySize</p>
+
+    @foreach (var dinosaur in player.Dinosaurs)
+    {
+        <div class="card" style="width: 18rem; flex-wrap:initial">
+            <div class="card-body">
+                <h5 class="card-title"><b>@dinosaur.Name</b></h5>
+                <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
+                <p class="card-text">Health: @dinosaur.TotalHealth</p>
+                <p class="card-text">Attack: @dinosaur.Attack</p>
+                <p class="card-text">Defense: @dinosaur.Defense</p>
                 <p>
-                    @if (teamMember.Locked)
+                    @if (dinosaur.Locked)
                     {
                         <span class="oi oi-lock-locked">  Locked!</span>
                     }
                 </p>
 
-                <button class="btn btn-primary" @onclick="() => LockMonster(teamMember)" value="@teamMember">Lock</button>
-                <button class="btn btn-danger" @onclick="() => RemoveMonster(teamMember)">Remove</button>
+                <button class="btn btn-primary" @onclick="() => LockDinosaur(dinosaur)" value="@dinosaur">Lock</button>
+                <button class="btn btn-danger" @onclick="() => RemoveMonster(dinosaur)">Remove</button>
             </div>
         </div>
     }
@@ -36,14 +50,14 @@
     [CascadingParameter]
     public Player player { get; set; }
 
-    public void LockMonster(Fossil monster)
+    public void LockDinosaur(Dinosaur dinosaur)
     {
-        monster = MonsterCreation.LockOrUnlockMonster(monster);
+        dinosaur = MonsterCreation.LockOrUnlockDinosaur(dinosaur);
     }
 
-    public void RemoveMonster(Fossil monster)
+    public void RemoveMonster(Dinosaur dinosaur)
     {
-        player = PlayerMonsters.RemoveMonster(player, monster);
+        player = PlayerMonsters.RemoveDinosaur(player, dinosaur);
     }
 }
 

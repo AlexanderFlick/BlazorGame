@@ -1,7 +1,8 @@
 ﻿@page "/hunt"
 @using Game.Data;
 @using Game.Services;
-@inject IPlayerMonsterService MonsterService
+@inject IPlayerDinosaurService DinosaurService
+@inject IPlayerFossilService FossilService
 @inject IAmberService AmberService
 @inject NavigationManager NavigationManager
 
@@ -10,12 +11,12 @@
     @if (!HasEnough)
     {
         <div class="alert alert-danger" role="alert">
-            <p>Go gather more amber to find new fossils!</p>
+            <p>Gather more amber to find new fossils!</p>
             <button class="btn btn-danger" @onclick="RedirectToGold">Go Get More Amber</button>
         </div>
     }
     <p>Current Amber: @player.Amber</p>
-    <p>Amber Needed to Hunt for New Fossils: @player.AmberPerMonster</p>
+    <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
     <p>Current Fossil Count: @player.Fossils.Count()/@player.MaxPartySize</p>    
     <button class="btn btn-primary" @onclick="GetNewFossil">Get New Dinosaur</button>
 </div>
@@ -28,12 +29,12 @@
 
     private void GetNewFossil()
     {
-        var enoughGold = AmberService.HasEnough(player, player.AmberPerMonster);
+        var enoughGold = AmberService.HasEnough(player, player.AmberPerFossil);
         if (enoughGold)
         {
             HasEnough = true;
-            player.Amber = AmberService.Pay(player.AmberPerMonster, player.Amber);
-            player = MonsterService.HuntForMonster(player);
+            player.Amber = AmberService.Pay(player.AmberPerFossil, player.Amber);
+            player = FossilService.HuntForFossil(player);
         }
         else
         {

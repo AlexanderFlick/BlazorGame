@@ -1,31 +1,32 @@
 ﻿using Game.Data;
+using Game.Data.Dinosaurs;
 
 namespace Game.Services;
 
-public interface IMonsterCreationService
+public interface IDinosaurCreationService
 {
-    Fossil GetNewMonster();
-    Fossil LockOrUnlockMonster(Fossil monster);
+    Dinosaur GetNewDinosaur();
+    Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur);
 }
-public class MonsterCreationService : IMonsterCreationService
+public class DinosaurCreationService : IDinosaurCreationService
 {
     readonly Random rand = new();
 
-    public Fossil GetNewMonster()
+    public Dinosaur GetNewDinosaur()
     {
-        var health = GetMonsterHealth();
+        var health = GetDinosaurHealth();
 
-        return new Fossil
+        return new Dinosaur
         {
-            Name = GetMonsterName(),
-            Attack = GetMonsterAttack(),
-            Defense= GetMonsterDefense(),
+            Name = GetDinosaurName(),
+            Attack = GetDinosaurAttack(),
+            Defense= GetDinosaurDefense(),
             CurrentHealth = health,
             TotalHealth = health
         };
     }
 
-    private string GetMonsterName()
+    private string GetDinosaurName()
     {
         var monsterName = "";
         var randomAdj = rand.NextSingle();
@@ -68,23 +69,23 @@ public class MonsterCreationService : IMonsterCreationService
         return monsterName;
     }
 
-    public int GetMonsterHealth()
+    public int GetDinosaurHealth()
     {        
         return rand.Next(80, 100);
     }
 
-    public int GetMonsterAttack()
+    public int GetDinosaurAttack()
     {
         return 0;
     }
-    public int GetMonsterDefense()
+    public int GetDinosaurDefense()
     {
         return 0;
     }
 
-    public Fossil LockOrUnlockMonster(Fossil monster)
+    public Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur)
     {
-        monster.Locked = monster.Locked != true;
-        return monster;
+        dinosaur.Locked = dinosaur.Locked != true;
+        return dinosaur;
     }
 }

@@ -6,11 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<IPlayerMonsterService, PlayerMonsterService>();
-builder.Services.AddSingleton<IMonsterCreationService, MonsterCreationService>();
+builder.Services.AddSingleton<IPlayerDinosaurService, PlayerDinosaurService>();
+builder.Services.AddSingleton<IDinosaurCreationService, DinosaurCreationService>();
 builder.Services.AddSingleton<IAmberService, AmberService>();
 builder.Services.AddSingleton<IBattleService, BattleService>();
 builder.Services.AddSingleton<IWeaponRepository, WeaponRepository>();
+builder.Services.AddSingleton<IPlayerFossilService, PlayerFossilService>();
 
 var app = builder.Build();
 
