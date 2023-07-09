@@ -1,5 +1,4 @@
 ﻿using Game.Data;
-using Microsoft.AspNetCore.Components;
 
 namespace Game.Services;
 
