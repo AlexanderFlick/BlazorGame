@@ -6,9 +6,9 @@
 
 <div style="text-align:center;" class="overflow-auto">
     <h1><b>Party</b></h1>
-    <p>Party size: @player.Monsters.Count()/@player.MaxPartySize</p>
+    <p>Party size: @player.Fossils.Count()/@player.MaxPartySize</p>
 
-    @foreach (var teamMember in player.Monsters)
+    @foreach (var teamMember in player.Fossils)
     {
         <div class="card" style="width: 18rem; flex-wrap:initial">
             <div class="card-body">
@@ -36,12 +36,12 @@
     [CascadingParameter]
     public Player player { get; set; }
 
-    public void LockMonster(Monster monster)
+    public void LockMonster(Fossil monster)
     {
         monster = MonsterCreation.LockOrUnlockMonster(monster);
     }
 
-    public void RemoveMonster(Monster monster)
+    public void RemoveMonster(Fossil monster)
     {
         player = PlayerMonsters.RemoveMonster(player, monster);
     }

@@ -1,6 +1,6 @@
 ﻿namespace Game.Data;
 
-public class Monster
+public class Fossil
 {
     public string? Name { get; set; }
     public int Level { get; set; } = 1;

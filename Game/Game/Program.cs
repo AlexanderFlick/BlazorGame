@@ -1,3 +1,4 @@
+using Game.Data.Weapons;
 using Game.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<IPlayerMonsterService, PlayerMonsterService>();
 builder.Services.AddSingleton<IMonsterCreationService, MonsterCreationService>();
-builder.Services.AddSingleton<IGoldService, GoldService>();
+builder.Services.AddSingleton<IAmberService, AmberService>();
+builder.Services.AddSingleton<IBattleService, BattleService>();
+builder.Services.AddSingleton<IWeaponRepository, WeaponRepository>();
 
 var app = builder.Build();
 

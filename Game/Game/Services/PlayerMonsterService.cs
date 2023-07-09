@@ -5,7 +5,7 @@ namespace Game.Services;
 public interface IPlayerMonsterService
 {
     Player HuntForMonster(Player player);
-    Player RemoveMonster(Player player, Monster monster);
+    Player RemoveMonster(Player player, Fossil monster);
 }
 public class PlayerMonsterService : IPlayerMonsterService
 {
@@ -19,21 +19,21 @@ public class PlayerMonsterService : IPlayerMonsterService
 
     public Player HuntForMonster(Player player)
     {
-        if (player.Monsters.Count >= player.MaxPartySize)
+        if (player.Fossils.Count >= player.MaxPartySize)
             return player;
 
-        player.Monsters.Add(_monsterCreationService.GetNewMonster());
+        player.Fossils.Add(_monsterCreationService.GetNewMonster());
         return player;
     }
 
     
 
-    public Player RemoveMonster(Player player, Monster monster)
+    public Player RemoveMonster(Player player, Fossil monster)
     {
         if (monster.Locked)
             return player;
 
-        player.Monsters.Remove(monster);
+        player.Fossils.Remove(monster);
 
         return player;
     }

@@ -2,23 +2,22 @@
 @using Game.Data;
 @using Game.Services;
 @inject IPlayerMonsterService MonsterService
-@inject IGoldService GoldService
+@inject IAmberService AmberService
 @inject NavigationManager NavigationManager
 
 <div style="text-align:center">
-    <h3><b>Hunt For Monsters</b></h3>
+    <h3><b>Hunt For Dinosaur Fossils</b></h3>
     @if (!HasEnough)
     {
         <div class="alert alert-danger" role="alert">
-            Go earn more gold to buy new Monsters!
-            <button class="btn btn-danger" @onclick="RedirectToGold">Go Get More Gold</button>
+            <p>Go gather more amber to find new fossils!</p>
+            <button class="btn btn-danger" @onclick="RedirectToGold">Go Get More Amber</button>
         </div>
     }
-    <p>Current Gold: @player.Amber</p>
-    <p>Gold Needed to Hunt for New Monsters: @player.AmberPerMonster</p>
-    <p>Current Monster Count: @player.Monsters.Count()/@player.MaxPartySize</p>    
-    <button class="btn btn-primary" @onclick="GetNewMonster">Get New Monster</button>
-    
+    <p>Current Amber: @player.Amber</p>
+    <p>Amber Needed to Hunt for New Fossils: @player.AmberPerMonster</p>
+    <p>Current Fossil Count: @player.Fossils.Count()/@player.MaxPartySize</p>    
+    <button class="btn btn-primary" @onclick="GetNewFossil">Get New Dinosaur</button>
 </div>
 
 @code {
@@ -27,24 +26,23 @@
 
     public bool HasEnough { get; set; } = true;
 
-    private void GetNewMonster()
+    private void GetNewFossil()
     {
-        var enoughGold = GoldService.HasEnough(player, player.AmberPerMonster);
+        var enoughGold = AmberService.HasEnough(player, player.AmberPerMonster);
         if (enoughGold)
         {
             HasEnough = true;
-            player.Amber = GoldService.Pay(player.AmberPerMonster, player.Amber);
+            player.Amber = AmberService.Pay(player.AmberPerMonster, player.Amber);
             player = MonsterService.HuntForMonster(player);
         }
         else
         {
             HasEnough = false;
-
         }
     }
 
     private void RedirectToGold()
     {
-        NavigationManager.NavigateTo("/gold");
+        NavigationManager.NavigateTo("/amber");
     }
 }

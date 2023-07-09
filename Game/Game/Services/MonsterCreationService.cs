@@ -4,18 +4,18 @@ namespace Game.Services;
 
 public interface IMonsterCreationService
 {
-    Monster GetNewMonster();
-    Monster LockOrUnlockMonster(Monster monster);
+    Fossil GetNewMonster();
+    Fossil LockOrUnlockMonster(Fossil monster);
 }
 public class MonsterCreationService : IMonsterCreationService
 {
     readonly Random rand = new();
 
-    public Monster GetNewMonster()
+    public Fossil GetNewMonster()
     {
         var health = GetMonsterHealth();
 
-        return new Monster
+        return new Fossil
         {
             Name = GetMonsterName(),
             Attack = GetMonsterAttack(),
@@ -82,7 +82,7 @@ public class MonsterCreationService : IMonsterCreationService
         return 0;
     }
 
-    public Monster LockOrUnlockMonster(Monster monster)
+    public Fossil LockOrUnlockMonster(Fossil monster)
     {
         monster.Locked = monster.Locked != true;
         return monster;

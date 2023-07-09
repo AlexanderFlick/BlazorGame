@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Components;
 
 namespace Game.Services;
 
-public interface IGoldService
+public interface IAmberService
 {
     void GetAmber(Player player);
     bool HasEnough(Player player, int cost);
     int Pay(int cost, int total);
 }
-public class GoldService : IGoldService
+public class AmberService : IAmberService
 {
     public void GetAmber(Player player)
     {
