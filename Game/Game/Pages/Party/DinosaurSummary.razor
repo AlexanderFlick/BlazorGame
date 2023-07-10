@@ -7,12 +7,14 @@
     
     @if (dinosaur.PetName != null)
     {
-        <h3>Dinosaur Summary: @dinosaur.PetName</h3>
+        <h3>Dinosaur Summary:</h3>
+        <h1><b>@dinosaur.PetName</b></h1>
         <p>@dinosaur.DinosaurType</p>
     }
     else
     {
-        <h3>Dinosaur Summary: @dinosaur.DinosaurType</h3>
+        <h3>Dinosaur Summary: </h3>
+        <h1><b>@dinosaur.DinosaurType</b></h1>
     }
     <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
     <p class="card-text">Health: @dinosaur.TotalHealth</p>
