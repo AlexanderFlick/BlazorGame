@@ -11,6 +11,7 @@ builder.Services.AddSingleton<IBattleService, BattleService>();
 builder.Services.AddSingleton<IPlayerFossilService, PlayerFossilService>();
 builder.Services.AddSingleton<IFusionService, FusionService>();
 builder.Services.AddSingleton<IItemService, ItemService>();
+builder.Services.AddSingleton<ISaveService, SaveService>();
 
 var app = builder.Build();
 

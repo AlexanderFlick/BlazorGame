@@ -5,6 +5,7 @@ using Game.Data.Items;
 
 namespace Game.Data;
 
+[Serializable]
 public class Player
 {
     public string? Name { get; set; }
