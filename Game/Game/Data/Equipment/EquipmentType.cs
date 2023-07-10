@@ -1,6 +1,6 @@
 ﻿namespace Game.Data.Items;
 
-public enum ItemType
+public enum EquipmentType
 {
     Gun,
     Armor

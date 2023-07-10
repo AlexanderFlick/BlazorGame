@@ -16,7 +16,7 @@ public class Player
     public int AmberPerFossil { get; set; } = 3;
     public DinosaurEraEnum Era { get; set; } = DinosaurEraEnum.Triassic;
     public AmberType AmberType { get; set; } = AmberType.Yellow;
-    public List<Item> UnassignedItems { get; set; } = new List<Item>();
+    public List<Equipment> UnassignedItems { get; set; } = new List<Equipment>();
     public Access Access { get; set; } = new Access();
 }
 

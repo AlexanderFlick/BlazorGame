@@ -1,4 +1,3 @@
-using Game.Data.Weapons;
 using Game.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +8,6 @@ builder.Services.AddSingleton<IPlayerDinosaurService, PlayerDinosaurService>();
 builder.Services.AddSingleton<IDinosaurService, DinosaurService>();
 builder.Services.AddSingleton<IAmberService, AmberService>();
 builder.Services.AddSingleton<IBattleService, BattleService>();
-builder.Services.AddSingleton<IWeaponRepository, WeaponRepository>();
 builder.Services.AddSingleton<IPlayerFossilService, PlayerFossilService>();
 builder.Services.AddSingleton<IFusionService, FusionService>();
 builder.Services.AddSingleton<IItemService, ItemService>();
