@@ -5,20 +5,20 @@ namespace Game.Services;
 
 public interface IDinosaurCreationService
 {
-    Dinosaur GetNewDinosaur();
+    Dinosaur GetNewDinosaur(DinosaurTypeEnum dinosaurType);
     Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur);
 }
 public class DinosaurCreationService : IDinosaurCreationService
 {
     readonly Random rand = new();
 
-    public Dinosaur GetNewDinosaur()
+    public Dinosaur GetNewDinosaur(DinosaurTypeEnum dinosaurType)
     {
         var health = GetDinosaurHealth();
 
         return new Dinosaur
         {
-            Name = GetDinosaurName(),
+            Name = GetDinosaurName(dinosaurType),
             Attack = GetDinosaurAttack(),
             Defense= GetDinosaurDefense(),
             CurrentHealth = health,
@@ -26,47 +26,9 @@ public class DinosaurCreationService : IDinosaurCreationService
         };
     }
 
-    private string GetDinosaurName()
+    private string GetDinosaurName(DinosaurTypeEnum dinosaurType)
     {
-        var monsterName = "";
-        var randomAdj = rand.NextSingle();
-        var randomNoun = rand.NextSingle();
-        var adjectives = new List<string>
-        {
-            "Good",
-            "Evil"
-        };
-
-        if (randomAdj > 0.5)
-        {
-            monsterName = adjectives[0];
-        }
-        if (randomAdj < 0.5)
-        {
-            monsterName = adjectives[1];
-        }
-
-        var nouns = new List<string>
-        {
-            " Lizard",
-            " Tiger",
-            " Turtle"
-        };
-
-        if (randomNoun > 0 && randomNoun <= 0.33)
-        {
-            monsterName += nouns[0];
-        }
-        if (randomNoun > 0.33 && randomNoun <= 0.66)
-        {
-            monsterName += nouns[1];
-        }
-        if (randomNoun > 0.66)
-        {
-            monsterName += nouns[2];
-        }
-
-        return monsterName;
+        return dinosaurType.ToString();
     }
 
     public int GetDinosaurHealth()

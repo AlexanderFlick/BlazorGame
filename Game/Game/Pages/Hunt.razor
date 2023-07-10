@@ -1,5 +1,7 @@
-﻿@page "/hunt"
+﻿@page "/fossils"
 @using Game.Data;
+@using Game.Data.Dinosaurs;
+@using Game.Data.Fossils;
 @using Game.Services;
 @inject IPlayerDinosaurService DinosaurService
 @inject IPlayerFossilService FossilService
@@ -7,25 +9,44 @@
 @inject NavigationManager NavigationManager
 
 <div style="text-align:center">
-    <h3><b>Hunt For Dinosaur Fossils</b></h3>
+    <h1><b>Hunt For Dinosaur Fossils</b></h1>
+    <img src="/images/dinosaurbones.png"/>
     @if (!HasEnough)
     {
         <div class="alert alert-danger" role="alert">
             <p>Gather more amber to find new fossils!</p>
-            <button class="btn btn-danger" @onclick="RedirectToGold">Gather More Amber</button>
+            <button class="btn btn-danger" @onclick="RedirectToAmber">Gather More Amber</button>
         </div>
     }
     <p>Total Amber: @player.Amber</p>
     <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
-    <p>Current Fossil Count: @player.Fossils.Count()</p>
-    <button class="btn btn-primary" @onclick="GetNewFossil">Get New Dinosaur</button>
+    <button class="btn btn-primary" @onclick="GetNewFossil">Get New Fossil</button>
 </div>
+
+<div style="text-align:center;">
+    <h3><b>Fossil Inventory</b></h3>
+    <p>Fossil Total: @player.Fossils.Count()</p>
+    <p>Raptor Claws: @clawCount</p>
+    <p>Raptor Skulls: @skullCount</p>
+    <p>Raptor Feet: @footCount</p>
+    <p>Raptor Ribs: @ribCount</p>
+</div>
+
 
 @code {
     [CascadingParameter]
     public Player player { get; set; }
 
     public bool HasEnough { get; set; } = true;
+    public int clawCount = 0;
+    public int skullCount = 0;
+    public int footCount = 0;
+    public int ribCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetRaptorFossilCount(player);
+    }
 
     private void GetNewFossil()
     {
@@ -40,10 +61,34 @@
         {
             HasEnough = false;
         }
+        GetRaptorFossilCount(player);
     }
 
-    private void RedirectToGold()
+    private void RedirectToAmber()
     {
         NavigationManager.NavigateTo("/amber");
+    }
+
+    public void GetRaptorFossilCount(Player player)
+    {
+        clawCount = 0;
+        skullCount = 0;
+        footCount = 0;
+        ribCount = 0;
+
+        foreach (var fossil in player.Fossils)
+        {
+            if (fossil.DinosaurType == DinosaurTypeEnum.Raptor)
+            {
+                if (fossil.FossilType == FossilType.Claw)
+                    clawCount++;
+                if (fossil.FossilType == FossilType.Ribs)
+                    ribCount++;
+                if (fossil.FossilType == FossilType.Skull)
+                    skullCount++;
+                if (fossil.FossilType == FossilType.Foot)
+                    footCount++;
+            }
+        }
     }
 }

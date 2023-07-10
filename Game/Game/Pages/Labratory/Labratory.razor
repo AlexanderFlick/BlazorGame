@@ -1,0 +1,122 @@
+﻿@page "/labratory"
+@using Game.Data;
+@using Game.Data.Dinosaurs;
+@using Game.Data.Fossils;
+@using Game.Services;
+@inject NavigationManager NavigationManager
+@inject IFusionService FusionService
+@inject IPlayerFossilService FossilService
+@inject IDinosaurCreationService DinosaurCreationService
+
+<div style="text-align:center">
+    
+    <h3>Labratory</h3>
+    <img src="images/lab.png" />
+    <p>Fossils Needed to Fuse Raptor:</p>
+    <p>Claws: @clawCount/@raptor.DinosaurCost.Claw</p>
+    <p>Skull: @skullCount/@raptor.DinosaurCost.Skull</p>
+    <p>Feet: @footCount/@raptor.DinosaurCost.Foot</p>
+    <p>Ribs: @ribCount/@raptor.DinosaurCost.Rib</p>
+
+    @if (shortResources)
+    {
+        <div class="alert alert-danger" role="alert">
+            <p>You are short </p>
+            <button class="btn btn-danger" @onclick="RedirectToFossil">Hunt For Fossils</button>
+        </div>
+    }
+
+    @if (maxPartySize)
+    {
+            <div class="alert alert-danger" role="alert">
+                <p>Max Party Size Reached!</p>
+                <button class="btn btn-danger" @onclick="RedirectToParty">Go to Party</button>
+            </div>
+    }
+
+    <button class="btn btn-primary" @onclick="FuseRaptorFossils">Fuse Raptor</button>
+    <button class="btn btn-primary" @onclick="ExchangeFossils">Exchange Fossils</button>
+</div>
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    public bool shortResources = false;
+    public bool maxPartySize = false;
+    public int clawCount = 0;
+    public int skullCount = 0;
+    public int footCount = 0;
+    public int ribCount = 0;
+    Dinosaur raptor = new Dinosaur();
+
+    protected override async Task OnInitializedAsync()
+    {
+        maxPartySize = false;
+        shortResources = false;
+        GetRaptorFossilCount(player);
+    }
+
+    private void FuseRaptorFossils()
+    {
+        if (player.Dinosaurs.Count >= player.MaxPartySize)
+        {
+            maxPartySize = true;
+            return;
+        }
+
+        if (FusionService.HasResourcesToMakeDinosaur(player, raptor))
+        {
+            shortResources = false;
+            var dinosaur = DinosaurCreationService.GetNewDinosaur(DinosaurTypeEnum.Raptor);
+            player = FossilService.RemoveFossils(player, dinosaur);
+            player.Dinosaurs.Add(dinosaur);
+
+            GetRaptorFossilCount(player);
+        }
+        else
+        {
+            shortResources = true;
+        }
+    }
+
+    
+
+    public void GetRaptorFossilCount(Player player)
+    {
+        clawCount = 0;
+        skullCount = 0;
+        footCount = 0;
+        ribCount = 0;
+
+        foreach(var fossil in player.Fossils)
+        {
+            if (fossil.DinosaurType == DinosaurTypeEnum.Raptor)
+            {
+                if (fossil.FossilType == FossilType.Claw)
+                    clawCount++;
+                if (fossil.FossilType == FossilType.Ribs)
+                    ribCount++;
+                if (fossil.FossilType == FossilType.Skull)
+                    skullCount++;
+                if (fossil.FossilType == FossilType.Foot)
+                    footCount++;
+            }
+        }        
+    }
+
+    private void RedirectToFossil()
+    {
+        NavigationManager.NavigateTo("/fossils");
+    }
+
+    private void RedirectToParty()
+    {
+        NavigationManager.NavigateTo("/party");
+    }
+
+    private void ExchangeFossils()
+    {
+        NavigationManager.NavigateTo("/labratory/exchange");
+    }
+}

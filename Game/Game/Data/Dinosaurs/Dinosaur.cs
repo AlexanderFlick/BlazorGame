@@ -12,4 +12,13 @@ public class Dinosaur
     public int Attack { get; set; }
     public int Defense { get; set; }
     public bool Locked { get; set; }
+    public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
+}
+
+public class DinosaurCost
+{
+    public int Rib { get; set; } = 3;
+    public int Foot { get; set; } = 2;
+    public int Skull { get; set; } = 1;
+    public int Claw { get; set; } = 5;
 }
