@@ -10,9 +10,9 @@ public interface IPlayerDinosaurService
 }
 public class PlayerDinosaurService : IPlayerDinosaurService
 {
-    private readonly IDinosaurCreationService _dinosaurCreationService;
+    private readonly IDinosaurService _dinosaurCreationService;
 
-    public PlayerDinosaurService(IDinosaurCreationService dinosaurCreationService)
+    public PlayerDinosaurService(IDinosaurService dinosaurCreationService)
     {
         _dinosaurCreationService = dinosaurCreationService;
     }

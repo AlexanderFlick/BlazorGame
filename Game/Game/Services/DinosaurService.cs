@@ -3,12 +3,12 @@ using Game.Data.Dinosaurs;
 
 namespace Game.Services;
 
-public interface IDinosaurCreationService
+public interface IDinosaurService
 {
     Dinosaur GetNewDinosaur(DinosaurTypeEnum dinosaurType);
     Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur);
 }
-public class DinosaurCreationService : IDinosaurCreationService
+public class DinosaurService : IDinosaurService
 {
     readonly Random rand = new();
 
@@ -39,11 +39,11 @@ public class DinosaurCreationService : IDinosaurCreationService
 
     public int GetDinosaurAttack()
     {
-        return 0;
+        return rand.Next(10, 21);
     }
     public int GetDinosaurDefense()
     {
-        return 0;
+        return rand.Next(5, 11);
     }
 
     public Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur)

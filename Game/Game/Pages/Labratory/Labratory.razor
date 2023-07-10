@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject IFusionService FusionService
 @inject IPlayerFossilService FossilService
-@inject IDinosaurCreationService DinosaurCreationService
+@inject IDinosaurService DinosaurService
 
 <div style="text-align:center">
     
@@ -68,7 +68,7 @@
         if (FusionService.HasResourcesToMakeDinosaur(player, raptor))
         {
             shortResources = false;
-            var dinosaur = DinosaurCreationService.GetNewDinosaur(DinosaurTypeEnum.Raptor);
+            var dinosaur = DinosaurService.GetNewDinosaur(DinosaurTypeEnum.Raptor);
             player = FossilService.RemoveFossils(player, dinosaur);
             player.Dinosaurs.Add(dinosaur);
 

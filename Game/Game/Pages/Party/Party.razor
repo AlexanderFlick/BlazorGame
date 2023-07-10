@@ -2,8 +2,8 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Services;
-@inject IPlayerDinosaurService PlayerMonsters
-@inject IDinosaurCreationService MonsterCreation
+@inject IPlayerDinosaurService PlayerDinosaurService
+@inject IDinosaurService DinosaurService
 @inject NavigationManager NavigationManager
 
 
@@ -51,12 +51,12 @@
 
     public void LockDinosaur(Dinosaur dinosaur)
     {
-        dinosaur = MonsterCreation.LockOrUnlockDinosaur(dinosaur);
+        dinosaur = DinosaurService.LockOrUnlockDinosaur(dinosaur);
     }
 
     public void RemoveDinosaur(Dinosaur dinosaur)
     {
-        player = PlayerMonsters.RemoveDinosaur(player, dinosaur);
+        player = PlayerDinosaurService.RemoveDinosaur(player, dinosaur);
     }
 
     public void RedirectToSummary(int index)
