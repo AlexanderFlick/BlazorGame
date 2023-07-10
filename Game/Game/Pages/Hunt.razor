@@ -21,6 +21,7 @@
     <p>Total Amber: @player.Amber</p>
     <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
     <button class="btn btn-primary" @onclick="GetNewFossil">Get New Fossil</button>
+    <button class="btn btn-primary" @onclick="GetFiveFossils">Get 5 New Fossils</button>
 </div>
 
 <div style="text-align:center;">
@@ -62,6 +63,14 @@
             HasEnough = false;
         }
         GetRaptorFossilCount(player);
+    }
+
+    private void GetFiveFossils()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            GetNewFossil();
+        }        
     }
 
     private void RedirectToAmber()

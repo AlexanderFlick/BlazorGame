@@ -1,0 +1,44 @@
+﻿@page "/party/summary/{dinosaurIndex}/items"
+@using Game.Data;
+@using Game.Data.Dinosaurs;
+@inject NavigationManager NavigationManager
+
+<div>
+    @if(dinosaur.PetName != null)
+    {
+        <h3>Items for @dinosaur.PetName</h3>
+    }
+    else
+    {
+        <h3>Items for @dinosaur.DinosaurType</h3> 
+    }
+    <button class="btn btn-primary" @onclick="() => NavigateToSummary(pageIndex)" value="@pageIndex">Back To Summary</button>
+    <button class="btn btn-primary" @onclick="NavigateToParty">Back To Party</button>
+</div>
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    [Parameter]
+    public string dinosaurIndex { get; set; }
+
+    public int pageIndex { get; set; }
+    public Dinosaur dinosaur { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        pageIndex = int.Parse(dinosaurIndex);
+        dinosaur = player.Dinosaurs[pageIndex];
+    }
+
+    public void NavigateToSummary(int pageIndex)
+    {
+        NavigationManager.NavigateTo($"/party/summary/{pageIndex}");
+    }
+
+    private void NavigateToParty()
+    {
+        NavigationManager.NavigateTo($"/party");
+    }
+}

@@ -1,0 +1,71 @@
+﻿@page "/party/summary/{dinosaurIndex}"
+@using Game.Data;
+@using Game.Data.Dinosaurs;
+@inject NavigationManager NavigationManager
+
+<div style="text-align:center">
+    
+    @if (dinosaur.PetName != null)
+    {
+        <h3>Dinosaur Summary: @dinosaur.PetName</h3>
+        <p>@dinosaur.DinosaurType</p>
+    }
+    else
+    {
+        <h3>Dinosaur Summary: @dinosaur.DinosaurType</h3>
+    }
+    <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
+    <p class="card-text">Health: @dinosaur.TotalHealth</p>
+    <p class="card-text">Attack: @dinosaur.Attack</p>
+    <p class="card-text">Defense: @dinosaur.Defense</p>
+    <button class="btn btn-primary" @onclick="() => NavigateToItems(pageIndex)" value="@pageIndex">Items</button>
+    <button class="btn btn-primary" @onclick="RenameDinosaur">Rename</button>
+    <button class="btn btn-primary" @onclick="NavigateToParty">Back To Party</button>    
+
+    @if (wantsToRename)
+    {
+        <div>
+            <input @bind=@dinosaur.PetName>
+        </div>
+    }
+</div>
+
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    [Parameter]
+    public string dinosaurIndex { get; set; }
+
+    public int pageIndex { get; set; }
+    public Dinosaur dinosaur { get; set; }
+    public bool wantsToRename = false;
+    public string newDinoName { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        pageIndex = int.Parse(dinosaurIndex);
+        dinosaur = player.Dinosaurs[pageIndex];
+    }
+
+    public void Save()
+    {
+
+    }
+
+    public void RenameDinosaur()
+    {
+        wantsToRename = !wantsToRename;
+    }
+
+    private void NavigateToParty()
+    {
+        NavigationManager.NavigateTo($"/party");
+    }
+
+    public void NavigateToItems(int dinosaurIndex)
+    {
+        NavigationManager.NavigateTo($"/party/summary/{dinosaurIndex}/items");
+    }
+}

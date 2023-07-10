@@ -4,6 +4,8 @@
 @using Game.Services;
 @inject IPlayerDinosaurService PlayerMonsters
 @inject IDinosaurCreationService MonsterCreation
+@inject NavigationManager NavigationManager
+
 
 <div style="text-align:center;">
     <h1><b>Dinosaur Army</b></h1>
@@ -11,9 +13,18 @@
 
     @foreach (var dinosaur in player.Dinosaurs)
     {
+        var index = 0;
+
         <div class="card" style="width: 18rem; float:left;">
             <div class="card-body">
-                <h5 class="card-title"><b>@dinosaur.Name</b></h5>
+                @if(dinosaur.PetName != null)
+                {
+                    <h5 class="card-title"><b>@dinosaur.PetName</b></h5>
+                }
+                else
+                {
+                    <h5 class="card-title"><b>@dinosaur.Name</b></h5>
+                }                
                 <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
                 <p class="card-text">Health: @dinosaur.TotalHealth</p>
                 <p class="card-text">Attack: @dinosaur.Attack</p>
@@ -25,8 +36,9 @@
                     }
                 </p>
 
+                <button class="btn btn-primary" @onclick="() => RedirectToSummary(index)">Summary</button>
                 <button class="btn btn-primary" @onclick="() => LockDinosaur(dinosaur)" value="@dinosaur">Lock</button>
-                <button class="btn btn-danger" @onclick="() => RemoveMonster(dinosaur)">Remove</button>
+                <button class="btn btn-danger" @onclick="() => RemoveDinosaur(dinosaur)">Remove</button>
             </div>
         </div>
     }
@@ -42,8 +54,13 @@
         dinosaur = MonsterCreation.LockOrUnlockDinosaur(dinosaur);
     }
 
-    public void RemoveMonster(Dinosaur dinosaur)
+    public void RemoveDinosaur(Dinosaur dinosaur)
     {
         player = PlayerMonsters.RemoveDinosaur(player, dinosaur);
+    }
+
+    public void RedirectToSummary(int index)
+    {
+        NavigationManager.NavigateTo($"/party/summary/{index}");
     }
 }

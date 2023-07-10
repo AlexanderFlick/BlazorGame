@@ -22,7 +22,8 @@ public class DinosaurCreationService : IDinosaurCreationService
             Attack = GetDinosaurAttack(),
             Defense= GetDinosaurDefense(),
             CurrentHealth = health,
-            TotalHealth = health
+            TotalHealth = health,
+            DinosaurType = dinosaurType
         };
     }
 
@@ -33,7 +34,7 @@ public class DinosaurCreationService : IDinosaurCreationService
 
     public int GetDinosaurHealth()
     {        
-        return rand.Next(80, 100);
+        return rand.Next(80, 101);
     }
 
     public int GetDinosaurAttack()

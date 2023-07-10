@@ -1,8 +1,11 @@
-﻿namespace Game.Data.Dinosaurs;
+﻿using Game.Data.Items;
+
+namespace Game.Data.Dinosaurs;
 
 public class Dinosaur
 {
     public string? Name { get; set; }
+    public string? PetName { get; set; }
     public int FossilsToCreate { get; set; }
     public int Level { get; set; } = 1;
     public int ExperienceToLevelUp { get; set; }
@@ -12,7 +15,9 @@ public class Dinosaur
     public int Attack { get; set; }
     public int Defense { get; set; }
     public bool Locked { get; set; }
+    public DinosaurTypeEnum DinosaurType { get; set; }
     public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
+    public List<Item> Items { get; set; } = new List<Item>();
 }
 
 public class DinosaurCost

@@ -13,6 +13,7 @@ builder.Services.AddSingleton<IBattleService, BattleService>();
 builder.Services.AddSingleton<IWeaponRepository, WeaponRepository>();
 builder.Services.AddSingleton<IPlayerFossilService, PlayerFossilService>();
 builder.Services.AddSingleton<IFusionService, FusionService>();
+builder.Services.AddSingleton<IItemService, ItemService>();
 
 var app = builder.Build();
 
