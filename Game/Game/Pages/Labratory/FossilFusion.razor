@@ -35,6 +35,7 @@
 
     <button class="btn btn-primary" @onclick="FuseRaptorFossils">Fuse Raptor</button>
     <button class="btn btn-primary" @onclick="ExchangeFossils">Exchange Fossils</button>
+    <button class="btn btn-primary" @onclick="RedirectToLab">Back to the Labratory</button>
 </div>
 
 @code {
@@ -117,5 +118,10 @@
     private void ExchangeFossils()
     {
         NavigationManager.NavigateTo("/labratory/exchange");
+    }
+
+    private void RedirectToLab()
+    {
+        NavigationManager.NavigateTo("/labratory");
     }
 }

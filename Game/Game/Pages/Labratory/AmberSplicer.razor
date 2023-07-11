@@ -29,6 +29,7 @@
     
     <button class="btn btn-primary" @onclick="GetNewFossil">Crack Amber</button>
     <button class="btn btn-primary" @onclick="GetFiveFossils">Crack 5 Amber</button>
+    <button class="btn btn-primary" @onclick="RedirectToLab">Back to the Labratory</button>
     </div>
 </div>
 
@@ -93,11 +94,6 @@
         }        
     }
 
-    private void RedirectToAmber()
-    {
-        NavigationManager.NavigateTo("/amber");
-    }
-
     public void GetRaptorFossilCount(Player player)
     {
         clawCount = 0;
@@ -119,5 +115,15 @@
                     footCount++;
             }
         }
+    }
+
+    private void RedirectToAmber()
+    {
+        NavigationManager.NavigateTo("/amber");
+    }
+
+    private void RedirectToLab()
+    {
+        NavigationManager.NavigateTo("/labratory");
     }
 }
