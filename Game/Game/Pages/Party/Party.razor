@@ -6,11 +6,9 @@
 @inject IDinosaurService DinosaurService
 @inject NavigationManager NavigationManager
 
-
+<h1><b>Dinosaur Army</b></h1>
+<p>Party size: @player.Dinosaurs.Count()/@player.MaxPartySize</p>
 <div style="text-align:center;">
-    <h1><b>Dinosaur Army</b></h1>
-    <p>Party size: @player.Dinosaurs.Count()/@player.MaxPartySize</p>
-
     @foreach (var dinosaur in player.Dinosaurs)
     {
         var index = 0;

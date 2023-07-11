@@ -1,4 +1,4 @@
-﻿@page "/fossils"
+﻿@page "/labratory/splicer"
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Data.Fossils;
@@ -8,23 +8,31 @@
 @inject IAmberService AmberService
 @inject NavigationManager NavigationManager
 
-<div style="text-align:center">
-    <h1><b>Hunt For Dinosaur Fossils</b></h1>
-    <img src="/images/dinosaurbones.png"/>
-    @if (!HasEnough)
+
+<h1><b>Amber Splicer</b></h1>
+<div style="float:left">
+    <div>        
+        <img src="/images/dinosaurbones.png" />
+    </div>
+    <div style="float:left">
+        @if (!HasEnough)
     {
         <div class="alert alert-danger" role="alert">
             <p>Gather more amber to crack open. If you are lucky, you might find dinosaur DNA!</p>
             <button class="btn btn-danger" @onclick="RedirectToAmber">Gather More Amber</button>
         </div>
     }
-    <p>Total Amber: @player.Amber</p>
-    <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
+    <div style="text-align:center">
+            <p>Total Amber: @player.Amber</p>
+            <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
+    </div>
+    
     <button class="btn btn-primary" @onclick="GetNewFossil">Crack Amber</button>
     <button class="btn btn-primary" @onclick="GetFiveFossils">Crack 5 Amber</button>
+    </div>
 </div>
 
-<div style="text-align:center;">
+<div style="text-align:center; float:left">
     <h3><b>Fossil Inventory</b></h3>
     <p>Total DNA Samples: @player.Fossils.Count()</p>
     @if(clawCount > 0)
