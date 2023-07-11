@@ -16,6 +16,8 @@ public class Dinosaur
     public int Defense { get; set; }
     public bool Locked { get; set; }
     public DinosaurTypeEnum DinosaurType { get; set; }
+    public DinosaurEraEnum DinosaurEra { get; set; }
+    public DinosaurColorEnum DinosaurColor { get; set; }
     public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
     public List<Equipment> Items { get; set; } = new List<Equipment>();
 }

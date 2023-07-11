@@ -23,8 +23,20 @@ public class DinosaurService : IDinosaurService
             Defense= GetDinosaurDefense(),
             CurrentHealth = health,
             TotalHealth = health,
-            DinosaurType = dinosaurType
+            DinosaurType = dinosaurType,
+            DinosaurColor = GetDinosaurColor(),
+            DinosaurEra= GetDinosaurEra()
         };
+    }
+
+    private DinosaurEraEnum GetDinosaurEra()
+    {
+        return DinosaurEraEnum.Triassic;
+    }
+
+    private DinosaurColorEnum GetDinosaurColor()
+    {
+        return DinosaurColorEnum.Green;
     }
 
     private string GetDinosaurName(DinosaurTypeEnum dinosaurType)
@@ -44,7 +56,7 @@ public class DinosaurService : IDinosaurService
     public int GetDinosaurDefense()
     {
         return rand.Next(5, 11);
-    }
+    } 
 
     public Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur)
     {

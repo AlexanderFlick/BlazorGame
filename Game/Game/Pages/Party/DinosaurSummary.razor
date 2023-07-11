@@ -7,7 +7,6 @@
     
     @if (dinosaur.PetName != null)
     {
-        <h3>Dinosaur Summary:</h3>
         <h1><b>@dinosaur.PetName</b></h1>
         <p>@dinosaur.DinosaurType</p>
     }
@@ -18,8 +17,9 @@
     }
     <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
     <p class="card-text">Health: @dinosaur.TotalHealth</p>
-    <p class="card-text">Attack: @dinosaur.Attack</p>
-    <p class="card-text">Defense: @dinosaur.Defense</p>
+    <p class="card-text">Attack: @dinosaur.Attack Defense: @dinosaur.Defense</p>
+    <p class="card-text">Era: @dinosaur.DinosaurEra</p>
+    <p class="card-text">Color: @dinosaur.DinosaurColor</p>
     <button class="btn btn-primary" @onclick="() => NavigateToItems(pageIndex)" value="@pageIndex">Items</button>
     <button class="btn btn-primary" @onclick="RenameDinosaur">Rename</button>
     <button class="btn btn-primary" @onclick="NavigateToParty">Back To Party</button>    

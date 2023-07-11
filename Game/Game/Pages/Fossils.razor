@@ -14,23 +14,35 @@
     @if (!HasEnough)
     {
         <div class="alert alert-danger" role="alert">
-            <p>Gather more amber to find new fossils!</p>
+            <p>Gather more amber to crack open. If you are lucky, you might find dinosaur DNA!</p>
             <button class="btn btn-danger" @onclick="RedirectToAmber">Gather More Amber</button>
         </div>
     }
     <p>Total Amber: @player.Amber</p>
     <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
-    <button class="btn btn-primary" @onclick="GetNewFossil">Get New Fossil</button>
-    <button class="btn btn-primary" @onclick="GetFiveFossils">Get 5 New Fossils</button>
+    <button class="btn btn-primary" @onclick="GetNewFossil">Crack Amber</button>
+    <button class="btn btn-primary" @onclick="GetFiveFossils">Crack 5 Amber</button>
 </div>
 
 <div style="text-align:center;">
     <h3><b>Fossil Inventory</b></h3>
-    <p>Fossil Total: @player.Fossils.Count()</p>
-    <p>Raptor Claws: @clawCount</p>
-    <p>Raptor Skulls: @skullCount</p>
-    <p>Raptor Feet: @footCount</p>
-    <p>Raptor Ribs: @ribCount</p>
+    <p>Total DNA Samples: @player.Fossils.Count()</p>
+    @if(clawCount > 0)
+    {
+        <p>Raptor Claw Pieces: @clawCount</p>
+    }
+    @if (skullCount > 0)
+    {
+        <p>Raptor Skull Fragment: @skullCount</p>
+    }
+    @if(footCount > 0)
+    {
+        <p>Raptor Foot Bones: @footCount</p>
+    }
+    @if(ribCount > 0)
+    {
+        <p>Raptor Ribs: @ribCount</p>
+    }    
 </div>
 
 

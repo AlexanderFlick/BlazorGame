@@ -12,3 +12,11 @@ public enum DinosaurEraEnum
     Jurassic,
     Cretaceous
 }
+
+public enum DinosaurColorEnum
+{
+    Green,
+    Blue,
+    Red,
+    Albino
+}
