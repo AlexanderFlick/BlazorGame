@@ -26,4 +26,8 @@ public class Access
 {
     public bool Party { get; set; }
     public bool Labratory { get; set; }
+    public bool AmberHunting { get; set; }
+    public bool Items { get; set; }
+    public bool Battle { get; set; }
+    public bool FossilFusion { get; set; }
 }

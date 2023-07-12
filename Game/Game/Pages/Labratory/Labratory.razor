@@ -6,8 +6,11 @@
 <h3>Labratory</h3>
 <button class="btn btn-primary labratory" @onclick="RedirectToSplicer">Amber Splicer</button>
 <br />
-<button class="btn btn-primary labratory" @onclick="RedirectToFossilFusion">Fossil Fusion Reactor</button>
-<br />
+@if (player.Access.FossilFusion)
+{
+    <button class="btn btn-primary labratory" @onclick="RedirectToFossilFusion">Fossil Fusion Reactor</button>
+    <br />
+}
 <BackButton />
 
 @code {

@@ -7,13 +7,16 @@
 
 <div>
     <h1><b>Gather @player.AmberType Amber</b></h1>
-    <img src="images/placeholders/crystal.png" alt="Amber"/>
+    <img src="images/placeholders/crystal.png" alt="Amber" />
     <p>Total Amber: @player.Amber</p>
     <p>Amber Per Click: @player.AmberPerClick</p>
     <button class="btn btn-primary gatherAmber" @onclick="GetYellowAmber">Get Yellow Amber!</button>
     <br />
-    <button class="btn btn-primary gatherAmber" @onclick="NavigateToAuto">Assign Dinosaur To Hunt For Amber!</button>
-    <br />
+    @if (player.Access.AmberHunting)
+    {
+        <button class="btn btn-primary gatherAmber" @onclick="NavigateToAuto">Assign Dinosaur To Hunt For Amber!</button>
+        <br />
+    }
     <BackButton />
 </div>
 
@@ -33,7 +36,7 @@
 }
 
 <style>
-    .gatherAmber{
-        margin:20px;
+    .gatherAmber {
+        margin: 20px;
     }
 </style>

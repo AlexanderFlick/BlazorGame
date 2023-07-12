@@ -13,42 +13,52 @@
         <p>Party Size: @player.Dinosaurs.Count()/@player.MaxPartySize</p>
         <p></p>
     </div>
-    
+
     <div class="amber">
-        <label>            
+        <label>
             <img @onclick="RedirectToAmber" src="/images/placeholders/House.png" />
             Amber
         </label>
     </div>
-    <div class="battle">
-        <label>            
-            <img @onclick="RedirectToBattle" src="/images/placeholders/House1.png" />
-            Battle
-        </label>
+    @if (player.Access.Battle)
+    {
+        <div class="battle">
+            <label>
+                <img @onclick="RedirectToBattle" src="/images/placeholders/House1.png" />
+                Battle
+            </label>
 
-    </div>
-    <div class="party">
-        <label>            
-            <img @onclick="RedirectToParty" src="/images/placeholders/House2.png" />
-            Party
-        </label>
-    </div>
-
-    <div class="labratory">
-        <label>            
-            <img @onclick="RedirectToLabratory" src="/images/placeholders/House.png" />
-            Labratory
-        </label>
-    </div>
-    <div class="items">
-        <label>            
-            <img @onclick="RedirectToItems" src="/images/placeholders/House1.png" />
-            Items
-        </label>
-    </div>
-
+        </div>
+    }
+    @if (player.Access.Party)
+    {
+        <div class="party">
+            <label>
+                <img @onclick="RedirectToParty" src="/images/placeholders/House2.png" />
+                Party
+            </label>
+        </div>
+    }
+    @if (player.Access.Labratory)
+    {
+        <div class="labratory">
+            <label>
+                <img @onclick="RedirectToLabratory" src="/images/placeholders/House.png" />
+                Labratory
+            </label>
+        </div>
+    }
+    @if (player.Access.Items)
+    {
+        <div class="items">
+            <label>
+                <img @onclick="RedirectToItems" src="/images/placeholders/House1.png" />
+                Items
+            </label>
+        </div>
+    }
     <div class="save">
-        <label>            
+        <label>
             <img @onclick="RedirectToSave" src="/images/placeholders/House2.png" />
             Save
         </label>
@@ -56,17 +66,17 @@
 </div>
 
 <style>
-    .gameTitle{
+    .gameTitle {
         position: absolute;
         top: 30px;
         left: 400px;
     }
 
-    .playerInfo{
-        float:inline-end;
-        position:absolute;
-        top:400px;
-        left:650px;
+    .playerInfo {
+        float: inline-end;
+        position: absolute;
+        top: 400px;
+        left: 650px;
     }
 
     .parent {

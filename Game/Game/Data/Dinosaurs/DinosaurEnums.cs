@@ -2,6 +2,7 @@
 
 public enum DinosaurTypeEnum
 {
+    Herbivore,
     Raptor,
     TRex
 }
