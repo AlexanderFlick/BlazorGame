@@ -70,7 +70,8 @@
             var dinosaur = DinosaurService.GetNewDinosaur(DinosaurTypeEnum.Raptor, player);
             player = FossilService.RemoveFossils(player, dinosaur);
             player.Dinosaurs.Add(dinosaur);
-
+            player.Access.Party = true;
+            player.Access.AmberHunting = true;
             GetRaptorFossilCount(player);
         }
         else

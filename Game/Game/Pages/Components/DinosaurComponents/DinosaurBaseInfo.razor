@@ -16,7 +16,10 @@
     <p class="card-text">Attack: @Dinosaur.Attack Defense: @Dinosaur.Defense</p>
     <p class="card-text">Era: @Dinosaur.DinosaurEra</p>
     <p class="card-text">Color: @Dinosaur.DinosaurColor</p>
-    <p class="card-text">Amber Hunting: @Dinosaur.AmberHunting.Hunting</p>
+    @if(player.Access.AmberHunting)
+    {
+           <p class="card-text">Amber Hunting: @Dinosaur.AmberHunting.Hunting</p>
+    }
     <p>
         @if (Dinosaur.Locked)
         {
@@ -26,6 +29,9 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
     [Parameter]
     public Dinosaur Dinosaur { get; set; }
 }

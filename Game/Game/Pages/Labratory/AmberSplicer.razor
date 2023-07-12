@@ -17,7 +17,7 @@
     <div style="float:left">
         @if (!HasEnough)
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" style="margin-top:10px;" role="alert">
             <p>Gather more amber to crack open. If you are lucky, you might find dinosaur DNA!</p>
             <button class="btn btn-danger" @onclick="RedirectToAmber">Gather More Amber</button>
         </div>
@@ -28,8 +28,9 @@
     </div>
     
     <button class="btn btn-primary" @onclick="GetNewFossil">Crack Amber</button>
-    <button class="btn btn-primary" @onclick="GetFiveFossils">Crack 5 Amber</button>
-    <button class="btn btn-primary" @onclick="RedirectToLab">Back to the Labratory</button>
+    <br />
+    @*<button class="btn btn-primary" @onclick="GetFiveFossils">Crack 5 Amber</button>*@
+    <button class="btn btn-primary" style="margin-top:10px;" @onclick="RedirectToLab">Back to the Labratory</button>
     </div>
 </div>
 
@@ -77,7 +78,12 @@
         {
             HasEnough = true;
             player.Amber = AmberService.Pay(player.AmberPerFossil, player.Amber);
-            player = FossilService.HuntForFossil(player);
+            player = FossilService.SpliceAmberForFossil(player);
+
+            if(player.Fossils.Count > 4)
+            {
+                player.Access.FossilFusion = true;
+            }
         }
         else
         {

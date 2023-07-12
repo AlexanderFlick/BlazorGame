@@ -6,13 +6,13 @@ namespace Game.Services;
 
 public interface IPlayerFossilService
 {
-    Player HuntForFossil(Player player);
+    Player SpliceAmberForFossil(Player player);
     Player RemoveFossils(Player player, Dinosaur dinosaur);
 }
 public class PlayerFossilService : IPlayerFossilService
 {
     Random rand = new();
-    public Player HuntForFossil(Player player)
+    public Player SpliceAmberForFossil(Player player)
     {
         var fossil = new Fossil
         {

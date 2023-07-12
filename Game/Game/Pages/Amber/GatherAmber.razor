@@ -10,7 +10,7 @@
     <img src="images/placeholders/crystal.png" alt="Amber" />
     <p>Total Amber: @player.Amber</p>
     <p>Amber Per Click: @player.AmberPerClick</p>
-    <button class="btn btn-primary gatherAmber" @onclick="GetYellowAmber">Get Yellow Amber!</button>
+    <button class="btn btn-primary gatherAmber" @onclick="GetYellowAmber">Get Amber!</button>
     <br />
     @if (player.Access.AmberHunting)
     {
@@ -26,6 +26,10 @@
 
     private void GetYellowAmber()
     {
+        if(!player.Access.Labratory && player.Amber > 4)
+        {
+            player.Access.Labratory = true;
+        }
         AmberService.GetAmber(player);
     }
 

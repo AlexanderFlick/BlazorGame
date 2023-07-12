@@ -10,7 +10,6 @@
 }
 else
 {
-    <h1>Select a Dinosaur to Hunt Amber for You!</h1>
     <h3>Total Amber: @player.Amber</h3>
     <EditForm Model="@player.Dinosaurs" OnSubmit="AssignDinosaurToHuntAmber">
         @foreach (var dinosaur in player.Dinosaurs)

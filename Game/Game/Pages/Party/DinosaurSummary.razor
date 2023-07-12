@@ -1,14 +1,17 @@
 ﻿@page "/party/summary/{partyPosition}"
 @using Game.Data;
 @using Game.Data.Dinosaurs;
+@using Game.Pages.Components
 @using Game.Pages.Components.DinosaurComponents
 @inject NavigationManager NavigationManager
 
 <div>    
     <DinosaurBaseInfo Dinosaur="@dinosaur"/>
-    <button class="btn btn-primary" @onclick="() => NavigateToItems(index)" value="@index">Items</button>
-    <button class="btn btn-primary" @onclick="RenameDinosaur">Rename</button>
-    <button class="btn btn-primary" @onclick="NavigateToParty">Back To Party</button>    
+    <button class="btn btn-primary" style="margin-top:10px" @onclick="() => NavigateToItems(index)" value="@index">Items</button>
+    <br />
+    <button class="btn btn-primary" style="margin-top:10px" @onclick="RenameDinosaur">Rename</button>
+    <br />
+    <button class="btn btn-primary" style="margin-top:10px" @onclick="NavigateToParty">Back To Party</button>
 
     @if (wantsToRename)
     {
@@ -16,6 +19,7 @@
             <input @bind=@dinosaur.PetName>
         </div>
     }
+    <BackButton  />
 </div>
 
 
