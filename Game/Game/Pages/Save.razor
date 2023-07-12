@@ -1,6 +1,7 @@
 ﻿@page "/save"
 @using Game.Data;
 @using Game.Data.Save;
+@using Game.Pages.Components
 @using Game.Services;
 @inject ISaveService SaveService
 @inject NavigationManager NavigationManager
@@ -21,11 +22,12 @@
         <br />
         <button type="submit">Submit</button>
     </EditForm>
+    <BackButton />
 </div>
 
 @code {
     [CascadingParameter]
-    public Player player { get; set; }
+    public Player Player { get; set; }
 
     private SaveFile saveFile = new();
 
@@ -33,14 +35,12 @@
     {
         if (saveFile.Saving)
         {
-            SaveService.Save(player, saveFile.Path);
+            SaveService.Save(Player, saveFile.Path);
         }
 
         if (saveFile.Loading)
         {
-            SaveService.Load(saveFile.Path);
+            Player = SaveService.Load(saveFile.Path);
         }
-
-        NavigationManager.NavigateTo("/");
     }
 }

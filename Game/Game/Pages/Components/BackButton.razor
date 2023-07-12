@@ -1,0 +1,10 @@
+﻿@inject NavigationManager NavigationManager
+
+<button class="btn btn-primary" @onclick="RedirectToAmber">Back</button>
+
+@code {
+    private void RedirectToAmber()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

@@ -1,9 +1,143 @@
 ﻿@page "/"
+@using Game.Data;
+@inject NavigationManager NavigationManager
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Dinosaurs With Guns</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="parent">
 
-Welcome to your new app.
+    <img class="background" src="/images/placeholders/background.png" />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <div>
+        <p>Amber: @player.Amber</p>
+        <p>Party Size: @player.Dinosaurs.Count()</p>
+        <p></p>
+    </div>
+    
+    <div class="amber">
+        <label>
+            Amber
+            <img @onclick="RedirectToAmber" src="/images/placeholders/House.png" />
+        </label>
+    </div>
+    <div class="battle">
+        <label>
+            Battle
+            <img @onclick="RedirectToBattle" src="/images/placeholders/House1.png" />
+        </label>
+
+    </div>
+    <div class="party">
+        <label>
+            Party
+            <img @onclick="RedirectToParty" src="/images/placeholders/House2.png" />
+        </label>
+    </div>
+
+    <div class="labratory">
+        <label>
+            Labratory
+            <img @onclick="RedirectToLabratory" src="/images/placeholders/House.png" />
+        </label>
+    </div>
+    <div class="items">
+        <label>
+            Items
+            <img @onclick="RedirectToItems" src="/images/placeholders/House1.png" />
+        </label>
+    </div>
+
+    <div class="save">
+        <label>
+            Save
+            <img @onclick="RedirectToSave" src="/images/placeholders/House2.png" />
+        </label>
+    </div>
+</div>
+
+<style>
+    .parent {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    .background {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 800px;
+        height: 500px;
+    }
+
+    .amber {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+    }
+
+    .battle {
+        position: absolute;
+        top: 90px;
+        left: 30px;
+    }
+
+    .party {
+        position: absolute;
+        top: 150px;
+        left: 30px;
+    }
+
+    .labratory {
+        position: absolute;
+        top: 210px;
+        left: 30px;
+    }
+
+    .items {
+        position: absolute;
+        top: 270px;
+        left: 30px;
+    }
+
+    .save {
+        position: absolute;
+        top: 330px;
+        left: 30px;
+    }
+</style>
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    private void RedirectToAmber()
+    {
+        NavigationManager.NavigateTo("/amber");
+    }
+
+    private void RedirectToParty()
+    {
+        NavigationManager.NavigateTo("/party");
+    }
+
+    private void RedirectToBattle()
+    {
+        NavigationManager.NavigateTo("/battle");
+    }
+
+    private void RedirectToLabratory()
+    {
+        NavigationManager.NavigateTo("/labratory");
+    }
+
+    private void RedirectToItems()
+    {
+        NavigationManager.NavigateTo("/items");
+    }
+
+    private void RedirectToSave()
+    {
+        NavigationManager.NavigateTo("/save");
+    }
+}

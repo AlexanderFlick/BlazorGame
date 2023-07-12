@@ -1,0 +1,38 @@
+﻿@page "/battle/prepare"
+@using Game.Data;
+@inject NavigationManager NavigationManager
+
+<h3>Prepare</h3>
+@foreach (var dinosaur in player.Dinosaurs)
+{
+    <div>
+        <label>
+            Select For Battle:
+            <InputCheckbox @bind-Value="dinosaur.BattleSelected"></InputCheckbox>
+        </label>
+        @if (dinosaur.PetName != null)
+        {
+            <h5 class="card-title"><b>@dinosaur.PetName</b></h5>
+        }
+        else
+        {
+            <h5 class="card-title"><b>@dinosaur.Name</b></h5>
+        }
+        <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
+        <p class="card-text">Health: @dinosaur.TotalHealth</p>
+        <p class="card-text">Attack: @dinosaur.Attack</p>
+        <p class="card-text">Defense: @dinosaur.Defense</p>
+        
+    </div>
+}
+<button class="btn btn-primary" @onclick="RedirectToBattle">Battle!!!</button>
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    public void RedirectToBattle()
+    {
+        NavigationManager.NavigateTo("battle/battlegrounds");
+    }
+}

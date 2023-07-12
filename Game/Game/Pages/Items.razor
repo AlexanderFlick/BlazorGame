@@ -1,0 +1,11 @@
+﻿@page "/items"
+@using Game.Data;
+@using Game.Pages.Components
+
+<h3>Items</h3>
+<BackButton />
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+}

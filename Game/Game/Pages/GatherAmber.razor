@@ -1,6 +1,7 @@
 ﻿@page "/amber"
 @inject IAmberService AmberService
 @using Game.Data;
+@using Game.Pages.Components
 @using Game.Services;
 
 <div style="text-align:center">
@@ -9,6 +10,7 @@
     <p>Total Amber: @player.Amber</p>
     <p>Amber Per Click: @player.AmberPerClick</p>
     <button class="btn btn-primary" @onclick="GetYellowAmber">Get Yellow Amber!</button>
+    <BackButton />
 </div>
 
 @code {

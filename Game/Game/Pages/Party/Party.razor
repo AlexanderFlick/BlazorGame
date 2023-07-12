@@ -1,6 +1,7 @@
 ﻿@page "/party"
 @using Game.Data;
 @using Game.Data.Dinosaurs;
+@using Game.Pages.Components
 @using Game.Services;
 @inject IPlayerDinosaurService PlayerDinosaurService
 @inject IDinosaurService DinosaurService
@@ -11,8 +12,7 @@
 <div style="text-align:center;">
     @foreach (var dinosaur in player.Dinosaurs)
     {
-        var index = 0;
-
+        index++;
         <div class="card" style="width: 18rem; float:left;">
             <div class="card-body">
                 @if(dinosaur.PetName != null)
@@ -40,12 +40,14 @@
             </div>
         </div>
     }
-
+    <BackButton />
 </div>
 
 @code {
     [CascadingParameter]
     public Player player { get; set; }
+
+    private int index = 0;
 
     public void LockDinosaur(Dinosaur dinosaur)
     {

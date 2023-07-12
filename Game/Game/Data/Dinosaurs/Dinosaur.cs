@@ -6,7 +6,6 @@ public class Dinosaur
 {
     public string? Name { get; set; }
     public string? PetName { get; set; }
-    public int FossilsToCreate { get; set; }
     public int Level { get; set; } = 1;
     public int ExperienceToLevelUp { get; set; }
     public int CurrentExperience { get; set; }
@@ -20,6 +19,7 @@ public class Dinosaur
     public DinosaurColorEnum DinosaurColor { get; set; }
     public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
     public List<Equipment> Items { get; set; } = new List<Equipment>();
+    public bool BattleSelected { get; set; }
 }
 
 public class DinosaurCost
