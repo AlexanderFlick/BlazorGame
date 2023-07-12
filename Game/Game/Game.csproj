@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Components\DinosaurComponents\" />
     <Folder Include="wwwroot\images\placeholders\" />
   </ItemGroup>
 

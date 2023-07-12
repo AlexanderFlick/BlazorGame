@@ -27,14 +27,13 @@
 
     @if (maxPartySize)
     {
-            <div class="alert alert-danger" role="alert">
-                <p>Max Party Size Reached!</p>
-                <button class="btn btn-danger" @onclick="RedirectToParty">Go to Party</button>
-            </div>
+        <div class="alert alert-danger" role="alert">
+            <p>Max Party Size Reached!</p>
+            <button class="btn btn-danger" @onclick="RedirectToParty">Go to Party</button>
+        </div>
     }
 
     <button class="btn btn-primary" @onclick="FuseRaptorFossils">Fuse Raptor</button>
-    <button class="btn btn-primary" @onclick="ExchangeFossils">Exchange Fossils</button>
     <button class="btn btn-primary" @onclick="RedirectToLab">Back to the Labratory</button>
 </div>
 
@@ -80,7 +79,7 @@
         }
     }
 
-    
+
 
     public void GetRaptorFossilCount(Player player)
     {
@@ -89,7 +88,7 @@
         footCount = 0;
         ribCount = 0;
 
-        foreach(var fossil in player.Fossils)
+        foreach (var fossil in player.Fossils)
         {
             if (fossil.DinosaurType == DinosaurTypeEnum.Raptor)
             {
@@ -102,12 +101,12 @@
                 if (fossil.FossilType == FossilType.Foot)
                     footCount++;
             }
-        }        
+        }
     }
 
     private void RedirectToFossil()
     {
-        NavigationManager.NavigateTo("/fossils");
+        NavigationManager.NavigateTo("/labratory/splicer");
     }
 
     private void RedirectToParty()

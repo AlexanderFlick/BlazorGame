@@ -5,21 +5,7 @@
 
 <div style="text-align:center">
     
-    @if (dinosaur.PetName != null)
-    {
-        <h1><b>@dinosaur.PetName</b></h1>
-        <p>@dinosaur.DinosaurType</p>
-    }
-    else
-    {
-        <h3>Dinosaur Summary: </h3>
-        <h1><b>@dinosaur.DinosaurType</b></h1>
-    }
-    <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
-    <p class="card-text">Health: @dinosaur.TotalHealth</p>
-    <p class="card-text">Attack: @dinosaur.Attack Defense: @dinosaur.Defense</p>
-    <p class="card-text">Era: @dinosaur.DinosaurEra</p>
-    <p class="card-text">Color: @dinosaur.DinosaurColor</p>
+    <DinosaurSummary Dinosaur="@dinosaur"/>
     <button class="btn btn-primary" @onclick="() => NavigateToItems(pageIndex)" value="@pageIndex">Items</button>
     <button class="btn btn-primary" @onclick="RenameDinosaur">Rename</button>
     <button class="btn btn-primary" @onclick="NavigateToParty">Back To Party</button>    
@@ -49,11 +35,6 @@
     {
         pageIndex = int.Parse(dinosaurIndex);
         dinosaur = player.Dinosaurs[pageIndex];
-    }
-
-    public void Save()
-    {
-
     }
 
     public void RenameDinosaur()

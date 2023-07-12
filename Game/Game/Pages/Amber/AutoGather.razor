@@ -1,0 +1,15 @@
+﻿@page "/amber/auto"
+@using Game.Data;
+@using Game.Pages.Components
+
+<h3>Select a Dinosaur to Hunt Amber for You!</h3>
+@foreach (var dinosaur in player.Dinosaurs)
+{
+    
+}
+<BackButton />
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+}

@@ -4,9 +4,12 @@
 @inject NavigationManager NavigationManager;
 
 <h3>Labratory</h3>
-<button class="btn btn-primary" @onclick="RedirectToSplicer">Amber Splicer</button>
-<button class="btn btn-primary" @onclick="RedirectToFossilFusion">Fossil Fusion Reactor</button>
+<button class="btn btn-primary labratory" @onclick="RedirectToSplicer">Amber Splicer</button>
+<br />
+<button class="btn btn-primary labratory" @onclick="RedirectToFossilFusion">Fossil Fusion Reactor</button>
+<br />
 <BackButton />
+
 @code {
     [CascadingParameter]
     public Player player { get; set; }
@@ -21,3 +24,9 @@
         NavigationManager.NavigateTo($"/labratory/fusion");
     }
 }
+
+<style>
+    .labratory{
+        margin:10px;
+    }
+</style>

@@ -20,6 +20,7 @@ public class Dinosaur
     public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
     public List<Equipment> Items { get; set; } = new List<Equipment>();
     public bool BattleSelected { get; set; }
+    public bool AmberHunting { get; set; }
 }
 
 public class DinosaurCost
