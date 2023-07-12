@@ -1,4 +1,5 @@
 ﻿using Game.Data;
+using System.Threading;
 
 namespace Game.Services;
 
@@ -23,5 +24,10 @@ public class AmberService : IAmberService
     public int Pay(int cost, int total)
     {
         return total -= cost;
+    }
+
+    public void StartAmberAutoGathering(Player player)
+    {
+        
     }
 }

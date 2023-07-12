@@ -14,15 +14,16 @@ public class Dinosaur
     public int Attack { get; set; }
     public int Defense { get; set; }
     public bool Locked { get; set; }
+    public DinosaurAmberHunting AmberHunting { get; set; } = new DinosaurAmberHunting();
     public DinosaurTypeEnum DinosaurType { get; set; }
     public DinosaurEraEnum DinosaurEra { get; set; }
     public DinosaurColorEnum DinosaurColor { get; set; }
     public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
     public List<Equipment> Items { get; set; } = new List<Equipment>();
     public bool BattleSelected { get; set; }
-    public bool AmberHunting { get; set; }
+   
     public int PartyPosition { get; set; }
-    public int AmberPerSecond { get; set; }
+    
 }
 
 public class DinosaurCost
@@ -31,4 +32,12 @@ public class DinosaurCost
     public int Foot { get; set; } = 2;
     public int Skull { get; set; } = 1;
     public int Claw { get; set; } = 5;
+}
+
+public class DinosaurAmberHunting
+{
+    public bool Hunting { get; set; }
+    public int PerSecond { get; set; } = 1;
+    public int MaxCollected { get; set; } = 100;
+    public int Total { get; set; }
 }
