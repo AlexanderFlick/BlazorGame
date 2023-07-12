@@ -19,6 +19,7 @@ public class Player
     public AmberType AmberType { get; set; } = AmberType.Yellow;
     public List<Equipment> UnassignedItems { get; set; } = new List<Equipment>();
     public Access Access { get; set; } = new Access();
+    public int MaxDinosaursHuntingForAmber { get; set; } = 1;
 }
 
 public class Access

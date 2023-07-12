@@ -22,6 +22,7 @@ public class Dinosaur
     public bool BattleSelected { get; set; }
     public bool AmberHunting { get; set; }
     public int PartyPosition { get; set; }
+    public int AmberPerSecond { get; set; }
 }
 
 public class DinosaurCost
