@@ -7,55 +7,68 @@
 <div class="parent">
 
     <img class="background" src="/images/placeholders/background.png" />
-
-    <div>
+    <h1 class="gameTitle">Dinosaurs With Guns</h1>
+    <div class="playerInfo">
         <p>Amber: @player.Amber</p>
-        <p>Party Size: @player.Dinosaurs.Count()</p>
+        <p>Party Size: @player.Dinosaurs.Count()/@player.MaxPartySize</p>
         <p></p>
     </div>
     
     <div class="amber">
-        <label>
-            Amber
+        <label>            
             <img @onclick="RedirectToAmber" src="/images/placeholders/House.png" />
+            Amber
         </label>
     </div>
     <div class="battle">
-        <label>
-            Battle
+        <label>            
             <img @onclick="RedirectToBattle" src="/images/placeholders/House1.png" />
+            Battle
         </label>
 
     </div>
     <div class="party">
-        <label>
-            Party
+        <label>            
             <img @onclick="RedirectToParty" src="/images/placeholders/House2.png" />
+            Party
         </label>
     </div>
 
     <div class="labratory">
-        <label>
-            Labratory
+        <label>            
             <img @onclick="RedirectToLabratory" src="/images/placeholders/House.png" />
+            Labratory
         </label>
     </div>
     <div class="items">
-        <label>
-            Items
+        <label>            
             <img @onclick="RedirectToItems" src="/images/placeholders/House1.png" />
+            Items
         </label>
     </div>
 
     <div class="save">
-        <label>
-            Save
+        <label>            
             <img @onclick="RedirectToSave" src="/images/placeholders/House2.png" />
+            Save
         </label>
     </div>
 </div>
 
 <style>
+    .gameTitle{
+        position: absolute;
+        top: 30px;
+        left: 400px;
+    }
+
+    .playerInfo{
+        float:inline-end;
+        position:absolute;
+        top:400px;
+        left:650px;
+    }
+
     .parent {
         position: relative;
         top: 0;
