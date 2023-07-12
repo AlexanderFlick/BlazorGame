@@ -67,7 +67,7 @@
         if (FusionService.HasResourcesToMakeDinosaur(player, raptor))
         {
             shortResources = false;
-            var dinosaur = DinosaurService.GetNewDinosaur(DinosaurTypeEnum.Raptor);
+            var dinosaur = DinosaurService.GetNewDinosaur(DinosaurTypeEnum.Raptor, player);
             player = FossilService.RemoveFossils(player, dinosaur);
             player.Dinosaurs.Add(dinosaur);
 

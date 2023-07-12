@@ -5,14 +5,14 @@ namespace Game.Services;
 
 public interface IDinosaurService
 {
-    Dinosaur GetNewDinosaur(DinosaurTypeEnum dinosaurType);
+    Dinosaur GetNewDinosaur(DinosaurTypeEnum dinosaurType, Player player);
     Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur);
 }
 public class DinosaurService : IDinosaurService
 {
     readonly Random rand = new();
 
-    public Dinosaur GetNewDinosaur(DinosaurTypeEnum dinosaurType)
+    public Dinosaur GetNewDinosaur(DinosaurTypeEnum dinosaurType, Player player)
     {
         var health = GetDinosaurHealth();
 
@@ -20,12 +20,13 @@ public class DinosaurService : IDinosaurService
         {
             Name = GetDinosaurName(dinosaurType),
             Attack = GetDinosaurAttack(),
-            Defense= GetDinosaurDefense(),
+            Defense = GetDinosaurDefense(),
             CurrentHealth = health,
             TotalHealth = health,
             DinosaurType = dinosaurType,
             DinosaurColor = GetDinosaurColor(),
-            DinosaurEra= GetDinosaurEra()
+            DinosaurEra = GetDinosaurEra(),
+            PartyPosition = (player.Dinosaurs.Count + 1)
         };
     }
 

@@ -9,7 +9,6 @@
     }
     else
     {
-        <h3>Dinosaur Summary: </h3>
         <h1><b>@Dinosaur.DinosaurType</b></h1>
     }
     <p class="card-subtitle mb-2 text-muted">Level: @Dinosaur.Level Experience: @Dinosaur.CurrentExperience/@Dinosaur.ExperienceToLevelUp</p>
@@ -17,6 +16,12 @@
     <p class="card-text">Attack: @Dinosaur.Attack Defense: @Dinosaur.Defense</p>
     <p class="card-text">Era: @Dinosaur.DinosaurEra</p>
     <p class="card-text">Color: @Dinosaur.DinosaurColor</p>
+    <p>
+        @if (Dinosaur.Locked)
+        {
+            <span class="oi oi-lock-locked">  Locked!</span>
+        }
+    </p>
 </div>
 
 @code {

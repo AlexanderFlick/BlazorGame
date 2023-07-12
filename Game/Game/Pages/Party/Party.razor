@@ -2,6 +2,7 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Pages.Components
+@using Game.Pages.Components.DinosaurComponents
 @using Game.Services;
 @inject IPlayerDinosaurService PlayerDinosaurService
 @inject IDinosaurService DinosaurService
@@ -9,34 +10,17 @@
 
 <h1><b>Dinosaur Army</b></h1>
 <p>Party size: @player.Dinosaurs.Count()/@player.MaxPartySize</p>
-<div style="text-align:center; float:left">
+<br />
+<div style="text-align:center; float:left; margin:10px;">
     @foreach (var dinosaur in player.Dinosaurs)
-    {
-        index++;
+    {        
         <div class="card" style="width: 18rem; float:left;">
             <div class="card-body">
-                @if(dinosaur.PetName != null)
-                {
-                    <h5 class="card-title"><b>@dinosaur.PetName</b></h5>
-                }
-                else
-                {
-                    <h5 class="card-title"><b>@dinosaur.Name</b></h5>
-                }                
-                <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
-                <p class="card-text">Health: @dinosaur.TotalHealth</p>
-                <p class="card-text">Attack: @dinosaur.Attack</p>
-                <p class="card-text">Defense: @dinosaur.Defense</p>
-                <p>
-                    @if (dinosaur.Locked)
-                    {
-                        <span class="oi oi-lock-locked">  Locked!</span>
-                    }
-                </p>
-
-                <button class="btn btn-primary" @onclick="() => RedirectToSummary(index)">Summary</button>
+                <DinosaurBaseInfo Dinosaur="dinosaur"/>
+                <button class="btn btn-primary" @onclick="() => RedirectToSummary(dinosaur)">Detailed Summary</button>
                 <button class="btn btn-primary" @onclick="() => LockDinosaur(dinosaur)" value="@dinosaur">Lock</button>
                 <button class="btn btn-danger" @onclick="() => RemoveDinosaur(dinosaur)">Remove</button>
+
             </div>
         </div>
     }
@@ -48,8 +32,6 @@
     [CascadingParameter]
     public Player player { get; set; }
 
-    private int index = 0;
-
     public void LockDinosaur(Dinosaur dinosaur)
     {
         dinosaur = DinosaurService.LockOrUnlockDinosaur(dinosaur);
@@ -60,8 +42,8 @@
         player = PlayerDinosaurService.RemoveDinosaur(player, dinosaur);
     }
 
-    public void RedirectToSummary(int index)
+    public void RedirectToSummary(Dinosaur dinosaur)
     {
-        NavigationManager.NavigateTo($"/party/summary/{index}");
+        NavigationManager.NavigateTo($"/party/summary/{dinosaur.PartyPosition}");
     }
 }

@@ -22,7 +22,7 @@ public class PlayerDinosaurService : IPlayerDinosaurService
         if (player.Dinosaurs.Count >= player.MaxPartySize)
             return player;
 
-        player.Dinosaurs.Add(_dinosaurCreationService.GetNewDinosaur(dinosaurType));
+        player.Dinosaurs.Add(_dinosaurCreationService.GetNewDinosaur(dinosaurType, player));
         return player;
     }    
 

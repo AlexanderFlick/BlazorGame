@@ -21,6 +21,7 @@ public class Dinosaur
     public List<Equipment> Items { get; set; } = new List<Equipment>();
     public bool BattleSelected { get; set; }
     public bool AmberHunting { get; set; }
+    public int PartyPosition { get; set; }
 }
 
 public class DinosaurCost

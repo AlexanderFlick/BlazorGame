@@ -1,12 +1,12 @@
-﻿@page "/party/summary/{dinosaurIndex}"
+﻿@page "/party/summary/{partyPosition}"
 @using Game.Data;
 @using Game.Data.Dinosaurs;
+@using Game.Pages.Components.DinosaurComponents
 @inject NavigationManager NavigationManager
 
-<div style="text-align:center">
-    
-    <DinosaurSummary Dinosaur="@dinosaur"/>
-    <button class="btn btn-primary" @onclick="() => NavigateToItems(pageIndex)" value="@pageIndex">Items</button>
+<div>    
+    <DinosaurBaseInfo Dinosaur="@dinosaur"/>
+    <button class="btn btn-primary" @onclick="() => NavigateToItems(index)" value="@index">Items</button>
     <button class="btn btn-primary" @onclick="RenameDinosaur">Rename</button>
     <button class="btn btn-primary" @onclick="NavigateToParty">Back To Party</button>    
 
@@ -24,17 +24,17 @@
     public Player player { get; set; }
 
     [Parameter]
-    public string dinosaurIndex { get; set; }
+    public string partyPosition { get; set; }
 
-    public int pageIndex { get; set; }
-    public Dinosaur dinosaur { get; set; }
+    private Dinosaur dinosaur { get; set; }
+
+    public int index { get; set; }
     public bool wantsToRename = false;
-    public string newDinoName { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        pageIndex = int.Parse(dinosaurIndex);
-        dinosaur = player.Dinosaurs[pageIndex];
+        index = int.Parse(partyPosition);
+        dinosaur = player.Dinosaurs.Where(x => x.PartyPosition == index).First();
     }
 
     public void RenameDinosaur()
