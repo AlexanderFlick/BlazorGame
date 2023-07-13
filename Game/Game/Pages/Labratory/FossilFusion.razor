@@ -2,6 +2,7 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Data.Fossils;
+@using Game.Pages.Components.DinosaurComponents
 @using Game.Services;
 @inject NavigationManager NavigationManager
 @inject IFusionService FusionService
@@ -10,20 +11,54 @@
 
 <h3>Labratory</h3>
 <img src="images/lab.png" />
+
+@if (shortResources)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>Fossil requirement not met! Crack open more <b><i>Amber</i></b> to find fossils.</p>
+        <button class="btn btn-danger" @onclick="RedirectToFossil">Get More Fossils</button>
+    </div>
+}
+
+@if (newRaptorCreated)
+{
+    <h2>New @newDinosaur.DinosaurType Created!!!</h2>
+    <DinosaurBaseInfo Dinosaur="newDinosaur"/>
+    <button class="btn btn-primary" @onclick="() => AddDinosaur(newDinosaur)">Add to Party</button>
+    <button class="btn btn-primary" @onclick="DismissDinosaur">Dismiss</button>
+}
+
 <div style="text-align:center; float:left">
     <p>Fossils Needed to Fuse Raptor:</p>
-    <p>Claws: @clawCount/@raptor.DinosaurCost.Claw</p>
-    <p>Skull: @skullCount/@raptor.DinosaurCost.Skull</p>
-    <p>Feet: @footCount/@raptor.DinosaurCost.Foot</p>
-    <p>Ribs: @ribCount/@raptor.DinosaurCost.Rib</p>
+    <p>
+        @if (clawCount >= newDinosaur.DinosaurCost.Claw)
+        {
+            <span class="oi oi-circle-check"></span>
+        }
+        Claws: @clawCount/@newDinosaur.DinosaurCost.Claw
+    </p>
+    <p>
+        @if (skullCount >= @newDinosaur.DinosaurCost.Skull)
+        {
+            <span class="oi oi-circle-check"></span>
+        }
 
-    @if (shortResources)
-    {
-        <div class="alert alert-danger" role="alert">
-            <p>Fossil requirement not met! Crack open more <b><i>Amber</i></b> to find fossils.</p>
-            <button class="btn btn-danger" @onclick="RedirectToFossil">Get More Fossils</button>
-        </div>
-    }
+        Skull: @skullCount/@newDinosaur.DinosaurCost.Skull
+    </p>
+    <p>
+        @if (footCount >= newDinosaur.DinosaurCost.Foot)
+        {
+            <span class="oi oi-circle-check"></span>
+        }
+        Feet: @footCount/@newDinosaur.DinosaurCost.Foot
+    </p>
+    <p>
+        @if (ribCount >= newDinosaur.DinosaurCost.Rib)
+        {
+            <span class="oi oi-circle-check"></span>
+        }
+        Ribs: @ribCount/@newDinosaur.DinosaurCost.Rib
+    </p>
 
     @if (maxPartySize)
     {
@@ -41,13 +76,14 @@
     [CascadingParameter]
     public Player player { get; set; }
 
+    public bool newRaptorCreated = false;
     public bool shortResources = false;
     public bool maxPartySize = false;
     public int clawCount = 0;
     public int skullCount = 0;
     public int footCount = 0;
     public int ribCount = 0;
-    Dinosaur raptor = new Dinosaur();
+    Dinosaur newDinosaur = new Dinosaur();
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,14 +100,15 @@
             return;
         }
 
-        if (FusionService.HasResourcesToMakeDinosaur(player, raptor))
+        if (FusionService.HasResourcesToMakeDinosaur(player, newDinosaur))
         {
             shortResources = false;
-            var dinosaur = DinosaurService.GetNewDinosaur(DinosaurTypeEnum.Raptor, player);
-            player = FossilService.RemoveFossils(player, dinosaur);
-            player.Dinosaurs.Add(dinosaur);
-            player.Access.Party = true;
-            player.Access.AmberHunting = true;
+            newDinosaur = DinosaurService.GetNewDinosaur(DinosaurTypeEnum.Raptor, player);
+            newRaptorCreated = true;
+            player = FossilService.RemoveFossils(player, newDinosaur);
+            //player.Dinosaurs.Add(dinosaur);
+            //player.Access.Party = true;
+            //player.Access.AmberHunting = true;
             GetRaptorFossilCount(player);
         }
         else
@@ -80,7 +117,18 @@
         }
     }
 
+    public void AddDinosaur(Dinosaur dinosaur)
+    {
+        player.Dinosaurs.Add(dinosaur);
+        player.Access.Party = true;
+        player.Access.AmberHunting = true;
+        newRaptorCreated = false;
+    }
 
+    public void DismissDinosaur()
+    {
+        newRaptorCreated = false;
+    }
 
     public void GetRaptorFossilCount(Player player)
     {

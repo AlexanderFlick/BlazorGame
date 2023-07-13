@@ -1,4 +1,5 @@
-﻿using Game.Data.Items;
+﻿using Game.Data.Dinosaurs.DinosaurMoves;
+using Game.Data.Items;
 
 namespace Game.Data.Dinosaurs;
 
@@ -11,19 +12,16 @@ public class Dinosaur
     public int CurrentExperience { get; set; }
     public int TotalHealth { get; set; }
     public int CurrentHealth { get; set; }
-    public int Attack { get; set; }
-    public int Defense { get; set; }
     public bool Locked { get; set; }
-    public DinosaurAmberHunting AmberHunting { get; set; } = new DinosaurAmberHunting();
+    public bool BattleSelected { get; set; }
+    public int PartyPosition { get; set; }
+    public DinosaurAmberHunting AmberHunting { get; set; } = new DinosaurAmberHunting();    
+    public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
+    public List<Equipment> Items { get; set; } = new List<Equipment>();    
+    public List<Move> Moves { get; set; } = new List<Move>();
     public DinosaurTypeEnum DinosaurType { get; set; }
     public DinosaurEraEnum DinosaurEra { get; set; }
     public DinosaurColorEnum DinosaurColor { get; set; }
-    public DinosaurCost DinosaurCost { get; set; } = new DinosaurCost();
-    public List<Equipment> Items { get; set; } = new List<Equipment>();
-    public bool BattleSelected { get; set; }
-   
-    public int PartyPosition { get; set; }
-    
 }
 
 public class DinosaurCost
