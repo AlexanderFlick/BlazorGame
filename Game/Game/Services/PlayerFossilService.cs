@@ -96,8 +96,8 @@ public class PlayerFossilService : IPlayerFossilService
         {
             for (int i = 0; i < dinosaur.Cost.TailSpike; i++)
             {
-                var claw = player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.TailSpikes).First();
-                player.Fossils.Remove(claw);
+                var spikes = player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.TailSpikes).First();
+                player.Fossils.Remove(spikes);
             }
         }
 
