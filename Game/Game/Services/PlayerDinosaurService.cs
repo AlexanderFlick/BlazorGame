@@ -26,7 +26,7 @@ public class PlayerDinosaurService : IPlayerDinosaurService
 
         player.Dinosaurs.Add(_dinosaurCreationService.GetNewDinosaur(player, dinosaurType));
         return player;
-    }    
+    }
 
     public Player RemoveDinosaur(Player player, Dinosaur dinosaur)
     {

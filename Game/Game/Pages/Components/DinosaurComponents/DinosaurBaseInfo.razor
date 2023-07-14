@@ -5,19 +5,21 @@
     @if (Dinosaur.PetName != null)
     {
         <h1><b>@Dinosaur.PetName</b></h1>
+        <p>@Dinosaur.Name</p>
+    }
+    @if (Dinosaur.PetName == null)
+    {
+        <h1><b>@Dinosaur.Name</b></h1>
         <p>@Dinosaur.DinosaurType</p>
     }
-    else
-    {
-        <h1><b>@Dinosaur.DinosaurType</b></h1>
-    }
     <p class="card-subtitle mb-2 text-muted">Level: @Dinosaur.Level Experience: @Dinosaur.CurrentExperience/@Dinosaur.ExperienceToLevelUp</p>
+    <p>@Dinosaur.DinosaurType</p>
     <p class="card-text">Health: @Dinosaur.TotalHealth</p>
     <p class="card-text">Era: @Dinosaur.DinosaurEra</p>
     <p class="card-text">Color: @Dinosaur.DinosaurColor</p>
-    @if(player.Access.AmberHunting)
+    @if (player.Access.AmberHunting)
     {
-           <p class="card-text">Amber Hunting: @Dinosaur.AmberHunting.Hunting</p>
+        <p class="card-text">Amber Hunting: @Dinosaur.AmberHunting.Hunting</p>
     }
     <p>
         @if (Dinosaur.Locked)
