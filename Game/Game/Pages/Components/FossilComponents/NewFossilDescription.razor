@@ -5,21 +5,21 @@
     @if (ShowFossilInfo)
     {
         <p>New Fossil Found!</p>
-        <p>Fossil Type: @NewFossil.DinosaurType</p>
-        @if (NewFossil.DinosaurType == DinosaurTypeEnum.Carnivore)
+        <p>Fossil Type: @NewFossilToDescribe.DinosaurType</p>
+        @if (NewFossilToDescribe.DinosaurType == DinosaurTypeEnum.Carnivore)
         {
-            <p>@NewFossil.CarnivoreFossils</p>
+            <p>@NewFossilToDescribe.CarnivoreFossils</p>
         }
-        @if (NewFossil.DinosaurType == DinosaurTypeEnum.Herbivore)
+        @if (NewFossilToDescribe.DinosaurType == DinosaurTypeEnum.Herbivore)
         {
-            <p>@NewFossil.HerbivoreFossils</p>
+            <p>@NewFossilToDescribe.HerbivoreFossils</p>
         }
     }
 </div>
 
 @code {
     [Parameter]
-    public Fossil NewFossil { get; set; }
+    public Fossil NewFossilToDescribe { get; set; }
 
     [Parameter]
     public bool ShowFossilInfo { get; set; }

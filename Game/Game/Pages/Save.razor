@@ -7,8 +7,6 @@
 @inject NavigationManager NavigationManager
 
 <div>
-    <h3>Save</h3>
-
     <EditForm Model="@saveFile" OnSubmit="@HandleSubmit">
         @if (successfulSave)
         {
@@ -29,7 +27,7 @@
             <InputCheckbox @bind-Value="@saveFile.Saving"></InputCheckbox>
         </label>
         <br />
-        <label>
+        <label style="float:left;">
             Load
             <InputCheckbox @bind-Value="@saveFile.Loading"></InputCheckbox>
         </label>

@@ -9,6 +9,8 @@
     <DinosaurBaseInfo Dinosaur="@dinosaur"/>
     <button class="btn btn-primary" style="margin-top:10px" @onclick="() => NavigateToItems(index)" value="@index">Items</button>
     <br />
+    <button class="btn btn-primary" style="margin-top:10px" @onclick="() => NavigateToMoves(index)" value="@index">Moves</button>
+    <br />
     <button class="btn btn-primary" style="margin-top:10px" @onclick="RenameDinosaur">Rename</button>
     <br />
     <button class="btn btn-primary" style="margin-top:10px" @onclick="NavigateToParty">Back To Party</button>
@@ -19,6 +21,7 @@
             <input @bind=@dinosaur.PetName>
         </div>
     }
+    <br />
     <BackButton  />
 </div>
 
@@ -54,5 +57,10 @@
     public void NavigateToItems(int dinosaurIndex)
     {
         NavigationManager.NavigateTo($"/party/summary/{dinosaurIndex}/items");
+    }
+
+    public void NavigateToMoves(int dinosaurIndex)
+    {
+        NavigationManager.NavigateTo($"/party/summary/{dinosaurIndex}/moves");
     }
 }

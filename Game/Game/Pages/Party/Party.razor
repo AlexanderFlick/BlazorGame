@@ -19,7 +19,8 @@
                 <DinosaurBaseInfo Dinosaur="dinosaur"/>
                 <button class="btn btn-primary" @onclick="() => RedirectToSummary(dinosaur)">Detailed Summary</button>
                 <button class="btn btn-primary" @onclick="() => LockDinosaur(dinosaur)" value="@dinosaur">Lock</button>
-                <button class="btn btn-danger" @onclick="() => RemoveDinosaur(dinosaur)">Remove</button>
+                <br>
+                <button class="btn btn-danger" style="margin-top:10px;" @onclick="() => RemoveDinosaur(dinosaur)">Remove</button>
 
             </div>
         </div>

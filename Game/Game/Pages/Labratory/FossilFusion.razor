@@ -9,6 +9,7 @@
 @inject IFusionService FusionService
 @inject IPlayerFossilService FossilService
 @inject IDinosaurService DinosaurService
+@inject IAccessService AccessService
 
 <h3>Labratory</h3>
 <img src="images/lab.png" />
@@ -39,7 +40,9 @@
         </div>
     }
 
-    <button class="btn btn-primary" @onclick="FuseRaptorFossils">Fuse Raptor</button>
+    <button class="btn btn-primary" @onclick="FuseCarnivoreFossils">Fuse Carnivore</button>
+    <button class="btn btn-primary" @onclick="FuseHerbivoreFossils">Fuse Herbivore</button>
+    <br />
     <button class="btn btn-primary" @onclick="RedirectToLab">Back to the Labratory</button>
 </div>
 
@@ -62,7 +65,7 @@
         shortResources = false;
     }
 
-    private void FuseRaptorFossils()
+    private void FuseCarnivoreFossils()
     {
         if (player.Dinosaurs.Count >= player.MaxPartySize)
         {
@@ -73,7 +76,28 @@
         if (FusionService.HasResourcesToMakeDinosaur(player, newDinosaur))
         {
             shortResources = false;
-            newDinosaur = DinosaurService.GetNewDinosaur(player);
+            newDinosaur = DinosaurService.GetNewDinosaur(player, DinosaurTypeEnum.Carnivore);
+            newDinosaurCreated = true;
+            player = FossilService.RemoveFossils(player, newDinosaur);
+        }
+        else
+        {
+            shortResources = true;
+        }
+    }
+
+    private void FuseHerbivoreFossils()
+    {
+        if(player.Dinosaurs.Count >= player.MaxPartySize)
+        {
+            maxPartySize = true;
+            return;
+        }
+
+        if (FusionService.HasResourcesToMakeDinosaur(player, newDinosaur))
+        {
+            shortResources = false;
+            newDinosaur = DinosaurService.GetNewDinosaur(player, DinosaurTypeEnum.Herbivore);
             newDinosaurCreated = true;
             player = FossilService.RemoveFossils(player, newDinosaur);
         }
@@ -86,8 +110,7 @@
     public void AddDinosaur(Dinosaur dinosaur)
     {
         player.Dinosaurs.Add(dinosaur);
-        player.Access.Party = true;
-        player.Access.AmberHunting = true;
+        AccessService.SetAccessIfFirstDinosaur(player);
         newDinosaurCreated = false;
     }
 

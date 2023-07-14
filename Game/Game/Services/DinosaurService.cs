@@ -6,7 +6,7 @@ namespace Game.Services;
 
 public interface IDinosaurService
 {
-    Dinosaur GetNewDinosaur(Player player);
+    Dinosaur GetNewDinosaur(Player player, DinosaurTypeEnum dinosaurFossilType);
     Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur);
 }
 public class DinosaurService : IDinosaurService
@@ -19,7 +19,7 @@ public class DinosaurService : IDinosaurService
         _dinoMoves= dinosaurMoveRepository;
     }
 
-    public Dinosaur GetNewDinosaur(Player player)
+    public Dinosaur GetNewDinosaur(Player player, DinosaurTypeEnum dinosaurFossilType)
     {
         var health = GetDinosaurHealth();
 
@@ -27,7 +27,7 @@ public class DinosaurService : IDinosaurService
         {
             CurrentHealth = health,
             TotalHealth = health,
-            DinosaurType = GetDinosaurType(),
+            DinosaurType = dinosaurFossilType,
             DinosaurColor = GetDinosaurColor(),
             DinosaurEra = GetDinosaurEra(player),
             PartyPosition = (player.Dinosaurs.Count + 1)
@@ -116,5 +116,23 @@ public class DinosaurService : IDinosaurService
         }
 
         return Herbivores.Triceratops;
+    }
+
+    private List<Move> GetMoves(DinosaurTypeEnum dinosaurType)
+    {
+        var newMoves = new List<Move>();
+
+        if(dinosaurType == DinosaurTypeEnum.Carnivore)
+        {
+            newMoves.Add(_dinoMoves.GetOffensiveMoves().Last());
+            newMoves.Add(_dinoMoves.GetDefensiveMoves().First());
+        }
+        if (dinosaurType == DinosaurTypeEnum.Herbivore)
+        {
+            newMoves.Add(_dinoMoves.GetOffensiveMoves().First());
+            newMoves.Add(_dinoMoves.GetDefensiveMoves().Last());
+        }
+
+        return newMoves;
     }
 }

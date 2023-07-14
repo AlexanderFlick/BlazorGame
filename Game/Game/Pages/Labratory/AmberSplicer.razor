@@ -23,7 +23,7 @@
                 <p>Total Amber: @player.Amber</p>
                 @if (fossilAcquired)
                 {
-                    <NewFossilDescription NewFossil="newFossil" ShowFossilInfo="showFossilInfo" />
+                    <NewFossilDescription NewFossilToDescribe="newFossil" ShowFossilInfo="showFossilInfo" />
                 }
                 else
                 {
@@ -135,6 +135,16 @@
 
     public void GetCarnivoreAndHerbivoreFossilCount()
     {
+        carnivoreClawCount = 0;
+        carnivoreSkullCount = 0;
+        carnivoreFootCount = 0;
+        carnivoreRibCount = 0;
+
+        herbivoreSkullCount = 0;
+        herbivoreSpikeCount = 0;
+        herbivoreFootCount = 0;
+        herbivoreRibCount = 0;
+
         foreach (var fossil in player.Fossils)
         {
             if (fossil.DinosaurType == DinosaurTypeEnum.Carnivore)

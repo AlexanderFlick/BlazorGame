@@ -31,9 +31,9 @@
         dinosaur = player.Dinosaurs[pageIndex];
     }
 
-    public void NavigateToSummary(int pageIndex)
+    public void NavigateToSummary(int dinosaurIndex)
     {
-        NavigationManager.NavigateTo($"/party/summary/{pageIndex}");
+        NavigationManager.NavigateTo($"/party/summary/{dinosaurIndex}");
     }
 
     private void NavigateToParty()

@@ -13,14 +13,14 @@ public class DinosaurMoveRepository : IDinosaurMoveRepository
         {
             new Move
             {
-                Name = "Dodge",
+                Name = "Duck, Dodge",
                 MoveType = MoveType.Defensive,
                 DiceCount = 2,
                 DiceSize = 3
             },
             new Move
             {
-                Name = "Jump",
+                Name = "Ten Foot Jump",
                 MoveType = MoveType.Defensive,
                 DiceCount = 1,
                 DiceSize = 4
@@ -34,14 +34,14 @@ public class DinosaurMoveRepository : IDinosaurMoveRepository
         {
             new Move
             {
-                Name = "Bite",
+                Name = "Vicious Bite",
                 MoveType = MoveType.Offensive,
                 DiceCount = 1,
                 DiceSize = 8
             },
             new Move
             {
-                Name = "Claw",
+                Name = "Swift Claws",
                 MoveType = MoveType.Offensive,
                 DiceCount = 2,
                 DiceSize = 4
