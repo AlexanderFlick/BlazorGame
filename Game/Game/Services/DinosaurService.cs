@@ -16,7 +16,7 @@ public class DinosaurService : IDinosaurService
 
     public DinosaurService(IDinosaurMoveRepository dinosaurMoveRepository)
     {
-        _dinoMoves= dinosaurMoveRepository;
+        _dinoMoves = dinosaurMoveRepository;
     }
 
     public Dinosaur GetNewDinosaur(Player player, DinosaurTypeEnum dinosaurFossilType)
@@ -31,7 +31,7 @@ public class DinosaurService : IDinosaurService
             DinosaurColor = GetDinosaurColor(),
             DinosaurEra = GetDinosaurEra(player),
             PartyPosition = (player.Dinosaurs.Count + 1),
-            BaseDefense= GetDinosaurBaseDefense()
+            BaseDefense = GetDinosaurBaseDefense()
         };
 
         dinoToReturn.Name = dinoToReturn.DinosaurType == DinosaurTypeEnum.Carnivore ? GetCarnivore().ToString() : GetHerbivore().ToString();
@@ -44,27 +44,27 @@ public class DinosaurService : IDinosaurService
 
     private static DinosaurEraEnum GetDinosaurEra(Player player) => player.Era;
 
+    public int GetDinosaurHealth() => rand.Next(80, 101);
+
     private DinosaurColorEnum GetDinosaurColor()
     {
         var rarity = rand.Next(1, 1001);
 
-        if(rarity < 680)
+        if (rarity < 680)
         {
             return DinosaurColorEnum.Green;
         }
-        if(rarity < 950)
+        if (rarity < 950)
         {
             return DinosaurColorEnum.Blue;
         }
-        if(rarity < 997)
+        if (rarity < 997)
         {
             return DinosaurColorEnum.Red;
         }
 
         return DinosaurColorEnum.Albino;
     }
-
-    public int GetDinosaurHealth() => rand.Next(80, 101);
 
     public Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur)
     {
@@ -75,7 +75,7 @@ public class DinosaurService : IDinosaurService
     private Carnivores GetCarnivore()
     {
         var types = rand.Next(0, 101);
-        if(types < 90)
+        if (types < 90)
         {
             return Carnivores.Raptor;
         }
@@ -98,7 +98,7 @@ public class DinosaurService : IDinosaurService
     {
         var newMoves = new List<Move>();
 
-        if(dinosaurType == DinosaurTypeEnum.Carnivore)
+        if (dinosaurType == DinosaurTypeEnum.Carnivore)
         {
             newMoves.Add(_dinoMoves.GetOffensiveMoves().Last());
             newMoves.Add(_dinoMoves.GetDefensiveMoves().First());
