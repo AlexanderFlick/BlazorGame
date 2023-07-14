@@ -30,35 +30,19 @@ public class DinosaurService : IDinosaurService
             DinosaurType = dinosaurFossilType,
             DinosaurColor = GetDinosaurColor(),
             DinosaurEra = GetDinosaurEra(player),
-            PartyPosition = (player.Dinosaurs.Count + 1)
+            PartyPosition = (player.Dinosaurs.Count + 1),
+            BaseDefense= GetDinosaurBaseDefense()
         };
 
         dinoToReturn.Name = dinoToReturn.DinosaurType == DinosaurTypeEnum.Carnivore ? GetCarnivore().ToString() : GetHerbivore().ToString();
-        dinoToReturn.Moves.AddRange(_dinoMoves.GetOffensiveMoves());
-        dinoToReturn.Moves.AddRange(_dinoMoves.GetDefensiveMoves());
+        dinoToReturn.Moves.AddRange(GetMoves(dinosaurFossilType));
+
         return dinoToReturn;
     }
 
-    private int GetDinosaurBaseDefense()
-    {
-        return rand.Next(10, 13);
-    }
+    private int GetDinosaurBaseDefense() => rand.Next(10, 13);
 
-    private DinosaurEraEnum GetDinosaurEra(Player player)
-    {
-        return player.Era;
-    }
-
-    private DinosaurTypeEnum GetDinosaurType()
-    {
-        var types = rand.Next(0, 101);
-        if(types < 50)
-        {
-            return DinosaurTypeEnum.Carnivore;
-        }
-
-        return DinosaurTypeEnum.Herbivore;
-    }
+    private static DinosaurEraEnum GetDinosaurEra(Player player) => player.Era;
 
     private DinosaurColorEnum GetDinosaurColor()
     {
@@ -80,15 +64,7 @@ public class DinosaurService : IDinosaurService
         return DinosaurColorEnum.Albino;
     }
 
-    private string GetDinosaurName(DinosaurTypeEnum dinosaurType)
-    {
-        return dinosaurType.ToString();
-    }
-
-    public int GetDinosaurHealth()
-    {        
-        return rand.Next(80, 101);
-    }
+    public int GetDinosaurHealth() => rand.Next(80, 101);
 
     public Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur)
     {
