@@ -1,0 +1,19 @@
+﻿@using Game.Data.Dinosaurs.DinosaurMoves;
+
+<div>
+    <p>@dinoMove.MoveType</p>
+    <p>@dinoMove.Name</p>
+    @if (dinoMove.MoveType == MoveType.Offensive)
+    {
+        <p>Attack: @dinoMove.DiceCount/@dinoMove.DiceSize</p>
+    }
+    @if (dinoMove.MoveType == MoveType.Defensive)
+    {
+        <p>Defense: @dinoMove.DiceCount/@dinoMove.DiceSize</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Move dinoMove { get; set; }
+}

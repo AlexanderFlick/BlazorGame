@@ -1,0 +1,112 @@
+﻿@using Game.Data.Dinosaurs;
+@using Game.Data;
+@using Game.Data.Fossils;
+
+<div class="fossilSummary">
+    <p>Carnivore Fossils:</p>
+    @if (carnivoreClawCount >= @dinosaurFossil.Cost.Claw)
+    {
+        <p>
+            <span class="oi oi-circle-check"></span>
+            Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw
+        </p>
+
+    }
+    else
+    {
+        <p>
+            Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw
+        </p>
+    }
+
+    <p>Skulls: @carnivoreSkullCount/@dinosaurFossil.Cost.Skull</p>
+    <p>Feet: @carnivoreFootCount/@dinosaurFossil.Cost.Foot</p>
+    <p>Ribs: @carnivoreRibCount/@dinosaurFossil.Cost.Rib</p>
+
+    <br />
+    <p>Herbivore Fossils:</p>
+    <p>Tail Spikes: @herbivoreSpikeCount/@dinosaurFossil.Cost.TailSpike</p>
+    <p>Skulls: @herbivoreSkullCount/@dinosaurFossil.Cost.Skull</p>
+    <p>Feet: @herbivoreFootCount/@dinosaurFossil.Cost.Foot</p>
+    <p>Ribs: @herbivoreRibCount/@dinosaurFossil.Cost.Rib</p>
+</div>
+
+@code {
+    [CascadingParameter]
+    public Player player { get; set; }
+
+    private Dinosaur dinosaurFossil = new Dinosaur();
+
+    public int carnivoreClawCount = 0;
+    public int carnivoreSkullCount = 0;
+    public int carnivoreFootCount = 0;
+    public int carnivoreRibCount = 0;
+
+    public int herbivoreSkullCount = 0;
+    public int herbivoreSpikeCount = 0;
+    public int herbivoreFootCount = 0;
+    public int herbivoreRibCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetCarnivoreAndHerbivoreFossilCount();
+        await Task.CompletedTask;
+    }
+
+    public void GetCarnivoreAndHerbivoreFossilCount()
+    {
+        foreach (var fossil in player.Fossils)
+        {
+            if (fossil.DinosaurType == DinosaurTypeEnum.Carnivore)
+            {
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Claw)
+                {
+                    carnivoreClawCount++;
+                }
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Skull)
+                {
+                    carnivoreSkullCount++;
+                }
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Foot)
+                {
+                    carnivoreFootCount++;
+                }
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Ribs)
+                {
+                    carnivoreRibCount++;
+                }
+            }
+
+            if (fossil.DinosaurType == DinosaurTypeEnum.Herbivore)
+            {
+                if (fossil.HerbivoreFossils == HerbivoreFossil.TailSpikes)
+                {
+                    herbivoreSpikeCount++;
+                }
+                if (fossil.HerbivoreFossils == HerbivoreFossil.Skull)
+                {
+                    herbivoreSkullCount++;
+                }
+                if (fossil.HerbivoreFossils == HerbivoreFossil.Foot)
+                {
+                    herbivoreFootCount++;
+                }
+                if (fossil.HerbivoreFossils == HerbivoreFossil.Ribs)
+                {
+                    herbivoreRibCount++;
+                }
+            }
+        }
+    }
+
+    public void RefreshFossilSummary()
+    {
+        StateHasChanged();
+    }
+}
+
+<style>
+    .fossilSummary {
+        margin: 30px;
+    }
+</style>

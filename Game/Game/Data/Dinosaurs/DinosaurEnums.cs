@@ -3,8 +3,19 @@
 public enum DinosaurTypeEnum
 {
     Herbivore,
+    Carnivore
+}
+
+public enum Carnivores
+{
     Raptor,
-    TRex
+    Trex
+}
+
+public enum Herbivores
+{
+    Triceratops,
+    Stegasaurus
 }
 
 public enum DinosaurEraEnum

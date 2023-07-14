@@ -1,29 +1,50 @@
 ﻿@page "/battle/prepare"
 @using Game.Data;
+@using Game.Pages.Components.DinosaurComponents
 @inject NavigationManager NavigationManager
 
-<h3>Prepare</h3>
+<h1>Prepare</h1>
 @foreach (var dinosaur in player.Dinosaurs)
 {
-    <div>
-        <label>
-            Select For Battle:
-            <InputCheckbox @bind-Value="dinosaur.BattleSelected"></InputCheckbox>
-        </label>
-        @if (dinosaur.PetName != null)
+    <div style="outline-color:black; outline-style:double; margin-top:10px;">
+        @if (dinosaur.AmberHunting.Hunting)
         {
-            <h5 class="card-title"><b>@dinosaur.PetName</b></h5>
+            @if (dinosaur.PetName != null)
+            {
+                <h5 class="card-title"><b>@dinosaur.PetName</b> is amber hunting and cannot battle!</h5>
+            }
+            else
+            {
+                <h5 class="card-title"><b>@dinosaur.Name</b> is amber hunting and cannot battle!</h5>
+            }
+            <button class="btn btn-primary" @onclick="RedirectToAutoAmber">Go to Amber Hunting</button>
         }
         else
         {
-            <h5 class="card-title"><b>@dinosaur.Name</b></h5>
+            <div>
+                <label>
+                    Select For Battle:
+                    <InputCheckbox @bind-Value="dinosaur.BattleSelected"></InputCheckbox>
+                </label>
+                @if (dinosaur.PetName != null)
+                {
+                    <h5 class="card-title"><b>@dinosaur.PetName</b></h5>
+                }
+                else
+                {
+                    <h5 class="card-title"><b>@dinosaur.Name</b></h5>
+                }
+                <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
+                <p class="card-text">Health: @dinosaur.TotalHealth</p>
+                <h5>Moves</h5>
+                @foreach (var move in dinosaur.Moves)
+                {
+                    <MoveBaseInfo dinoMove="move" />
+                }
+            </div>
         }
-        <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
-        <p class="card-text">Health: @dinosaur.TotalHealth</p>
-        <p class="card-text">Attack: @dinosaur.Attack</p>
-        <p class="card-text">Defense: @dinosaur.Defense</p>
-        
     </div>
+
 }
 <button class="btn btn-primary" @onclick="RedirectToBattle">Battle!!!</button>
 
@@ -34,5 +55,10 @@
     public void RedirectToBattle()
     {
         NavigationManager.NavigateTo("battle/ground");
+    }
+
+    public void RedirectToAutoAmber()
+    {
+        NavigationManager.NavigateTo("amber/auto");
     }
 }

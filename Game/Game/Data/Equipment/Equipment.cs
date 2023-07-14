@@ -9,5 +9,5 @@ public class Equipment
     public EquipmentQuality Quality { get; set; }
     public string Name { get; set; }
     public int Buff { get; set; }
-    public FossilType DinosaurBodyPart { get; set; }
+    public CarnivoreFossil DinosaurBodyPart { get; set; }
 }

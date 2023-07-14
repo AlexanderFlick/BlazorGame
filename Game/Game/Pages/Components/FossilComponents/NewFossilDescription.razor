@@ -1,0 +1,35 @@
+﻿@using Game.Data.Dinosaurs;
+@using Game.Data.Fossils;
+
+<div class="newFossil">
+    @if (ShowFossilInfo)
+    {
+        <p>New Fossil Found!</p>
+        <p>Fossil Type: @NewFossil.DinosaurType</p>
+        @if (NewFossil.DinosaurType == DinosaurTypeEnum.Carnivore)
+        {
+            <p>@NewFossil.CarnivoreFossils</p>
+        }
+        @if (NewFossil.DinosaurType == DinosaurTypeEnum.Herbivore)
+        {
+            <p>@NewFossil.HerbivoreFossils</p>
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Fossil NewFossil { get; set; }
+
+    [Parameter]
+    public bool ShowFossilInfo { get; set; }
+}
+
+<style>
+    .newFossil {
+        text-align: center;
+        outline-style: double;
+        margin-top: 10px;
+        margin-right: 60px;
+    }
+</style>

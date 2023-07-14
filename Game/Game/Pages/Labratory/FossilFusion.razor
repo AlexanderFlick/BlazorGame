@@ -3,6 +3,7 @@
 @using Game.Data.Dinosaurs;
 @using Game.Data.Fossils;
 @using Game.Pages.Components.DinosaurComponents
+@using Game.Pages.Components.FossilComponents
 @using Game.Services;
 @inject NavigationManager NavigationManager
 @inject IFusionService FusionService
@@ -20,7 +21,7 @@
     </div>
 }
 
-@if (newRaptorCreated)
+@if (newDinosaurCreated)
 {
     <h2>New @newDinosaur.DinosaurType Created!!!</h2>
     <DinosaurBaseInfo Dinosaur="newDinosaur"/>
@@ -29,37 +30,7 @@
 }
 
 <div style="text-align:center; float:left">
-    <p>Fossils Needed to Fuse Raptor:</p>
-    <p>
-        @if (clawCount >= newDinosaur.DinosaurCost.Claw)
-        {
-            <span class="oi oi-circle-check"></span>
-        }
-        Claws: @clawCount/@newDinosaur.DinosaurCost.Claw
-    </p>
-    <p>
-        @if (skullCount >= @newDinosaur.DinosaurCost.Skull)
-        {
-            <span class="oi oi-circle-check"></span>
-        }
-
-        Skull: @skullCount/@newDinosaur.DinosaurCost.Skull
-    </p>
-    <p>
-        @if (footCount >= newDinosaur.DinosaurCost.Foot)
-        {
-            <span class="oi oi-circle-check"></span>
-        }
-        Feet: @footCount/@newDinosaur.DinosaurCost.Foot
-    </p>
-    <p>
-        @if (ribCount >= newDinosaur.DinosaurCost.Rib)
-        {
-            <span class="oi oi-circle-check"></span>
-        }
-        Ribs: @ribCount/@newDinosaur.DinosaurCost.Rib
-    </p>
-
+    <FossilSummary />
     @if (maxPartySize)
     {
         <div class="alert alert-danger" role="alert">
@@ -76,7 +47,7 @@
     [CascadingParameter]
     public Player player { get; set; }
 
-    public bool newRaptorCreated = false;
+    public bool newDinosaurCreated = false;
     public bool shortResources = false;
     public bool maxPartySize = false;
     public int clawCount = 0;
@@ -89,7 +60,6 @@
     {
         maxPartySize = false;
         shortResources = false;
-        GetRaptorFossilCount(player);
     }
 
     private void FuseRaptorFossils()
@@ -103,13 +73,9 @@
         if (FusionService.HasResourcesToMakeDinosaur(player, newDinosaur))
         {
             shortResources = false;
-            newDinosaur = DinosaurService.GetNewDinosaur(DinosaurTypeEnum.Raptor, player);
-            newRaptorCreated = true;
+            newDinosaur = DinosaurService.GetNewDinosaur(player);
+            newDinosaurCreated = true;
             player = FossilService.RemoveFossils(player, newDinosaur);
-            //player.Dinosaurs.Add(dinosaur);
-            //player.Access.Party = true;
-            //player.Access.AmberHunting = true;
-            GetRaptorFossilCount(player);
         }
         else
         {
@@ -122,35 +88,12 @@
         player.Dinosaurs.Add(dinosaur);
         player.Access.Party = true;
         player.Access.AmberHunting = true;
-        newRaptorCreated = false;
+        newDinosaurCreated = false;
     }
 
     public void DismissDinosaur()
     {
-        newRaptorCreated = false;
-    }
-
-    public void GetRaptorFossilCount(Player player)
-    {
-        clawCount = 0;
-        skullCount = 0;
-        footCount = 0;
-        ribCount = 0;
-
-        foreach (var fossil in player.Fossils)
-        {
-            if (fossil.DinosaurType == DinosaurTypeEnum.Raptor)
-            {
-                if (fossil.FossilType == FossilType.Claw)
-                    clawCount++;
-                if (fossil.FossilType == FossilType.Ribs)
-                    ribCount++;
-                if (fossil.FossilType == FossilType.Skull)
-                    skullCount++;
-                if (fossil.FossilType == FossilType.Foot)
-                    footCount++;
-            }
-        }
+        newDinosaurCreated = false;
     }
 
     private void RedirectToFossil()

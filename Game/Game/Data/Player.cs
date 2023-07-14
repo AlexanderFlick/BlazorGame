@@ -12,7 +12,6 @@ public class Player
     public int Amber { get; set; }
     public int AmberPerClick { get; set; } = 1;
     public int MaxPartySize { get; set; } = 2;
-    public int AmberPerFossil { get; set; } = 3;
     public Access Access { get; set; } = new Access();
     public List<Fossil> Fossils { get; set; } = new List<Fossil>();
     public List<Dinosaur> Dinosaurs { get; set; } = new List<Dinosaur>();

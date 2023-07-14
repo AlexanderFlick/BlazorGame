@@ -2,130 +2,181 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Data.Fossils;
+@using Game.Pages.Components.FossilComponents
 @using Game.Services;
 @inject IPlayerDinosaurService DinosaurService
 @inject IPlayerFossilService FossilService
 @inject IAmberService AmberService
+@inject IAccessService AccessService
 @inject NavigationManager NavigationManager
 
-
-<h1><b>Amber Splicer</b></h1>
-<div style="float:left">
-    <div>        
-        <img src="/images/dinosaurbones.png" />
-    </div>
+<div>
+    <h1><b>Amber Splicer</b></h1>
     <div style="float:left">
-        @if (!HasEnough)
-    {
-        <div class="alert alert-danger" style="margin-top:10px;" role="alert">
-            <p>Gather more amber to crack open. If you are lucky, you might find dinosaur DNA!</p>
-            <button class="btn btn-danger" @onclick="RedirectToAmber">Gather More Amber</button>
+        <div>
+            <img src="/images/dinosaurbones.png" />
         </div>
-    }
-    <div style="text-align:center">
-            <p>Total Amber: @player.Amber</p>
-            <p>Amber Needed to Hunt for New Fossils: @player.AmberPerFossil</p>
+
+        <div style="float:left">
+            <AmberShortageAlert HasEnough="hasEnough" />
+            <div style="text-align:center">
+                <p>Total Amber: @player.Amber</p>
+                @if (fossilAcquired)
+                {
+                    <NewFossilDescription NewFossil="newFossil" ShowFossilInfo="showFossilInfo" />
+                }
+                else
+                {
+                    <p>No fossil acquired. Crack open another amber!</p>
+                }
+            </div>
+
+
+            <button class="btn btn-primary" @onclick="GetNewFossil">Crack Amber</button>
+            <br />
+            <button class="btn btn-primary" style="margin-top:10px;" @onclick="RedirectToLab">Back to the Labratory</button>
+        </div>
     </div>
-    
-    <button class="btn btn-primary" @onclick="GetNewFossil">Crack Amber</button>
-    <br />
-    @*<button class="btn btn-primary" @onclick="GetFiveFossils">Crack 5 Amber</button>*@
-    <button class="btn btn-primary" style="margin-top:10px;" @onclick="RedirectToLab">Back to the Labratory</button>
+
+    <div class="fossilSummary">
+        <p>Carnivore Fossils:</p>
+        @if (carnivoreClawCount >= @dinosaurFossil.Cost.Claw)
+        {
+            <p>
+                <span class="oi oi-circle-check"></span>
+                Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw
+            </p>
+
+        }
+        else
+        {
+            <p>
+                Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw
+            </p>
+        }
+
+        <p>Skulls: @carnivoreSkullCount/@dinosaurFossil.Cost.Skull</p>
+        <p>Feet: @carnivoreFootCount/@dinosaurFossil.Cost.Foot</p>
+        <p>Ribs: @carnivoreRibCount/@dinosaurFossil.Cost.Rib</p>
+
+        <br />
+        <p>Herbivore Fossils:</p>
+        <p>Tail Spikes: @herbivoreSpikeCount/@dinosaurFossil.Cost.TailSpike</p>
+        <p>Skulls: @herbivoreSkullCount/@dinosaurFossil.Cost.Skull</p>
+        <p>Feet: @herbivoreFootCount/@dinosaurFossil.Cost.Foot</p>
+        <p>Ribs: @herbivoreRibCount/@dinosaurFossil.Cost.Rib</p>
     </div>
 </div>
-
-<div style="text-align:center; float:left">
-    <h3><b>Fossil Inventory</b></h3>
-    <p>Total DNA Samples: @player.Fossils.Count()</p>
-    @if(clawCount > 0)
-    {
-        <p>Raptor Claw Pieces: @clawCount</p>
-    }
-    @if (skullCount > 0)
-    {
-        <p>Raptor Skull Fragment: @skullCount</p>
-    }
-    @if(footCount > 0)
-    {
-        <p>Raptor Foot Bones: @footCount</p>
-    }
-    @if(ribCount > 0)
-    {
-        <p>Raptor Ribs: @ribCount</p>
-    }    
-</div>
-
 
 @code {
     [CascadingParameter]
     public Player player { get; set; }
 
-    public bool HasEnough { get; set; } = true;
-    public int clawCount = 0;
-    public int skullCount = 0;
-    public int footCount = 0;
-    public int ribCount = 0;
+    public bool hasEnough { get; set; } = true;
+    public bool showFossilInfo = false;
+    public bool fossilAcquired = false;
+    public Fossil? newFossil;
 
-    protected override async Task OnInitializedAsync()
-    {
-        GetRaptorFossilCount(player);
-    }
+    private Dinosaur dinosaurFossil = new Dinosaur();
+
+    public int carnivoreClawCount = 0;
+    public int carnivoreSkullCount = 0;
+    public int carnivoreFootCount = 0;
+    public int carnivoreRibCount = 0;
+
+    public int herbivoreSkullCount = 0;
+    public int herbivoreSpikeCount = 0;
+    public int herbivoreFootCount = 0;
+    public int herbivoreRibCount = 0;
 
     private void GetNewFossil()
     {
-        var enoughGold = AmberService.HasEnough(player, player.AmberPerFossil);
-        if (enoughGold)
-        {
-            HasEnough = true;
-            player.Amber = AmberService.Pay(player.AmberPerFossil, player.Amber);
-            player = FossilService.SpliceAmberForFossil(player);
+        var enoughAmber = AmberService.HasEnough(player, 1);
 
-            if(player.Fossils.Count > 4)
-            {
-                player.Access.FossilFusion = true;
-            }
+        if (enoughAmber)
+        {
+            AddNewFossilAndRemoveAmber();
         }
         else
         {
-            HasEnough = false;
+            showFossilInfo = false;
+            fossilAcquired = false;
+            hasEnough = false;
         }
-        GetRaptorFossilCount(player);
     }
 
-    private void GetFiveFossils()
+    protected override async Task OnInitializedAsync()
     {
-        for (int i = 0; i < 5; i++)
+        GetCarnivoreAndHerbivoreFossilCount();
+        await Task.CompletedTask;
+    }
+
+    private void AddNewFossilAndRemoveAmber()
+    {
+        hasEnough = true;
+        player.Amber = AmberService.Pay(1, player.Amber);
+        newFossil = FossilService.SpliceAmberForFossil(player);
+
+        if (newFossil is null)
         {
-            GetNewFossil();
-        }        
+            fossilAcquired = false;
+            showFossilInfo = false;
+            return;
+        }
+        else
+        {
+            fossilAcquired = true;
+            showFossilInfo = true;
+            player.Fossils.Add(newFossil);
+            AccessService.SetFossilFusionAccess(player);
+            GetCarnivoreAndHerbivoreFossilCount();
+        }
     }
 
-    public void GetRaptorFossilCount(Player player)
+    public void GetCarnivoreAndHerbivoreFossilCount()
     {
-        clawCount = 0;
-        skullCount = 0;
-        footCount = 0;
-        ribCount = 0;
-
         foreach (var fossil in player.Fossils)
         {
-            if (fossil.DinosaurType == DinosaurTypeEnum.Raptor)
+            if (fossil.DinosaurType == DinosaurTypeEnum.Carnivore)
             {
-                if (fossil.FossilType == FossilType.Claw)
-                    clawCount++;
-                if (fossil.FossilType == FossilType.Ribs)
-                    ribCount++;
-                if (fossil.FossilType == FossilType.Skull)
-                    skullCount++;
-                if (fossil.FossilType == FossilType.Foot)
-                    footCount++;
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Claw)
+                {
+                    carnivoreClawCount++;
+                }
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Skull)
+                {
+                    carnivoreSkullCount++;
+                }
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Foot)
+                {
+                    carnivoreFootCount++;
+                }
+                if (fossil.CarnivoreFossils == CarnivoreFossil.Ribs)
+                {
+                    carnivoreRibCount++;
+                }
+            }
+
+            if (fossil.DinosaurType == DinosaurTypeEnum.Herbivore)
+            {
+                if (fossil.HerbivoreFossils == HerbivoreFossil.TailSpikes)
+                {
+                    herbivoreSpikeCount++;
+                }
+                if (fossil.HerbivoreFossils == HerbivoreFossil.Skull)
+                {
+                    herbivoreSkullCount++;
+                }
+                if (fossil.HerbivoreFossils == HerbivoreFossil.Foot)
+                {
+                    herbivoreFootCount++;
+                }
+                if (fossil.HerbivoreFossils == HerbivoreFossil.Ribs)
+                {
+                    herbivoreRibCount++;
+                }
             }
         }
-    }
-
-    private void RedirectToAmber()
-    {
-        NavigationManager.NavigateTo("/amber");
     }
 
     private void RedirectToLab()

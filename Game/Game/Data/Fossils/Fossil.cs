@@ -5,5 +5,6 @@ namespace Game.Data.Fossils;
 public class Fossil
 {
     public DinosaurTypeEnum DinosaurType { get; set; }
-    public FossilType FossilType { get; set; }
+    public CarnivoreFossil? CarnivoreFossils { get; set; }
+    public HerbivoreFossil? HerbivoreFossils { get; set; }
 }

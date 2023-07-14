@@ -16,24 +16,42 @@ public class FusionService : IFusionService
         var claw = false;
         var ribs = false;
         var foot = false;
+        var spikes = false;
 
-        if(dinosaur.DinosaurCost.Skull <= player.Fossils.Where(x => x.FossilType == FossilType.Skull).Count())
+        if (dinosaur.DinosaurType == DinosaurTypeEnum.Carnivore)
+        {
+            if (dinosaur.Cost.Claw <= player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Claw).Count())
+            {
+                claw = true;
+            }
+        }
+
+        if (dinosaur.DinosaurType == DinosaurTypeEnum.Herbivore)
+        {
+            if (dinosaur.Cost.TailSpike <= player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.TailSpikes).Count())
+            {
+                spikes = true;
+            }
+        }
+
+        if (dinosaur.Cost.Skull <= player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Skull || x.HerbivoreFossils == HerbivoreFossil.Skull).Count())
         {
             skull = true;
         }
-        if (dinosaur.DinosaurCost.Claw <= player.Fossils.Where(x => x.FossilType == FossilType.Claw).Count())
-        {
-            claw = true;
-        }
-        if (dinosaur.DinosaurCost.Rib <= player.Fossils.Where(x => x.FossilType == FossilType.Ribs).Count())
+
+        if (dinosaur.Cost.Rib <= player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Ribs || x.HerbivoreFossils == HerbivoreFossil.Ribs).Count())
         {
             ribs = true;
         }
-        if (dinosaur.DinosaurCost.Foot <= player.Fossils.Where(x => x.FossilType == FossilType.Foot).Count())
+        if (dinosaur.Cost.Foot <= player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Foot || x.HerbivoreFossils == HerbivoreFossil.Foot).Count())
         {
             foot = true;
         }
 
-        return (claw && skull && ribs && foot);
+        if (dinosaur.DinosaurType == DinosaurTypeEnum.Carnivore)
+        {
+            return (claw && skull && ribs && foot);
+        }
+        return (spikes && skull && ribs && foot);
     }
 }

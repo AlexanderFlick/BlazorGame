@@ -1,0 +1,27 @@
+﻿@inject NavigationManager NavigationManager
+
+<div class="amberShortageAlert">
+    @if (!HasEnough)
+    {
+        <div class="alert alert-danger" style="margin-top:10px;" role="alert">
+            <p>Gather more amber to crack open. If you are lucky, you might find dinosaur DNA!</p>
+            <button class="btn btn-danger" @onclick="RedirectToAmber">Gather More Amber</button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public bool HasEnough { get; set; }
+
+    private void RedirectToAmber()
+    {
+        NavigationManager.NavigateTo("/amber");
+    }
+}
+
+<style>
+    .amberShortageAlert{
+        text-align:center;
+    }
+</style>

@@ -1,9 +1,17 @@
 ﻿namespace Game.Data.Fossils;
 
-public enum FossilType
+public enum CarnivoreFossil
 {
     Skull,
     Claw,
     Ribs,
     Foot
+}
+
+public enum HerbivoreFossil
+{
+    Skull,
+    TailSpikes,
+    Foot,
+    Ribs
 }
