@@ -16,7 +16,7 @@ public class PlayerFossilService : IPlayerFossilService
     public Fossil? SpliceAmberForFossil(Player player)
     {
         var fossilChance = rand.Next(1, 1001);
-        if(fossilChance < 666)
+        if (fossilChance < 666)
         {
             return null;
         }
@@ -84,12 +84,12 @@ public class PlayerFossilService : IPlayerFossilService
     {
         if (dinosaur.DinosaurType == DinosaurTypeEnum.Carnivore)
         {
-            
+
             for (int i = 0; i < dinosaur.Cost.Claw; i++)
             {
                 var claw = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Claw).First();
                 player.Fossils.Remove(claw);
-            }            
+            }
         }
 
         if (dinosaur.DinosaurType == DinosaurTypeEnum.Herbivore)

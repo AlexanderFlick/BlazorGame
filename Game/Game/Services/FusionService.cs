@@ -25,7 +25,6 @@ public class FusionService : IFusionService
                 claw = true;
             }
         }
-
         if (dinosaur.DinosaurType == DinosaurTypeEnum.Herbivore)
         {
             if (dinosaur.Cost.TailSpike <= player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.TailSpikes).Count())
@@ -38,7 +37,6 @@ public class FusionService : IFusionService
         {
             skull = true;
         }
-
         if (dinosaur.Cost.Rib <= player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Ribs || x.HerbivoreFossils == HerbivoreFossil.Ribs).Count())
         {
             ribs = true;
@@ -47,11 +45,11 @@ public class FusionService : IFusionService
         {
             foot = true;
         }
-
         if (dinosaur.DinosaurType == DinosaurTypeEnum.Carnivore)
         {
             return (claw && skull && ribs && foot);
         }
+
         return (spikes && skull && ribs && foot);
     }
 }

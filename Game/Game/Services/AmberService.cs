@@ -11,23 +11,9 @@ public interface IAmberService
 }
 public class AmberService : IAmberService
 {
-    public void GetAmber(Player player)
-    {
-        player.Amber += player.AmberPerClick;
-    }
+    public void GetAmber(Player player) => player.Amber += player.AmberPerClick;
 
-    public bool HasEnough(Player player, int cost)
-    {
-        return (player.Amber >= cost);
-    }
+    public bool HasEnough(Player player, int cost) => (player.Amber >= cost);
 
-    public int Pay(int cost, int total)
-    {
-        return total -= cost;
-    }
-
-    public void StartAmberAutoGathering(Player player)
-    {
-        
-    }
+    public int Pay(int cost, int total) => total -= cost;
 }

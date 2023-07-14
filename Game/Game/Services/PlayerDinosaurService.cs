@@ -20,7 +20,9 @@ public class PlayerDinosaurService : IPlayerDinosaurService
     public Player CreateDinosaur(Player player, DinosaurTypeEnum dinosaurType)
     {
         if (player.Dinosaurs.Count >= player.MaxPartySize)
+        {
             return player;
+        }
 
         player.Dinosaurs.Add(_dinosaurCreationService.GetNewDinosaur(player, dinosaurType));
         return player;
@@ -29,7 +31,9 @@ public class PlayerDinosaurService : IPlayerDinosaurService
     public Player RemoveDinosaur(Player player, Dinosaur dinosaur)
     {
         if (dinosaur.Locked)
+        {
             return player;
+        }
 
         player.Dinosaurs.Remove(dinosaur);
 

@@ -17,7 +17,7 @@ public class AccessService : IAccessService
             player.Access.FossilFusion = true;
         }
     }
-    
+
     public void SetBattleAccess(Player player)
     {
         player.Access.Battle = true;
