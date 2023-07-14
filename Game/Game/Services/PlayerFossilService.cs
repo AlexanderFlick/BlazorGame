@@ -84,50 +84,37 @@ public class PlayerFossilService : IPlayerFossilService
     {
         if (dinosaur.DinosaurType == DinosaurTypeEnum.Carnivore)
         {
-            for (int i = 0; i < dinosaur.Cost.Skull; i++)
-            {
-                var skull = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Skull).First();
-                player.Fossils.Remove(skull);
-            }
+            
             for (int i = 0; i < dinosaur.Cost.Claw; i++)
             {
                 var claw = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Claw).First();
                 player.Fossils.Remove(claw);
-            }
-            for (int i = 0; i < dinosaur.Cost.Foot; i++)
-            {
-                var foot = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Foot).First();
-                player.Fossils.Remove(foot);
-            }
-            for (int i = 0; i < dinosaur.Cost.Rib; i++)
-            {
-                var rib = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Ribs).First();
-                player.Fossils.Remove(rib);
-            }
+            }            
         }
 
         if (dinosaur.DinosaurType == DinosaurTypeEnum.Herbivore)
         {
-            for (int i = 0; i < dinosaur.Cost.Skull; i++)
-            {
-                var skull = player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.Skull).First();
-                player.Fossils.Remove(skull);
-            }
             for (int i = 0; i < dinosaur.Cost.TailSpike; i++)
             {
                 var claw = player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.TailSpikes).First();
                 player.Fossils.Remove(claw);
             }
-            for (int i = 0; i < dinosaur.Cost.Foot; i++)
-            {
-                var foot = player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.Foot).First();
-                player.Fossils.Remove(foot);
-            }
-            for (int i = 0; i < dinosaur.Cost.Rib; i++)
-            {
-                var rib = player.Fossils.Where(x => x.HerbivoreFossils == HerbivoreFossil.Ribs).First();
-                player.Fossils.Remove(rib);
-            }
+        }
+
+        for (int i = 0; i < dinosaur.Cost.Foot; i++)
+        {
+            var foot = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Foot || x.HerbivoreFossils == HerbivoreFossil.Foot).First();
+            player.Fossils.Remove(foot);
+        }
+        for (int i = 0; i < dinosaur.Cost.Rib; i++)
+        {
+            var rib = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Ribs || x.HerbivoreFossils == HerbivoreFossil.Ribs).First();
+            player.Fossils.Remove(rib);
+        }
+        for (int i = 0; i < dinosaur.Cost.Skull; i++)
+        {
+            var skull = player.Fossils.Where(x => x.CarnivoreFossils == CarnivoreFossil.Skull || x.HerbivoreFossils == HerbivoreFossil.Skull).First();
+            player.Fossils.Remove(skull);
         }
 
         return player;
