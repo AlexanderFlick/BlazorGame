@@ -1,0 +1,28 @@
+﻿@using Game.Data.Dinosaurs.DinosaurMoves;
+@using Game.Data;
+<div style="margin:50px;">
+    <h3>Turn Summary</h3>
+    <div style="float:left;">
+        @foreach (var summary in TurnSummaries)
+        {
+            @if (summary.MoveType == MoveType.Offensive)
+            {
+                <p>@summary.Attacker did @summary.AttackDamage damage</p>
+            }
+            @if (summary.MoveType == MoveType.Defensive)
+            {
+                <p>@summary.Attacker increased base defense by +@summary.DefensiveIncrease</p>
+            }
+            @if (summary.MoveType == MoveType.UltimateCharge)
+            {
+                <p>@summary.Attacker increased Ultimate charge by @summary.UltimateChargeIncrease</p>
+            }
+        }
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public List<MoveSummary> TurnSummaries { get; set; }
+}

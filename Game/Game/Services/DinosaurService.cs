@@ -28,10 +28,10 @@ public class DinosaurService : IDinosaurService
             CurrentHealth = health,
             TotalHealth = health,
             DinosaurType = dinosaurFossilType,
-            DinosaurColor = GetDinosaurColor(),
-            DinosaurEra = GetDinosaurEra(player),
+            DinosaurColor = GetMutation(),
+            DinosaurEra = GetEra(player),
             PartyPosition = (player.Dinosaurs.Count + 1),
-            BaseDefense = GetDinosaurBaseDefense()
+            Battle = GetBattleStats(dinosaurFossilType)
         };
 
         dinoToReturn.Name = dinoToReturn.DinosaurType == DinosaurTypeEnum.Carnivore ? GetCarnivore().ToString() : GetHerbivore().ToString();
@@ -40,30 +40,47 @@ public class DinosaurService : IDinosaurService
         return dinoToReturn;
     }
 
-    private int GetDinosaurBaseDefense() => rand.Next(10, 13);
+    private BattleStat GetBattleStats(DinosaurTypeEnum dinosaurType)
+    {
+        var statsToReturn = new BattleStat();
 
-    private static DinosaurEraEnum GetDinosaurEra(Player player) => player.Era;
+        if (dinosaurType == DinosaurTypeEnum.Carnivore)
+        {
+            statsToReturn.AttackModifier = 7;
+            statsToReturn.BaseDefense = 10;
+            statsToReturn.Speed = rand.Next(50, 101);
+        }
+        if (dinosaurType == DinosaurTypeEnum.Herbivore)
+        {
+            statsToReturn.AttackModifier = 3;
+            statsToReturn.BaseDefense = 14;
+            statsToReturn.Speed = rand.Next(40, 101);
+        }
+        return statsToReturn;
+    }
+
+    private static DinosaurEraEnum GetEra(Player player) => player.Era;
 
     public int GetDinosaurHealth() => rand.Next(80, 101);
 
-    private DinosaurColorEnum GetDinosaurColor()
+    private DinosaurMutationEnum GetMutation()
     {
         var rarity = rand.Next(1, 1001);
 
         if (rarity < 680)
         {
-            return DinosaurColorEnum.Green;
+            return DinosaurMutationEnum.Green;
         }
         if (rarity < 950)
         {
-            return DinosaurColorEnum.Blue;
+            return DinosaurMutationEnum.Blue;
         }
         if (rarity < 997)
         {
-            return DinosaurColorEnum.Red;
+            return DinosaurMutationEnum.Red;
         }
 
-        return DinosaurColorEnum.Albino;
+        return DinosaurMutationEnum.Albino;
     }
 
     public Dinosaur LockOrUnlockDinosaur(Dinosaur dinosaur)
@@ -108,6 +125,8 @@ public class DinosaurService : IDinosaurService
             newMoves.Add(_dinoMoves.GetOffensiveMoves().First());
             newMoves.Add(_dinoMoves.GetDefensiveMoves().Last());
         }
+
+        newMoves.AddRange(_dinoMoves.GetUltimateChargeMoves());
 
         return newMoves;
     }

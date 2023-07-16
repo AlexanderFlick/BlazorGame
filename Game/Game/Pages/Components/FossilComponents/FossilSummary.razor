@@ -14,15 +14,41 @@
     }
     else
     {
+        <p>Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw</p>
+    }
+    @if (carnivoreSkullCount >= @dinosaurFossil.Cost.Skull)
+    {
         <p>
-            Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw
+            <span class="oi oi-circle-check"></span>
+            Skulls: @carnivoreSkullCount/@dinosaurFossil.Cost.Skull
         </p>
     }
-
-    <p>Skulls: @carnivoreSkullCount/@dinosaurFossil.Cost.Skull</p>
-    <p>Feet: @carnivoreFootCount/@dinosaurFossil.Cost.Foot</p>
-    <p>Ribs: @carnivoreRibCount/@dinosaurFossil.Cost.Rib</p>
-
+    else
+    {
+        <p>Skulls: @carnivoreSkullCount/@dinosaurFossil.Cost.Skull</p>
+    }
+    @if (carnivoreFootCount >= dinosaurFossil.Cost.Foot)
+    {
+        <p>
+            <span class="oi oi-circle-check"></span>
+            Feet: @carnivoreFootCount/@dinosaurFossil.Cost.Foot
+        </p>
+    }
+    else
+    {
+        <p>Feet: @carnivoreFootCount/@dinosaurFossil.Cost.Foot</p>
+    }
+    @if (carnivoreRibCount >= dinosaurFossil.Cost.Rib)
+    {
+        <p>
+            <span class="oi oi-circle-check"></span>
+            Ribs: @carnivoreRibCount/@dinosaurFossil.Cost.Rib
+        </p>
+    }
+    else
+    {
+        <p>Ribs: @carnivoreRibCount/@dinosaurFossil.Cost.Rib</p>
+    }
     <br />
     <p>Herbivore Fossils:</p>
     <p>Tail Spikes: @herbivoreSpikeCount/@dinosaurFossil.Cost.TailSpike</p>

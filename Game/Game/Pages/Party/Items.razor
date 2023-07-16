@@ -10,7 +10,7 @@
     }
     else
     {
-        <h3>Items for @dinosaur.DinosaurType</h3> 
+        <h3>Items for @dinosaur.DinosaurType @dinosaur.Name</h3> 
     }
     <button class="btn btn-primary" @onclick="() => NavigateToSummary(pageIndex)" value="@pageIndex">Back To Summary</button>
     <button class="btn btn-primary" @onclick="NavigateToParty">Back To Party</button>
@@ -28,7 +28,7 @@
     protected override async Task OnInitializedAsync()
     {
         pageIndex = int.Parse(dinosaurIndex);
-        dinosaur = player.Dinosaurs[pageIndex];
+        dinosaur = player.Dinosaurs.Where(x => x.PartyPosition == pageIndex).First();
     }
 
     public void NavigateToSummary(int dinosaurIndex)

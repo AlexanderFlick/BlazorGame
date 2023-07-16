@@ -25,7 +25,7 @@ public enum DinosaurEraEnum
     Cretaceous
 }
 
-public enum DinosaurColorEnum
+public enum DinosaurMutationEnum
 {
     Green,
     Blue,

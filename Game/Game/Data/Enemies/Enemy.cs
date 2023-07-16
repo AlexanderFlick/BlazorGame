@@ -1,8 +1,10 @@
-﻿namespace Game.Data.Enemies;
+﻿using Game.Data.Dinosaurs;
 
-public class Enemy
+namespace Game.Data.Enemies;
+
+public class Enemy : Dinosaur
 {
-    public string Name { get; set; }
-    public int Health { get; set; } = 100;
     public int Experience { get; set; }
+    public string Description { get; set; }
+    public BattleStat BattleStats { get; set; } = new BattleStat();
 }

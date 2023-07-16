@@ -27,5 +27,6 @@ public class AccessService : IAccessService
     {
         player.Access.Party = true;
         player.Access.AmberHunting = true;
+        player.Access.Battle = true;
     }
 }

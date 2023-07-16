@@ -1,0 +1,15 @@
+﻿@using Game.Data.Enemies;
+
+<div>
+    *******
+    <h2>@EnemyToFight.Name</h2>
+    <p>Health: @EnemyToFight.CurrentHealth/@EnemyToFight.TotalHealth</p>
+    <br />
+    <p>@EnemyToFight.Description</p>
+    *******
+</div>
+
+@code {
+    [Parameter]
+    public Enemy EnemyToFight { get; set; }
+}

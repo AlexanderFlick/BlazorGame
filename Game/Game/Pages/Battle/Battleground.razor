@@ -1,7 +1,101 @@
 ﻿@page "/battle/ground"
+@using Game.Data;
+@using Game.Data.Dinosaurs.DinosaurMoves;
+@using Game.Data.Enemies;
+@using Game.Pages.Components.BattleComponents
+@using Game.Pages.Components.DinosaurComponents
+@using Game.Pages.Components.EnemyComponents
+@using Game.Pages.Party
+@using Game.Services;
+@inject IEnemyService EnemyService;
+@inject IBattleService BattleService;
+@inject NavigationManager NavigationManager
 
-<h3>Battleground</h3>
+<div>
+
+    @if (!player.Battle.Won)
+    {
+        <h1>Ultimate Charge: @player.Ultimate.CurrentCharge/@player.Ultimate.MaxCharge</h1>
+        foreach (var newEnemy in enemies)
+        {
+            <BaseEnemy EnemyToFight="newEnemy" />
+        }
+
+        @foreach (var dinosaur in player.Dinosaurs)
+        {
+            <div style="float:left; margin-left:30px;">
+                @if (dinosaur.Battle.Selected)
+                {
+                    <DinosaurName dinosaurToName="dinosaur" />
+                    <p>Health: @dinosaur.CurrentHealth/@dinosaur.TotalHealth</p>
+                    <DinosaurMoves DinoMoves="dinosaur.Moves" InBattle="true" />
+                }
+            </div>
+        }
+
+        <div style="float:none;">
+            <button class="btn btn-primary" @onclick="TakeTurn">Take Turn!</button>
+            <br />
+            <button style="margin-top:10px;" class="btn btn-primary" @onclick="UseUltimate">Use Ultimate!</button>
+        </div>
+
+        @if (turnOccured)
+        {
+            <TurnSummary TurnSummaries="turnSummary" />
+        }
+    }
+
+    @if (player.Battle.Won)
+    {
+        <p>You won the battle!! Go get your hard earned rewards!</p>
+        <button @onclick="NavigateToRewards">Get Rewards</button>
+    }
+
+    <BattleLost playerDinosaurs="player.Dinosaurs" />
+
+</div>
+
 
 @code {
+    [CascadingParameter]
+    public Player player { get; set; }
+    public List<Enemy> enemies = new List<Enemy>();
+    public List<MoveSummary> turnSummary = new List<MoveSummary>();
+    private bool SelectingMove { get; set; }
+    private bool turnOccured { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (player.Battle.FirstRound)
+        {
+            enemies.Add(EnemyService.CreateEnemy());
+        }
+    }
+
+    private void TakeTurn()
+    {
+        foreach (var enemyToFight in enemies)
+        {
+            BattleService.SetEnemyMove(enemyToFight);
+        }
+
+        turnSummary = BattleService.BattleRound(player, enemies);
+        player.Battle.Won = BattleService.AllEnemiesAreDead(enemies);
+        BattleService.ResetMoves(player, enemies);
+        turnOccured = true;
+        player.Battle.FirstRound = false;
+    }
+
+    private void UseUltimate()
+    {
+        if (player.Ultimate.CurrentCharge >= player.Ultimate.MaxCharge)
+        {
+            BattleService.UseUltimate(player, enemies);
+        }
+    }
+
+    private void NavigateToRewards()
+    {
+        NavigationManager.NavigateTo("battle/rewards");
+    }
 }

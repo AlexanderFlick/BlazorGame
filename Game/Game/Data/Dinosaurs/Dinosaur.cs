@@ -11,18 +11,22 @@ public class Dinosaur
     public int ExperienceToLevelUp { get; set; }
     public int CurrentExperience { get; set; }
     public int TotalHealth { get; set; }
-    public int CurrentHealth { get; set; }
-    public bool Locked { get; set; }
-    public bool BattleSelected { get; set; }
     public int PartyPosition { get; set; }
-    public int BaseDefense { get; set; }
+    public int CurrentHealth { get; set; }
+
+    public bool Locked { get; set; }
+    public bool Hostile { get; set; }
+    public bool Dead { get; set; }
+
+    public BattleStat Battle { get; set; } = new BattleStat();
+
     public DinosaurAmberHunting AmberHunting { get; set; } = new DinosaurAmberHunting();
     public DinosaurCost Cost { get; set; } = new DinosaurCost();
     public List<Equipment> Items { get; set; } = new List<Equipment>();
     public List<Move> Moves { get; set; } = new List<Move>();
     public DinosaurTypeEnum DinosaurType { get; set; }
     public DinosaurEraEnum DinosaurEra { get; set; }
-    public DinosaurColorEnum DinosaurColor { get; set; }
+    public DinosaurMutationEnum DinosaurColor { get; set; }
 }
 
 public class DinosaurCost
@@ -41,4 +45,15 @@ public class DinosaurAmberHunting
     public int PerSecond { get; set; } = 1;
     public int MaxCollected { get; set; } = 100;
     public int Total { get; set; }
+}
+
+public class BattleStat
+{
+    public int CurrentDefense { get; set; }
+    public int BaseDefense { get; set; }
+    public bool Selected { get; set; }
+
+    public int AttackModifier { get; set; }
+    public int Speed { get; set; }
+    
 }

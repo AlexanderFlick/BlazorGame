@@ -1,52 +1,37 @@
 ﻿@page "/battle/prepare"
 @using Game.Data;
+@using Game.Pages.Components
 @using Game.Pages.Components.DinosaurComponents
+@using Game.Pages.Party
 @inject NavigationManager NavigationManager
 
-<h1>Prepare</h1>
 @foreach (var dinosaur in player.Dinosaurs)
 {
-    <div style="outline-color:black; outline-style:double; margin-top:10px;">
-        @if (dinosaur.AmberHunting.Hunting)
-        {
-            @if (dinosaur.PetName != null)
-            {
-                <h5 class="card-title"><b>@dinosaur.PetName</b> is amber hunting and cannot battle!</h5>
-            }
-            else
-            {
-                <h5 class="card-title"><b>@dinosaur.Name</b> is amber hunting and cannot battle!</h5>
-            }
-            <button class="btn btn-primary" @onclick="RedirectToAutoAmber">Go to Amber Hunting</button>
-        }
-        else
-        {
-            <div>
-                <label>
-                    Select For Battle:
-                    <InputCheckbox @bind-Value="dinosaur.BattleSelected"></InputCheckbox>
-                </label>
-                @if (dinosaur.PetName != null)
-                {
-                    <h5 class="card-title"><b>@dinosaur.PetName</b></h5>
-                }
-                else
-                {
-                    <h5 class="card-title"><b>@dinosaur.Name</b></h5>
-                }
-                <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
-                <p class="card-text">Health: @dinosaur.TotalHealth</p>
-                <h5>Moves</h5>
-                @foreach (var move in dinosaur.Moves)
-                {
-                    <MoveBaseInfo dinoMove="move" />
-                }
-            </div>
-        }
-    </div>
+    <div style="float:left; margin-left:30px;">
+        <DinosaurName dinosaurToName="dinosaur" />
+        <label>
+            Select For Battle:
+            <InputCheckbox @bind-Value="dinosaur.Battle.Selected"></InputCheckbox>
+        </label>
+        <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
+        <p class="card-text">Health: @dinosaur.TotalHealth</p>
 
+        <div style="outline-color:black; outline-style:double; margin-top:10px;">
+            @if (dinosaur.AmberHunting.Hunting)
+            {
+                <button class="btn btn-primary" @onclick="RedirectToAutoAmber">Go to Amber Hunting</button>
+            }
+            @if (!dinosaur.AmberHunting.Hunting)
+            {
+                <DinosaurMoves DinoMoves="dinosaur.Moves" InBattle="false" />
+            }
+        </div>
+    </div>
 }
+<br />
 <button class="btn btn-primary" @onclick="RedirectToBattle">Battle!!!</button>
+<br />
+<BackButton />
 
 @code {
     [CascadingParameter]
@@ -60,5 +45,10 @@
     public void RedirectToAutoAmber()
     {
         NavigationManager.NavigateTo("amber/auto");
+    }
+
+    public void SeeMoveset(bool seeMoveset)
+    {
+        seeMoveset = !seeMoveset;
     }
 }

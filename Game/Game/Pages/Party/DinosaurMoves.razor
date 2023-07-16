@@ -1,0 +1,42 @@
+﻿@using Game.Data.Dinosaurs.DinosaurMoves;
+@using Game.Pages.Components
+
+<div style="text-align:center;">
+    @foreach (var move in DinoMoves)
+    {
+        <div class="moveType">
+            <p><b>@move.Name</b></p>
+            @if (move.MoveType == MoveType.Offensive)
+            {
+                <p>Damage: @move.DiceCount d @move.DiceSize</p>
+            }
+            @if (move.MoveType == MoveType.Defensive)
+            {
+                <p>Base Defense Increase: @move.DiceCount d @move.DiceSize</p>
+            }
+            <p>Increase Ultimate Charge: @move.ChargeIncrease</p>
+
+            @if (InBattle)
+            {
+                <InputCheckbox @bind-Value="move.Selected" />
+            }
+        </div>
+    }
+</div>
+
+
+@code {
+    [Parameter]
+    public List<Move> DinoMoves { get; set; }
+
+    [Parameter]
+    public bool InBattle { get; set; }
+}
+
+<style>
+    .moveType {
+        outline: double;
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>

@@ -1,0 +1,18 @@
+﻿@using Game.Data.Dinosaurs;
+
+<div>
+    @if (dinosaurToName.PetName != null)
+    {
+        <h1><b>@dinosaurToName.PetName</b></h1>
+        <p>@dinosaurToName.DinosaurType</p>
+    }
+    @if (dinosaurToName.PetName == null)
+    {
+        <h1><b>@dinosaurToName.Name</b></h1>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Dinosaur dinosaurToName { get; set; }
+}

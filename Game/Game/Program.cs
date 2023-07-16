@@ -16,6 +16,8 @@ builder.Services.AddSingleton<ISaveService, SaveService>();
 builder.Services.AddSingleton<IRarityService, RarityService>();
 builder.Services.AddSingleton<IDinosaurMoveRepository, DinosaurMoveRepository>();
 builder.Services.AddSingleton<IAccessService, AccessService>();
+builder.Services.AddSingleton<IEnemyService, EnemyService>();
+builder.Services.AddSingleton<ITurnOrderService, TurnOrderService>();
 
 var app = builder.Build();
 

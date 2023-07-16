@@ -1,0 +1,29 @@
+﻿@using Game.Data.Dinosaurs;
+@using System.Reflection.Metadata;
+
+<div>
+    @if(!SomeoneAlive)
+    {
+        <p>Everyone on your team has died. Head back to town and lick your wounds.</p>
+        <BackButton />
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    public List<Dinosaur> playerDinosaurs { get; set; }
+
+    private bool SomeoneAlive { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        foreach(var dino in playerDinosaurs)
+        {
+            if (!dino.Dead)
+            {
+                SomeoneAlive = true;
+            }
+        }
+    }
+}

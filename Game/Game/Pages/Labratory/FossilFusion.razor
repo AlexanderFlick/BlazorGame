@@ -67,6 +67,8 @@
 
     private void FuseCarnivoreFossils()
     {
+        newDinosaur.DinosaurType = DinosaurTypeEnum.Carnivore;
+
         if (player.Dinosaurs.Count >= player.MaxPartySize)
         {
             maxPartySize = true;
@@ -88,6 +90,8 @@
 
     private void FuseHerbivoreFossils()
     {
+        newDinosaur.DinosaurType = DinosaurTypeEnum.Herbivore;
+
         if(player.Dinosaurs.Count >= player.MaxPartySize)
         {
             maxPartySize = true;
