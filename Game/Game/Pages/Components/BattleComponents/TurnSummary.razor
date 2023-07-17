@@ -5,17 +5,17 @@
     <div>
         @foreach (var summary in TurnSummaries)
         {
-            @if (summary.MoveType == MoveType.Offensive)
+            @if (summary.MoveType == MoveType.UltimateCharge)
             {
-                <p>@summary.Attacker did @summary.AttackDamage damage to @summary.Defender</p>
+                <p>@summary.Attacker increased Ultimate charge by @summary.UltimateChargeIncrease</p>
             }
             @if (summary.MoveType == MoveType.Defensive)
             {
                 <p>@summary.Attacker increased base defense by +@summary.DefensiveIncrease</p>
             }
-            @if (summary.MoveType == MoveType.UltimateCharge)
+            @if (summary.MoveType == MoveType.Offensive)
             {
-                <p>@summary.Attacker increased Ultimate charge by @summary.UltimateChargeIncrease</p>
+                <p>@summary.Attacker did @summary.AttackDamage damage to @summary.Defender</p>
             }
         }
     </div>

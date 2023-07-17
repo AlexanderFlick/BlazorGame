@@ -6,5 +6,5 @@ public class Enemy : Dinosaur
 {
     public int Experience { get; set; }
     public string Description { get; set; }
-    public BattleStat BattleStats { get; set; } = new BattleStat();
+    public BattleStat Battle { get; set; } = new BattleStat();
 }

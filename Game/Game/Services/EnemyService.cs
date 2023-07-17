@@ -25,7 +25,7 @@ public class EnemyService : IEnemyService
             Name = "Rogue Dinosaur",
             CurrentHealth = health,
             TotalHealth= health,
-            BattleStats = new BattleStat
+            Battle = new BattleStat
             {
                 AttackModifier = 3,
                 BaseDefense = 13,

@@ -54,9 +54,16 @@ public class BattleService : IBattleService
                 Attacker = dino.PetName is not null ? dino.PetName : dino.Name,
                 UltimateChargeIncrease = moveToProcess.ChargeIncrease,
                 AttackDamage = moveToProcess.DamageDone,
-                DefensiveIncrease = moveToProcess.BaseDefenseIncrease,
-                Defender = dinosToImpact[0].Name.ToString()
+                DefensiveIncrease = moveToProcess.BaseDefenseIncrease
             };
+            if(moveToProcess.Hit == HitScope.One)
+            {
+                moveSummary.Defender = dinosToImpact[0].Name.ToString();
+            }
+            if(moveToProcess.Hit == HitScope.All)
+            {
+                moveSummary.Defender = " everyone";
+            }
 
             turnSummaries.Add(moveSummary);
         }
