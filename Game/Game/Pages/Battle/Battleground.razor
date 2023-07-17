@@ -21,6 +21,13 @@
             <BaseEnemy EnemyToFight="newEnemy" />
         }
 
+        @if (!MoveSelectedForEachDinosaur)
+        {
+            <div class="alert alert-danger" role="alert">
+                <p>Select a move for each dinosaur before starting your turn!</p>
+            </div>
+        }
+        
         @foreach (var dinosaur in player.Dinosaurs)
         {
             <div style="float:left; margin-left:30px;">
@@ -59,6 +66,7 @@
     public List<MoveSummary> turnSummary = new List<MoveSummary>();
     private bool SelectingMove { get; set; }
     private bool turnOccured { get; set; }
+    private bool MoveSelectedForEachDinosaur = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,6 +78,13 @@
 
     private void TakeTurn()
     {
+        MoveSelectedForEachDinosaur = BattleService.MoveSelectedForEachDinosaur(player);
+        if (!MoveSelectedForEachDinosaur)
+        {
+            MoveSelectedForEachDinosaur = false;
+            return;
+        }
+
         foreach (var enemyToFight in enemies)
         {
             BattleService.SetEnemyMove(enemyToFight);

@@ -14,6 +14,7 @@ public interface IBattleService
     void UseUltimate(Player player, List<Enemy> enemies);
     bool AllEnemiesAreDead(List<Enemy> enemies);
     void ResetMoves(Player player, List<Enemy> enemies);
+    bool MoveSelectedForEachDinosaur(Player player);
 }
 public class BattleService : IBattleService
 {
@@ -33,39 +34,40 @@ public class BattleService : IBattleService
 
         foreach (var dino in turnOrder)
         {
+            var turnSummary = new MoveSummary { Attacker = dino.PetName ?? dino.Name };
             var moveToProcess = GetMoveToProcess(dino.Moves, dino.Hostile);
+            turnSummary.MoveType = moveToProcess.MoveType;
+            turnSummary.MoveName = moveToProcess.Name;
+
             var dinosToImpact = GetDinosaursToImpact(dino.Hostile, turnOrder);
 
             if (moveToProcess.MoveType == MoveType.Defensive)
             {
                 ProcessDefensiveMove(moveToProcess, dino);
+                turnSummary.DefensiveIncrease = dino.Battle.CurrentDefense;
             }
 
             if (moveToProcess.MoveType == MoveType.Offensive)
             {
                 ProcessAttack(moveToProcess, dinosToImpact, dino);
+                turnSummary.Successful = moveToProcess.SuccessfulHit;
+                turnSummary.AttackDamage = moveToProcess.DamageDone;
             }
 
             player.Ultimate.CurrentCharge += moveToProcess.ChargeIncrease;
+            turnSummary.UltimateChargeIncrease = moveToProcess.ChargeIncrease;
 
-            var moveSummary = new MoveSummary
+
+            if (moveToProcess.Hit == HitScope.One)
             {
-                MoveType = moveToProcess.MoveType,
-                Attacker = dino.PetName is not null ? dino.PetName : dino.Name,
-                UltimateChargeIncrease = moveToProcess.ChargeIncrease,
-                AttackDamage = moveToProcess.DamageDone,
-                DefensiveIncrease = moveToProcess.BaseDefenseIncrease
-            };
-            if(moveToProcess.Hit == HitScope.One)
-            {
-                moveSummary.Defender = dinosToImpact[0].Name.ToString();
+                turnSummary.Defender = dinosToImpact[0].Name.ToString();
             }
-            if(moveToProcess.Hit == HitScope.All)
+            if (moveToProcess.Hit == HitScope.All)
             {
-                moveSummary.Defender = " everyone";
+                turnSummary.Defender = " everyone";
             }
 
-            turnSummaries.Add(moveSummary);
+            turnSummaries.Add(turnSummary);
         }
 
         return turnSummaries;
@@ -210,9 +212,9 @@ public class BattleService : IBattleService
             }
         }
 
-        foreach(var dino in enemies)
+        foreach (var dino in enemies)
         {
-            foreach(var moveset in dino.Moves)
+            foreach (var moveset in dino.Moves)
             {
                 moveset.Selected = false;
             }
@@ -240,5 +242,23 @@ public class BattleService : IBattleService
         }
 
         return turnSummary;
+    }
+
+    public bool MoveSelectedForEachDinosaur(Player player)
+    {
+        var movesSelected = new List<bool>();
+
+        foreach(var dino in player.Dinosaurs)
+        {
+            foreach(var move in dino.Moves)
+            {
+                if (move.Selected)
+                {
+                    movesSelected.Add(true);
+                }
+            }
+        }
+
+        return movesSelected.Count == player.Dinosaurs.Count;
     }
 }
