@@ -1,13 +1,13 @@
 ﻿@using Game.Data.Dinosaurs.DinosaurMoves;
 @using Game.Data;
-<div style="margin:50px;">
+<div style="margin-block:50px; float:right;">
     <h3>Turn Summary</h3>
-    <div style="float:left;">
+    <div>
         @foreach (var summary in TurnSummaries)
         {
             @if (summary.MoveType == MoveType.Offensive)
             {
-                <p>@summary.Attacker did @summary.AttackDamage damage</p>
+                <p>@summary.Attacker did @summary.AttackDamage damage to @summary.Defender</p>
             }
             @if (summary.MoveType == MoveType.Defensive)
             {

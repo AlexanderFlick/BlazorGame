@@ -1,0 +1,17 @@
+﻿@inject NavigationManager NavigationManager
+
+@if (WonGame)
+{
+    <p>You won the battle!! Go get your hard earned rewards!</p>
+    <button @onclick="NavigateToRewards">Get Rewards</button>
+}
+
+@code {
+    [Parameter]
+    public bool WonGame { get; set; }
+
+    private void NavigateToRewards()
+    {
+        NavigationManager.NavigateTo("battle/rewards");
+    }
+}

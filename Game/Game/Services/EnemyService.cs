@@ -51,6 +51,6 @@ public class EnemyService : IEnemyService
 
     public string GetEnemyDescription()
     {
-        return "A snarling dinosaur stands in front of you. His eyes narrow, his nostrils flare. He lets out a blood curdling scream, the smell of blood fills the air.";
+        return "A snarling dinosaur stands in front of you. His eyes narrow, his nostrils flare. He lets out a shattering scream, the smell of blood fills the air.";
     }
 }

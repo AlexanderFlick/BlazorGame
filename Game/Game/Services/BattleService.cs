@@ -54,7 +54,8 @@ public class BattleService : IBattleService
                 Attacker = dino.PetName is not null ? dino.PetName : dino.Name,
                 UltimateChargeIncrease = moveToProcess.ChargeIncrease,
                 AttackDamage = moveToProcess.DamageDone,
-                DefensiveIncrease = moveToProcess.BaseDefenseIncrease
+                DefensiveIncrease = moveToProcess.BaseDefenseIncrease,
+                Defender = dinosToImpact[0].Name.ToString()
             };
 
             turnSummaries.Add(moveSummary);

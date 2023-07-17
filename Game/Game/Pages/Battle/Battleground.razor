@@ -15,7 +15,7 @@
 
     @if (!player.Battle.Won)
     {
-        <h1>Ultimate Charge: @player.Ultimate.CurrentCharge/@player.Ultimate.MaxCharge</h1>
+        <h1>@player.Ultimate.Name: @player.Ultimate.CurrentCharge/@player.Ultimate.MaxCharge</h1>
         foreach (var newEnemy in enemies)
         {
             <BaseEnemy EnemyToFight="newEnemy" />
@@ -45,12 +45,8 @@
         }
     }
 
-    @if (player.Battle.Won)
-    {
-        <p>You won the battle!! Go get your hard earned rewards!</p>
-        <button @onclick="NavigateToRewards">Get Rewards</button>
-    }
 
+    <BattleWon WonGame="player.Battle.Won" />
     <BattleLost playerDinosaurs="player.Dinosaurs" />
 
 </div>
@@ -92,10 +88,5 @@
         {
             BattleService.UseUltimate(player, enemies);
         }
-    }
-
-    private void NavigateToRewards()
-    {
-        NavigationManager.NavigateTo("battle/rewards");
     }
 }
