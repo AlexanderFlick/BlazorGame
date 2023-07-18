@@ -37,6 +37,7 @@ public class BattleService : IBattleService
             var turnSummary = new MoveSummary { Attacker = dino.PetName ?? dino.Name };
             var moveToProcess = GetMoveToProcess(dino.Moves, dino.Hostile);
             turnSummary.MoveType = moveToProcess.MoveType;
+            turnSummary.Hit = moveToProcess.Hit;
             turnSummary.MoveName = moveToProcess.Name;
 
             var dinosToImpact = GetDinosaursToImpact(dino.Hostile, turnOrder);
@@ -50,7 +51,7 @@ public class BattleService : IBattleService
             if (moveToProcess.MoveType == MoveType.Offensive)
             {
                 ProcessAttack(moveToProcess, dinosToImpact, dino);
-                turnSummary.Successful = moveToProcess.SuccessfulHit;
+                //turnSummary.Successful = moveToProcess.SuccessfulHits;
                 turnSummary.AttackDamage = moveToProcess.DamageDone;
             }
 
@@ -60,7 +61,7 @@ public class BattleService : IBattleService
 
             if (moveToProcess.Hit == HitScope.One)
             {
-                turnSummary.Defender = dinosToImpact[0].Name.ToString();
+                turnSummary.Defender = dinosToImpact.FirstOrDefault(x => !x.Dead).Name.ToString();
             }
             if (moveToProcess.Hit == HitScope.All)
             {
@@ -96,9 +97,10 @@ public class BattleService : IBattleService
         {
             var enemyBeingHit = dinosToImpact.Where(x => !x.Dead).First();
 
-            offensiveMove.SuccessfulHit = PassedCurrentDefense(attackingDinosaur, enemyBeingHit);
+            var attackSuccess = PassedCurrentDefense(attackingDinosaur, enemyBeingHit);
+            offensiveMove.SuccessfulHits.Add(attackSuccess);
 
-            if (offensiveMove.SuccessfulHit)
+            if (attackSuccess)
             {
                 GetDamage(offensiveMove);
                 enemyBeingHit.CurrentHealth -= offensiveMove.DamageDone;
@@ -116,8 +118,10 @@ public class BattleService : IBattleService
 
             foreach (var enemy in enemiesBeingHit)
             {
-                offensiveMove.SuccessfulHit = PassedCurrentDefense(attackingDinosaur, enemy);
-                if (offensiveMove.SuccessfulHit)
+                var attackSuccess = PassedCurrentDefense(attackingDinosaur, enemy);
+                offensiveMove.SuccessfulHits.Add(attackSuccess);
+
+                if (attackSuccess)
                 {
                     GetDamage(offensiveMove);
                     enemy.CurrentHealth -= offensiveMove.DamageDone;

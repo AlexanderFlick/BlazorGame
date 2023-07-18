@@ -1,5 +1,5 @@
 ﻿@using Game.Data.Dinosaurs.DinosaurMoves;
-@using Game.Data;
+
 <div style="float:right; text-align:center;">
     <h3>Turn Summary</h3>
     <div>
@@ -10,19 +10,35 @@
                 {
                     <p>@summary.Attacker used @summary.MoveName to increase base defense by +@summary.DefensiveIncrease</p>
                 }
+
                 @if (summary.MoveType == MoveType.Offensive)
                 {
-                    <p>@summary.Attacker used @summary.MoveName at @summary.Defender!</p>
-                    @if (summary.Successful)
+
+                    @if (summary.Hit == HitScope.One && summary.Successes.Where(x => x == true).Count() > 0)
                     {
+                        
                         <p>It was a successful hit!</p>
                         <p>@summary.AttackDamage damage was done to @summary.Defender.</p>
                     }
-                    @if (!summary.Successful)
+                    @if (summary.Hit == HitScope.All &&
+                   summary.Successes.Where(x => x == true).Count() > 0)
                     {
+                        <p>@summary.Attacker used @summary.MoveName that was sent to everyone!</p>
+                        <p>There were @summary.Successes.Count() successful hits.</p>
+                    }
+
+                    @if (summary.Hit == HitScope.One && summary.Successes.Where(x => x == true).Count() == 0)
+                    {
+                        <p>@summary.Attacker used @summary.MoveName at @summary.Defender!</p>
                         <p>It was not successful.</p>
                     }
+                    @if (summary.Hit == HitScope.All && summary.Successes.Where(x => x == true).Count() == 0)
+                    {
+                        <p>@summary.Attacker used @summary.MoveName at everyone.</p>
+                        <p>No one was hit by the attack.</p>
+                    }
                 }
+
                 @if (summary.UltimateChargeIncrease > 0)
                 {
                     <p>@summary.Attacker increased Ultimate charge by @summary.UltimateChargeIncrease</p>
