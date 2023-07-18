@@ -1,0 +1,13 @@
+﻿@using Game.Data.Dinosaurs;
+
+<div>
+    <h4>Battle Stats</h4>
+    <p class="card-text">Speed: @dinoForBattle.Battle.Speed</p>
+    <p class="card-text">Attack Modifier: @dinoForBattle.Battle.AttackModifier</p>
+    <p class="card-text">Base Defense: @dinoForBattle.Battle.BaseDefense</p>
+</div>
+
+@code {
+    [Parameter]
+    public Dinosaur dinoForBattle { get; set; }
+}

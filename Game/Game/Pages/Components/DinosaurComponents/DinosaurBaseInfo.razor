@@ -2,17 +2,10 @@
 @using Game.Data;
 
 <div>
-    <DinosaurName dinosaurToName="Dinosaur" />
     <p class="card-subtitle mb-2 text-muted">Level: @Dinosaur.Level Experience: @Dinosaur.CurrentExperience/@Dinosaur.ExperienceToLevelUp</p>
     <p class="card-text">Health: @Dinosaur.TotalHealth</p>
     <p class="card-text">Era: @Dinosaur.DinosaurEra</p>
     <p class="card-text">Color: @Dinosaur.DinosaurColor</p>
-    <br/>
-    <h3>Battle Stats</h3>
-    <p class="card-text">Speed: @Dinosaur.Battle.Speed</p>
-    <p class="card-text">Attack Modifier: @Dinosaur.Battle.AttackModifier</p>
-    <p class="card-text">Base Defense: @Dinosaur.Battle.BaseDefense</p>
-
     @if (player.Access.AmberHunting)
     {
         <p class="card-text">Amber Hunting: @Dinosaur.AmberHunting.Hunting</p>

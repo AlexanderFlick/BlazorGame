@@ -160,7 +160,7 @@ public class BattleService : IBattleService
 
     private bool PassedCurrentDefense(Dinosaur attackingDinosaur, Dinosaur defendingDinosaur)
     {
-        var attackRoll = rand.Next(1, 21);
+        var attackRoll = rand.Next(1, 11);
         var attackWithModifier = attackRoll + attackingDinosaur.Battle.AttackModifier;
 
         return attackWithModifier >= defendingDinosaur.Battle.CurrentDefense;
@@ -170,7 +170,7 @@ public class BattleService : IBattleService
     {
         if (player.Ultimate.MaxCharge <= player.Ultimate.CurrentCharge)
         {
-            player.Ultimate.MaxCharge = 0;
+            player.Ultimate.CurrentCharge = 0;
             foreach (var enemy in enemies)
             {
                 enemy.CurrentHealth -= player.Ultimate.Damage;
@@ -221,36 +221,13 @@ public class BattleService : IBattleService
         }
     }
 
-    public List<MoveSummary> MovesForTurnSummary(Player player, List<Enemy> enemies)
-    {
-        var turnSummary = new List<MoveSummary>();
-        var turnOrder = _turnOrder.GetTurnOrder(player, enemies);
-
-        foreach (var dino in turnOrder)
-        {
-            foreach (var move in dino.Moves)
-            {
-                if (move.Selected)
-                {
-                    var moveSummary = new MoveSummary();
-                    moveSummary.Attacker = dino.Name;
-                    moveSummary.MoveType = move.MoveType;
-
-                    turnSummary.Add(moveSummary);
-                }
-            }
-        }
-
-        return turnSummary;
-    }
-
     public bool MoveSelectedForEachDinosaur(Player player)
     {
         var movesSelected = new List<bool>();
 
-        foreach(var dino in player.Dinosaurs)
+        foreach (var dino in player.Dinosaurs)
         {
-            foreach(var move in dino.Moves)
+            foreach (var move in dino.Moves)
             {
                 if (move.Selected)
                 {

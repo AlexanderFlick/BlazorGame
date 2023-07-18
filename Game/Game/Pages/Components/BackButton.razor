@@ -1,6 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 
-<img style="margin-top:10px" src="/images/placeholders/backbuttonstyle3wideUNSELECTED.png" @onclick="RedirectToHome" />
+<div class="buttonChange" @onclick="RedirectToHome"></div>
 
 @code {
     private void RedirectToHome()
@@ -8,3 +8,16 @@
         NavigationManager.NavigateTo("/");
     }
 }
+
+<style>
+    .buttonChange {
+        height: 50px;
+        width: 150px;
+        margin-top: 10px;
+        background-image: url(../../images/placeholders/backbuttonstyle3wideUNSELECTED.png)
+    }
+
+        .buttonChange:hover {
+            background-image: url(../../images/placeholders/backbuttonstyle3wide.png)
+        }
+</style>
