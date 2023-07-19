@@ -2,6 +2,7 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Data.Fossils;
+@using Game.Pages.Components.Buttons
 @using Game.Pages.Components.DinosaurComponents
 @using Game.Pages.Components.FossilComponents
 @using Game.Services;
@@ -18,6 +19,7 @@
 {
     <div class="alert alert-danger" role="alert">
         <p>Fossil requirement not met! Crack open more <b><i>Amber</i></b> to find fossils.</p>
+        <RedirectButton ButtonPath="" />
         <button class="btn btn-danger" @onclick="RedirectToFossil">Get More Fossils</button>
     </div>
 }
@@ -25,9 +27,13 @@
 @if (newDinosaurCreated)
 {
     <h2>New @newDinosaur.DinosaurType Created!!!</h2>
-    <DinosaurBaseInfo Dinosaur="newDinosaur"/>
-    <button class="btn btn-primary" @onclick="() => AddDinosaur(newDinosaur)">Add to Party</button>
-    <button class="btn btn-primary" @onclick="DismissDinosaur">Dismiss</button>
+    <DinosaurBaseInfo Dinosaur="newDinosaur" />
+    <div @onclick="() => AddDinosaur(newDinosaur)">
+        <ActionButton ButtonText="Add to Party" />
+    </div>
+    <div @onclick="DismissDinosaur">
+        <ActionButton ButtonText="Dismiss" />
+    </div>
 }
 
 <div style="text-align:center; float:left">
@@ -36,14 +42,17 @@
     {
         <div class="alert alert-danger" role="alert">
             <p>Max Party Size Reached!</p>
-            <button class="btn btn-danger" @onclick="RedirectToParty">Go to Party</button>
+            <RedirectButton ButtonPath="/party" ButtonText="Party" />
         </div>
     }
-
-    <button class="btn btn-primary" @onclick="FuseCarnivoreFossils">Fuse Carnivore</button>
-    <button class="btn btn-primary" @onclick="FuseHerbivoreFossils">Fuse Herbivore</button>
+    <div @onclick="FuseCarnivoreFossils">
+        <ActionButton ButtonText="Fuse Carnivore" />
+    </div>
+    <div @onclick="FuseHerbivoreFossils">
+        <ActionButton ButtonText="Fuse Herbivore" />
+    </div>
     <br />
-    <button class="btn btn-primary" @onclick="RedirectToLab">Back to the Labratory</button>
+    <RedirectButton ButtonPath="/labratory" ButtonText="Back to Lab" />
 </div>
 
 @code {
@@ -92,7 +101,7 @@
     {
         newDinosaur.DinosaurType = DinosaurTypeEnum.Herbivore;
 
-        if(player.Dinosaurs.Count >= player.MaxPartySize)
+        if (player.Dinosaurs.Count >= player.MaxPartySize)
         {
             maxPartySize = true;
             return;
@@ -128,18 +137,8 @@
         NavigationManager.NavigateTo("/labratory/splicer");
     }
 
-    private void RedirectToParty()
-    {
-        NavigationManager.NavigateTo("/party");
-    }
-
     private void ExchangeFossils()
     {
         NavigationManager.NavigateTo("/labratory/exchange");
-    }
-
-    private void RedirectToLab()
-    {
-        NavigationManager.NavigateTo("/labratory");
     }
 }
