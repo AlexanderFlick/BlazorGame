@@ -12,9 +12,7 @@
     <DinosaurMoves DinoMoves="dinosaur.Moves" />
 
     <RedirectButton ButtonParameter=@index.ToString() ButtonPath="/party/summary/" ButtonPathContinued="/items" ButtonText="Items"/>
-    <br />
-    <RedirectButton ButtonPath="/party" ButtonText="Back to Party" />
-    <br />
+    <RedirectButton ButtonPath="/party" ButtonText="Party" />
     <div @onclick="RenameDinosaur">
         <ActionButton ButtonText="Rename"/>
     </div>
@@ -25,7 +23,6 @@
             <input @bind=@dinosaur.PetName>
         </div>
     }
-    <br />
     <RedirectButton ButtonPath="/" ButtonText="Back" />
 </div>
 

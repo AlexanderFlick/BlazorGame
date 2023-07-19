@@ -2,43 +2,47 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Pages.Components
+@using Game.Pages.Components.Buttons
 @using Game.Pages.Components.DinosaurComponents
 
-@if (player.Dinosaurs.Count < 1)
-{
-    <p>The labratory has the equipment needed to create dinosaurs!</p>
-}
-else
-{
-    <h3>Total Amber: @player.Amber</h3>
-    <EditForm Model="@player.Dinosaurs" OnSubmit="AssignDinosaurToHuntAmber">
-        @foreach (var dinosaur in player.Dinosaurs)
-        {
-            @if (dinosaur.PetName == null)
-            {
-                <p>Name: @dinosaur.Name</p>
-            }
-            else
-            {
-                <p>Name: @dinosaur.PetName</p>
-            }
+<div>
 
-            @if (dinosaur.AmberHunting.Hunting)
+    @if (player.Dinosaurs.Count < 1)
+    {
+        <p>The labratory has the equipment needed to create dinosaurs!</p>
+    }
+    else
+    {
+        <h3>Total Amber: @player.Amber</h3>
+        <EditForm Model="@player.Dinosaurs" OnSubmit="AssignDinosaurToHuntAmber">
+            @foreach (var dinosaur in player.Dinosaurs)
             {
-                <span class="oi oi-bolt">Hunting!</span>
-            }            
+                @if (dinosaur.PetName == null)
+                {
+                    <p>Name: @dinosaur.Name</p>
+                }
+                else
+                {
+                    <p>Name: @dinosaur.PetName</p>
+                }
 
-            <p>Amber Per Second: @dinosaur.AmberHunting.PerSecond</p>
-            <label>
-                Hunting Amber:
-                <InputCheckbox @bind-Value="@dinosaur.AmberHunting.Hunting" />
-            </label>
-            <p>Amber Collected: @dinosaur.AmberHunting.Total/@dinosaur.AmberHunting.MaxCollected</p>
-            <button class="btn btn-primary" @onclick="() => GetAmber(dinosaur)" value="@dinosaur">Start/Collect Amber</button>
-        }
-    </EditForm>   
-}
-<BackButton />
+                @if (dinosaur.AmberHunting.Hunting)
+                {
+                    <span class="oi oi-bolt">Hunting!</span>
+                }
+
+                <p>Amber Per Second: @dinosaur.AmberHunting.PerSecond</p>
+                <label>
+                    Hunting Amber:
+                    <InputCheckbox @bind-Value="@dinosaur.AmberHunting.Hunting" />
+                </label>
+                <p>Amber Collected: @dinosaur.AmberHunting.Total/@dinosaur.AmberHunting.MaxCollected</p>
+                <button class="btn btn-primary" @onclick="() => GetAmber(dinosaur)" value="@dinosaur">Start/Collect Amber</button>
+            }
+        </EditForm>
+    }
+    <RedirectButton ButtonPath="/" ButtonText="Back" />
+</div>
 
 
 @code {
@@ -58,16 +62,16 @@ else
             {
                 var timer = new Timer(new TimerCallback(_ =>
             {
-                if (dinosaur.AmberHunting.MaxCollected > dinosaur.AmberHunting.Total)
+                if (dinosaur.AmberHunting.MaxCollected > dinosaur.AmberHunting.Total && dinosaur.AmberHunting.Hunting)
                 {
-                    dinosaur.AmberHunting.Total++;
+                    dinosaur.AmberHunting.Total += dinosaur.AmberHunting.PerSecond;
                 }
 
                 InvokeAsync(() =>
                 {
                     StateHasChanged();
                 });
-            }), null, 10000, 10000);
+            }), null, 1000, 1000);
             }
         }
     }
