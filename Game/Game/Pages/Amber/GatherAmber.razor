@@ -17,7 +17,7 @@
     <br />
     @if (player.Access.AmberHunting)
     {
-        <RedirectButton ButtonPath="/amber/auto" ButtonText="AUTO" />
+        <RedirectButton ButtonPath="/amber/auto" ButtonText="Dino Amber Hunting" />
     }
     <br />
     <RedirectButton ButtonText="BACK" ButtonPath="/" />
@@ -29,7 +29,7 @@
 
     private void GetYellowAmber()
     {
-        if(!player.Access.Labratory && player.Amber > 4)
+        if (!player.Access.Labratory && player.Amber > 4)
         {
             player.Access.Labratory = true;
         }
