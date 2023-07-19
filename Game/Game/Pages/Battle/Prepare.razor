@@ -19,7 +19,7 @@
                 <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
                 <p class="card-text">Health: @dinosaur.TotalHealth</p>
 
-                <div style="outline-color:black; outline-style:double; margin-top:10px;">
+                <div style="outline-color:black; margin-top:10px;">
                     @if (dinosaur.AmberHunting.Hunting)
                     {
                         <button class="btn btn-primary" @onclick="RedirectToAutoAmber">Go to Amber Hunting</button>
@@ -35,7 +35,7 @@
     <br />
     <RedirectButton ButtonPath="battle/ground" ButtonText="Battle!!!" />
     <br />
-    <RedirectButton ButtonPath="/" ButtonText="HOME" />
+    <RedirectButton ButtonPath="/" ButtonText="Back" />
 
 </div>
 

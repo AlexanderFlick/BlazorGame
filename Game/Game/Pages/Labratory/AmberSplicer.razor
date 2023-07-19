@@ -2,6 +2,7 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Data.Fossils;
+@using Game.Pages.Components.Buttons
 @using Game.Pages.Components.FossilComponents
 @using Game.Services;
 @inject IPlayerDinosaurService DinosaurService
@@ -12,12 +13,12 @@
 
 <div>
     <h1><b>Amber Splicer</b></h1>
-    <div style="float:left">
+    <div>
         <div>
-            <img src="/images/dinosaurbones.png" />
+            <img src="/images/dinosaurbones.png" style="padding-bottom:30px;"/>
         </div>
 
-        <div style="float:left">
+        <div>
             <AmberShortageAlert HasEnough="hasEnough" />
             <div style="text-align:center; float:right;">
                 <p>Total Amber: @player.Amber</p>
@@ -31,10 +32,11 @@
                 }
             </div>
 
-
-            <button class="btn btn-primary" @onclick="GetNewFossil">Crack Amber</button>
+            <div @onclick="GetNewFossil">
+                <ActionButton ButtonText="Crack Amber" />
+            </div>
             <br />
-            <button class="btn btn-primary" style="margin-top:10px;" @onclick="RedirectToLab">Back to the Labratory</button>
+            <RedirectButton ButtonPath="/labratory" ButtonText="Back to Lab" />
         </div>
     </div>
 
@@ -42,21 +44,30 @@
         <p>Carnivore Fossils:</p>
         @if (carnivoreClawCount >= @dinosaurFossil.Cost.Claw)
         {
-            <p>
-                <span class="oi oi-circle-check"></span>
-                Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw
-            </p>
+            <span class="oi oi-circle-check"></span>
 
         }
-        else
+        <p>Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw</p>
+
+        @if (carnivoreSkullCount >= @dinosaurFossil.Cost.Skull)
         {
-            <p>
-                Claws: @carnivoreClawCount/@dinosaurFossil.Cost.Claw
-            </p>
-        }
+            <span class="oi oi-circle-check"></span>
 
+        }
         <p>Skulls: @carnivoreSkullCount/@dinosaurFossil.Cost.Skull</p>
+
+        @if (carnivoreFootCount >= @dinosaurFossil.Cost.Foot)
+        {
+            <span class="oi oi-circle-check"></span>
+
+        }
         <p>Feet: @carnivoreFootCount/@dinosaurFossil.Cost.Foot</p>
+
+        @if (carnivoreRibCount >= @dinosaurFossil.Cost.Rib)
+        {
+            <span class="oi oi-circle-check"></span>
+
+        }
         <p>Ribs: @carnivoreRibCount/@dinosaurFossil.Cost.Rib</p>
 
         <br />
@@ -187,10 +198,5 @@
                 }
             }
         }
-    }
-
-    private void RedirectToLab()
-    {
-        NavigationManager.NavigateTo("/labratory");
     }
 }

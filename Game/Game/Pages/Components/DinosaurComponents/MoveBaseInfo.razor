@@ -1,6 +1,6 @@
 ﻿@using Game.Data.Dinosaurs.DinosaurMoves;
 
-<div>
+<div class="moveInfo">
     <p>@dinoMove.MoveType</p>
     <p>@dinoMove.Name</p>
     @if (dinoMove.MoveType == MoveType.Offensive)
@@ -11,9 +11,16 @@
     {
         <p>Defense: @dinoMove.DiceCount/@dinoMove.DiceSize</p>
     }
+    <p>Ultimate Charge: +@dinoMove.ChargeIncrease</p>
 </div>
 
 @code {
     [Parameter]
     public Move dinoMove { get; set; }
 }
+
+<style>
+    .moveInfo{
+        width: 250px;
+    }
+</style>
