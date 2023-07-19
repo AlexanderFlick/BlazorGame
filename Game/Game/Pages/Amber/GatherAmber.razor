@@ -2,6 +2,7 @@
 @inject IAmberService AmberService
 @using Game.Data;
 @using Game.Pages.Components
+@using Game.Pages.Components.Buttons
 @using Game.Services;
 @inject NavigationManager NavigationManager
 
@@ -10,14 +11,16 @@
     <img src="images/placeholders/crystal.png" alt="Amber" />
     <p>Total Amber: @player.Amber</p>
     <p>Amber Per Click: @player.AmberPerClick</p>
-    <button class="btn btn-primary gatherAmber" @onclick="GetYellowAmber">Get Amber!</button>
+    <div @onclick="GetYellowAmber">
+        <ActionButton ButtonText="Get Amber!" />
+    </div>
     <br />
     @if (player.Access.AmberHunting)
     {
-        <button class="btn btn-primary gatherAmber" @onclick="NavigateToAuto">Assign Dinosaur To Hunt For Amber!</button>
-        <br />
+        <RedirectButton ButtonPath="/amber/auto" ButtonText="AUTO" />
     }
-    <BackButton />
+    <br />
+    <RedirectButton ButtonText="BACK" ButtonPath="/" />
 </div>
 
 @code {
@@ -31,11 +34,6 @@
             player.Access.Labratory = true;
         }
         AmberService.GetAmber(player);
-    }
-
-    private void NavigateToAuto()
-    {
-        NavigationManager.NavigateTo("/amber/auto");
     }
 }
 

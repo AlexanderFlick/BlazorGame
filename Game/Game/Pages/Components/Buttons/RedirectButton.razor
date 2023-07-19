@@ -1,0 +1,52 @@
+﻿@inject NavigationManager NavigationManager
+
+<div class="buttonChange" @onclick="RedirectToPath">
+    @ButtonText
+</div>
+
+@code {
+    [Parameter]
+    public string ButtonPath { get; set; }
+
+    [Parameter]
+    public string ButtonText { get; set; }
+
+    [Parameter]
+    public string? ButtonParameter { get; set; }
+
+    [Parameter]
+    public string? ButtonPathContinued { get; set; }
+
+    private void RedirectToPath()
+    {
+        var fullPath = ButtonPath;
+
+        if (ButtonParameter != null)
+        {
+            fullPath = fullPath + ButtonParameter;
+        }
+
+        if (ButtonPathContinued != null)
+        {
+            fullPath = fullPath + ButtonPathContinued;
+        }
+
+        NavigationManager.NavigateTo(fullPath);
+    }
+}
+
+<style>
+
+    .buttonChange {
+        height: 50px;
+        width: 150px;
+        margin-top: 10px;
+        padding-top: 12px;
+        padding-left: 50px;
+        background-image: url(../../images/placeholders/backbuttonstyle3wideUNSELECTED.png)
+    }
+
+        .buttonChange:hover {
+            background-image: url(../../images/placeholders/backbuttonstyle3wide.png)
+        }
+</style>

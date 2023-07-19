@@ -1,35 +1,29 @@
 ﻿@page "/labratory"
 @using Game.Data;
 @using Game.Pages.Components
+@using Game.Pages.Components.Buttons
 @inject NavigationManager NavigationManager;
 
-<h3>Labratory</h3>
-<button class="btn btn-primary labratory" @onclick="RedirectToSplicer">Amber Splicer</button>
-<br />
-@if (player.Access.FossilFusion)
-{
-    <button class="btn btn-primary labratory" @onclick="RedirectToFossilFusion">Fossil Fusion Reactor</button>
+<div>
+    <h3>Labratory</h3>
+    <RedirectButton ButtonText="Amber Splicer" ButtonPath="/labratory/splicer" />
     <br />
-}
-<BackButton />
+    @if (player.Access.FossilFusion)
+    {
+        <RedirectButton ButtonText="Fossil Fusion Reactor" ButtonPath="/labratory/fusion" />
+        <br />
+    }
+    <RedirectButton ButtonPath="/" ButtonText="BACK" />
+</div>
+
 
 @code {
     [CascadingParameter]
     public Player player { get; set; }
-
-    public void RedirectToSplicer()
-    {
-        NavigationManager.NavigateTo($"/labratory/splicer");
-    }
-
-    public void RedirectToFossilFusion()
-    {
-        NavigationManager.NavigateTo($"/labratory/fusion");
-    }
 }
 
 <style>
-    .labratory{
-        margin:10px;
+    .labratory {
+        margin: 10px;
     }
 </style>

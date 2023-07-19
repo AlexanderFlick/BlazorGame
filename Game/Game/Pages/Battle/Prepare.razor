@@ -1,37 +1,43 @@
 ﻿@page "/battle/prepare"
 @using Game.Data;
 @using Game.Pages.Components
+@using Game.Pages.Components.Buttons
 @using Game.Pages.Components.DinosaurComponents
 @using Game.Pages.Party
 @inject NavigationManager NavigationManager
 
-@foreach (var dinosaur in player.Dinosaurs)
-{
-    <div style="float:left; margin-left:30px;">
-        <DinosaurName dinosaurToName="dinosaur" />
-        <label>
-            Select For Battle:
-            <InputCheckbox @bind-Value="dinosaur.Battle.Selected"></InputCheckbox>
-        </label>
-        <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
-        <p class="card-text">Health: @dinosaur.TotalHealth</p>
+<div>
+    @foreach (var dinosaur in player.Dinosaurs)
+    {
+        <div>
+            <DinosaurName dinosaurToName="dinosaur" />
+            <label>
+                Select For Battle:
+                <InputCheckbox @bind-Value="dinosaur.Battle.Selected"></InputCheckbox>
+            </label>
+            <div class="battleInfo">
+                <p class="card-subtitle mb-2 text-muted">Level: @dinosaur.Level Experience: @dinosaur.CurrentExperience/@dinosaur.ExperienceToLevelUp</p>
+                <p class="card-text">Health: @dinosaur.TotalHealth</p>
 
-        <div style="outline-color:black; outline-style:double; margin-top:10px;">
-            @if (dinosaur.AmberHunting.Hunting)
-            {
-                <button class="btn btn-primary" @onclick="RedirectToAutoAmber">Go to Amber Hunting</button>
-            }
-            @if (!dinosaur.AmberHunting.Hunting)
-            {
-                <DinosaurMoves DinoMoves="dinosaur.Moves" InBattle="false" />
-            }
+                <div style="outline-color:black; outline-style:double; margin-top:10px;">
+                    @if (dinosaur.AmberHunting.Hunting)
+                    {
+                        <button class="btn btn-primary" @onclick="RedirectToAutoAmber">Go to Amber Hunting</button>
+                    }
+                    @if (!dinosaur.AmberHunting.Hunting)
+                    {
+                        <DinosaurMoves DinoMoves="dinosaur.Moves" InBattle="false" />
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-}
-<br />
-<button class="btn btn-primary" @onclick="RedirectToBattle">Battle!!!</button>
-<br />
-<BackButton />
+    }
+    <br />
+    <RedirectButton ButtonPath="battle/ground" ButtonText="Battle!!!" />
+    <br />
+    <RedirectButton ButtonPath="/" ButtonText="HOME" />
+
+</div>
 
 @code {
     [CascadingParameter]
@@ -52,3 +58,7 @@
         seeMoveset = !seeMoveset;
     }
 }
+
+<style>
+
+</style>

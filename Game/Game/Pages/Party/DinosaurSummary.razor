@@ -2,18 +2,23 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Pages.Components
+@using Game.Pages.Components.Buttons
 @using Game.Pages.Components.DinosaurComponents
 @inject NavigationManager NavigationManager
 
-<div>    
+<div>
+    <DinosaurName dinosaurToName="dinosaur" />
     <DinosaurBaseInfo Dinosaur="dinosaur"/>    
     <DinosaurMoves DinoMoves="dinosaur.Moves" />
 
-    <button class="btn btn-primary" style="margin-top:10px" @onclick="() => NavigateToItems(index)" value="@index">Items</button>
+    <RedirectButton ButtonParameter=@index.ToString() ButtonPath="/party/summary/" ButtonPathContinued="/items" ButtonText="Items"/>
     <br />
-    <button class="btn btn-primary" style="margin-top:10px" @onclick="NavigateToParty">Back To Party</button>
+    <RedirectButton ButtonPath="/party" ButtonText="Back to Party" />
     <br />
-    <button class="btn btn-primary" style="margin-top:10px" @onclick="RenameDinosaur">Rename</button>
+    <div @onclick="RenameDinosaur">
+        <ActionButton ButtonText="Rename"/>
+    </div>
+    
     @if (wantsToRename)
     {
         <div>
@@ -21,7 +26,7 @@
         </div>
     }
     <br />
-    <BackButton  />
+    <RedirectButton ButtonPath="/" ButtonText="HOME" />
 </div>
 
 
@@ -46,15 +51,5 @@
     public void RenameDinosaur()
     {
         wantsToRename = !wantsToRename;
-    }
-
-    private void NavigateToParty()
-    {
-        NavigationManager.NavigateTo($"/party");
-    }
-
-    public void NavigateToItems(int dinosaurIndex)
-    {
-        NavigationManager.NavigateTo($"/party/summary/{dinosaurIndex}/items");
     }
 }

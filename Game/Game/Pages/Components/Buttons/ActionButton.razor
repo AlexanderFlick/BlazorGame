@@ -1,0 +1,23 @@
+﻿<div class="actionButtonChange">
+    @ButtonText
+</div>
+
+@code {
+    [Parameter]
+    public string ButtonText { get; set; }
+}
+
+<style>
+    
+    .actionButtonChange {
+        height: 50px;
+        width: 150px;
+        text-align: center;
+        padding-top: 12px;
+        background-image: url(../../images/placeholders/backbuttonstyle3wideUNSELECTED.png);
+    }
+
+        .actionButtonChange:hover {
+            background-image: url(../../images/placeholders/backbuttonstyle3wide.png)
+        }
+</style>

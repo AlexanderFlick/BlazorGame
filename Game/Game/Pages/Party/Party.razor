@@ -2,32 +2,12 @@
 @using Game.Data;
 @using Game.Data.Dinosaurs;
 @using Game.Pages.Components
+@using Game.Pages.Components.Buttons
 @using Game.Pages.Components.DinosaurComponents
 @using Game.Services;
 @inject IPlayerDinosaurService PlayerDinosaurService
 @inject IDinosaurService DinosaurService
 @inject NavigationManager NavigationManager
-
-@*<h1><b>Dinosaur Army</b></h1>
-<p>Party size: @player.Dinosaurs.Count()/@player.MaxPartySize</p>
-<br />
-<div style="text-align:center; float:left; margin:10px;">
-    @foreach (var dinosaur in player.Dinosaurs)
-    {
-        <div class="card" style="width: 18rem; float:left;">
-            <div class="card-body">
-                <DinosaurBaseInfo Dinosaur="dinosaur" />
-                <button class="btn btn-primary" @onclick="() => RedirectToSummary(dinosaur)">Detailed Summary</button>
-                <button class="btn btn-primary" @onclick="() => LockDinosaur(dinosaur)" value="@dinosaur">Lock</button>
-                <br>
-                <button class="btn btn-danger" style="margin-top:10px;" @onclick="() => RemoveDinosaur(dinosaur)">Remove</button>
-
-            </div>
-        </div>
-    }
-    <br />
-    <BackButton />
-</div>*@
 
 <div>
     <div class="container">
@@ -39,12 +19,22 @@
                     <div class="fa">
                         <DinosaurBaseInfo Dinosaur="dino" />
                         <DinosaurBattleStats dinoForBattle="dino" />
+
+                        <RedirectButton ButtonParameter="@dino.PartyPosition.ToString()" ButtonPath="/party/summary/" ButtonText="Summary" />
+                        <div @onclick="() => LockDinosaur(dino)" value="@dino">
+                            <ActionButton ButtonText="Lock" />
+                        </div>
+                        <br>
+                        <div @onclick="() => RemoveDinosaur(dino)" value="@dino">
+                            <ActionButton ButtonText="Remove" />
+                        </div>
                     </div>
                 </div>
             </div>
         }
-        <BackButton />
+        <RedirectButton ButtonPath="/" ButtonText="BACK" />
     </div>
+    
 </div>
 
 
@@ -60,11 +50,6 @@
     public void RemoveDinosaur(Dinosaur dinosaur)
     {
         player = PlayerDinosaurService.RemoveDinosaur(player, dinosaur);
-    }
-
-    public void RedirectToSummary(Dinosaur dinosaur)
-    {
-        NavigationManager.NavigateTo($"/party/summary/{dinosaur.PartyPosition}");
     }
 }
 
@@ -83,8 +68,8 @@
     }
 
     .card {
-        height: 470px;
-        width: 350px;
+        height: 600px;
+        width: 450px;
         float: left;
         margin: 40px;
         box-shadow: 0 70px 63px -60px #000000;
@@ -98,7 +83,7 @@
 
     .thing {
         height: fit-content;
-        width: 329px;
+        width: 429px;
         opacity: 0;
         border: 2px solid;
         border-radius: 50px;
@@ -116,7 +101,6 @@
 
     .fa {
         opacity: 0;
-        text-align: center;
         transition-duration: 1s;
         margin: 20px;
     }
@@ -130,7 +114,7 @@
         background-image: url(../../images/placeholders/backbuttonstyle3wideUNSELECTED.png)
     }
 
-    .buttonChange:hover{
+        .buttonChange:hover {
             background-image: url(../../images/placeholders/backbuttonstyle3wide.png)
-    }
+        }
 </style>

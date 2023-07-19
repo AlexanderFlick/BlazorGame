@@ -2,6 +2,7 @@
 @using Game.Data;
 @using Game.Data.Save;
 @using Game.Pages.Components
+@using Game.Pages.Components.Buttons
 @using Game.Services;
 @inject ISaveService SaveService
 @inject NavigationManager NavigationManager
@@ -35,7 +36,7 @@
         <button type="submit">Submit</button>
     </EditForm>
     <br />
-    <BackButton />
+    <RedirectButton ButtonPath="/" ButtonText="BACK" />
 </div>
 
 @code {
