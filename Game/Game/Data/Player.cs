@@ -2,6 +2,7 @@
 using Game.Data.Dinosaurs;
 using Game.Data.Fossils;
 using Game.Data.Items;
+using Game.Data.Rewards;
 
 namespace Game.Data;
 
@@ -45,4 +46,9 @@ public class Battle
 {
     public bool Won { get; set; }
     public bool FirstRound { get; set; } = true;
+}
+
+public class Store
+{
+    public List<Reward> Rewards { get; set; }
 }

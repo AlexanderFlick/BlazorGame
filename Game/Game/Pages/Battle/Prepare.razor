@@ -22,7 +22,7 @@
                 <div style="outline-color:black; margin-top:10px;">
                     @if (dinosaur.AmberHunting.Hunting)
                     {
-                        <button class="btn btn-primary" @onclick="RedirectToAutoAmber">Go to Amber Hunting</button>
+                        <RedirectButton ButtonPath="/gather/auto" ButtonText="Auto Hunting"/>
                     }
                     @if (!dinosaur.AmberHunting.Hunting)
                     {
@@ -33,7 +33,10 @@
         </div>
     }
     <br />
-    <RedirectButton ButtonPath="battle/ground" ButtonText="Battle!!!" />
+    @if (player.Dinosaurs.Any(x => x.Battle.Selected))
+    {
+        <RedirectButton ButtonPath="battle/ground" ButtonText="Battle!!!" />
+    }    
     <br />
     <RedirectButton ButtonPath="/" ButtonText="Back" />
 
@@ -42,16 +45,6 @@
 @code {
     [CascadingParameter]
     public Player player { get; set; }
-
-    public void RedirectToBattle()
-    {
-        NavigationManager.NavigateTo("battle/ground");
-    }
-
-    public void RedirectToAutoAmber()
-    {
-        NavigationManager.NavigateTo("amber/auto");
-    }
 
     public void SeeMoveset(bool seeMoveset)
     {

@@ -1,4 +1,5 @@
 using Game.Data.Dinosaurs.DinosaurMoves;
+using Game.Data.Rewards;
 using Game.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddSingleton<IDinosaurMoveRepository, DinosaurMoveRepository>()
 builder.Services.AddSingleton<IAccessService, AccessService>();
 builder.Services.AddSingleton<IEnemyService, EnemyService>();
 builder.Services.AddSingleton<ITurnOrderService, TurnOrderService>();
+builder.Services.AddSingleton<IRewardRepository, RewardRepository>();
 
 var app = builder.Build();
 
